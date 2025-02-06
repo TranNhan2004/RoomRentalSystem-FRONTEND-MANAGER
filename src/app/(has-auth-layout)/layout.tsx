@@ -11,7 +11,7 @@ export default function HasAuthLayout({
       <Navbar />
       <div className="min-h-screen flex flex-col">
         <main className="flex-grow">
-          <div className="ml-[20%] mt-[5%] mr-[4%] p-6">
+          <div className="ml-[17%] mt-[5%] mr-[4%] p-6">
             {children}
           </div>
         </main>

@@ -12,7 +12,7 @@ const NavLink = (props: NavLinkProps) => {
     <>
       <Link 
         href={props.href} 
-        className={`text-white hover:text-mylightgreen hover:text-lg p-2 block ${props.className}`}
+        className={`text-[15px] text-white hover:text-mylightgreen hover:text-base p-2 block ${props.className}`}
       >
         {props.children}
       </Link>

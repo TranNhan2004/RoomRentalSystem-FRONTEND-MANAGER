@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import managementPicture from "../../../public/management.png";
+import columnChartPicture from "../../../public/column-chart.png";
 
 export const metadata: Metadata = {
   title: "Management | Home",
@@ -15,7 +17,7 @@ export default function HomePage() {
       <div className="grid grid-cols-2 gap-8 mb-[3%]">
         <div className="flex justify-center ml-[-30%]">
           <Image 
-            src={"/management.png"}
+            src={managementPicture}
             alt="Management Image"
             width={300}
             height={300}
@@ -29,7 +31,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="border-t border-gray-300 mb-[2%] mt-[4%]"></div>
+      <div className="border-t border-gray-300 mb-[2%] mt-[4%] ml-[3%]"></div>
 
       <div className="grid grid-cols-2 gap-8">
         <div className="flex flex-col justify-center ml-[8%] mr-[-25%]">
@@ -39,7 +41,7 @@ export default function HomePage() {
         </div>
         <div className="flex justify-center ml-[10%]">
           <Image 
-            src={"/column-chart.png"}
+            src={columnChartPicture}
             alt="Management Image"
             width={300}
             height={300}

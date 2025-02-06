@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import GoToHomeButton from '@/components/button/GoToHomeButton';
+import notFoundPicture from '../../public/not-found.png';
 
 export const dynamic = 'force-dynamic'; 
 
@@ -23,7 +24,7 @@ export default async function NotFound() {
       <div className="grid grid-cols-12 gap-8 items-center justify-center w-full max-w-7xl">
         <div className="col-span-4">
           <Image
-            src={'/not-found.png'}
+            src={notFoundPicture}
             alt="404 Illustration"
             className="w-full h-full object-cover"
             width={400}

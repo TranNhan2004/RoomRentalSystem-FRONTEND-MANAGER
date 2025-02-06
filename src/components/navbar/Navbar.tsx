@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import BaseUserType from '@/interfaces/user-account/BaseUser.interface';
 import AccountInfo from '../account/AccountInfo';
 import DropdownMenu from './DropdownMenu';
+import logoPicture from '../../../public/logo.png';
 
 const Navbar = () => {
   const [userInfo, setUserInfo] = useState<BaseUserType>({});
@@ -21,11 +22,11 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className='fixed top-0 left-0 h-full w-[18%] bg-mygreen p-2 overflow-y-auto'>
+      <div className='fixed top-0 left-0 h-full w-[16%] bg-mygreen p-2 overflow-y-auto'>
         <div className='mt-2 mb-8'>
           <Link href={'/'}>
             <Image 
-              src='/logo.png' 
+              src={logoPicture} 
               alt='Logo' 
               width={200} 
               height={200} 
