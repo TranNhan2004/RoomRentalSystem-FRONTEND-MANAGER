@@ -1,10 +1,12 @@
 'use client';
 
-import AddButton from "@/components/button/AddButton";
-import CancelButton from "@/components/button/CancelButton";
-import DeleteButton from "@/components/button/DeleteButton";
-import EditButton from "@/components/button/EditButton";
-import SaveButton from "@/components/button/SaveButton";
+import { 
+  AddButton,
+  CancelButton,
+  DeleteButton,
+  EditButton, 
+  SaveButton
+} from "@/components/button/FeatureButton";
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 

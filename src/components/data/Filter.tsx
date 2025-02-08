@@ -2,33 +2,38 @@
 
 import React, { useState } from 'react';
 import { FunnelIcon } from '@heroicons/react/24/outline'; 
-import FilterButton from '../button/FilterButton';
-import CancelButton from '../button/CancelButton';
+import { CancelButton, FilterButton } from '../button/FeatureButton';
 
-interface FilterOptionType {
+
+interface FilterOptionsGroupType {
   category: string;
-  options: string[];
+  options: {
+    label: string;
+    value: string;
+  }[];
 }
 
 interface FilterProps {
-  onFilter: (selectedFilters: string[]) => void; 
-  filterOptions: FilterOptionType[]; 
+  onFilter: (selectedFilters: Set<string>) => void; 
+  filterOptionsGroups: FilterOptionsGroupType[]; 
 }
 
 const Filter = (props: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false); 
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]); 
+  const [selectedFilters, setSelectedFilters] = useState<Set<string>>(new Set()); 
 
   const toggleFilter = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleCheckboxChange = (category: string, option: string) => {
+  const handleCheckboxChange = (category: string, optionLabel: string, optionValue: string) => {
     setSelectedFilters((prev) => {
-      const newFilters = [...prev];
-      const filterKey = `${category}-${option}`;
-      if (!newFilters.includes(filterKey)) {
-        newFilters.push(filterKey); 
+      const newFilters = new Set(prev);
+      const filterKey = `${category}-${optionLabel}-${optionValue}`;
+      if (newFilters.has(filterKey)) {
+        newFilters.delete(filterKey); 
+      } else {
+        newFilters.add(filterKey);  
       }
 
       return newFilters;
@@ -36,30 +41,34 @@ const Filter = (props: FilterProps) => {
   };
 
   const handleApplyFilter = () => {
-    const appliedFilters = selectedFilters.map((filter) => filter.split('-')[1]);
+    const appliedFilters = new Set(Array.from(selectedFilters).map((filter) => {
+      const filterArray = filter.split('-');
+      return `${filterArray[0]}-${filterArray[2]}`; 
+    }));
     props.onFilter(appliedFilters); 
     setIsOpen(false); 
   };
 
   const handleExitModal = () => {
     setIsOpen(false);
-    setSelectedFilters([]);
   };
 
-  const getOptionsInTSX = (filterOption: FilterOptionType) => {
-    return filterOption.options.map((option, index) => {
-      const key = `${option}-${index.toString()}`;
+  const getOptionsInTSX = (group: FilterOptionsGroupType) => {
+    return group.options.map((option) => {
+      const filterKey = `${group.category}-${option.label}-${option.value}`;
+      const isChecked = selectedFilters.has(filterKey);
 
       return (
-        <div key={key} className='inline-flex items-center mr-5'>
+        <div key={filterKey} className='inline-flex items-center mr-5'>
           <input
-            id={key}
-            name={key}
+            id={filterKey}
+            name={filterKey}
             type="checkbox"
             className="h-4 w-4 accent-blue-600"
-            onChange={() => handleCheckboxChange(filterOption.category, option)}
+            onChange={() => handleCheckboxChange(group.category, option.label, option.value)}
+            checked={isChecked}
           />
-          <label htmlFor={key} className="ml-3">{option}</label>
+          <label htmlFor={filterKey} className="ml-3">{option.label}</label>
         </div>
       );
     });
@@ -84,12 +93,12 @@ const Filter = (props: FilterProps) => {
 
               <div className="space-y-6 max-h-[73%] overflow-y-auto">
                 {
-                  props.filterOptions.map((filterOption) => (
-                    <div key={filterOption.category}>
-                      <h3 className="font-medium text-base">{filterOption.category}</h3>
+                  props.filterOptionsGroups.map((group) => (
+                    <div key={group.category}>
+                      <h3 className="font-medium text-base">{group.category}</h3>
                       <div className="border-t border-gray-300 mb-[2%] mr-[3%]"></div>
                       <div className="grid grid-cols-3 gap-x-8 gap-y-3 mt-2">
-                        {getOptionsInTSX(filterOption)}
+                        {getOptionsInTSX(group)}
                       </div>
                     </div>
                   ))
@@ -98,11 +107,11 @@ const Filter = (props: FilterProps) => {
 
               <div className='flex justify-end'>
                 <div className="mt-6 mr-2">
-                  <FilterButton onClick={handleApplyFilter} />
+                  <FilterButton onClick={handleApplyFilter}>Lọc</FilterButton>
                 </div>
 
                 <div className="mt-6">
-                  <CancelButton onClick={handleExitModal} />
+                  <CancelButton onClick={handleExitModal}>Thoát</CancelButton>
                 </div>
               </div>
             </div>

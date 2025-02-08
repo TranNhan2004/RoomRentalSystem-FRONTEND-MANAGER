@@ -19,8 +19,10 @@ export default function ProvincesPage() {
     console.log(`Sort by: ${optionValue}`);
   };
 
-  const onFilter = (selectedFilters: string[]) => {
-    console.log(`Filter by category ${selectedFilters}`);
+  const onFilter = (selectedFilters: Set<string>) => {
+    selectedFilters.forEach((filter) => {
+      console.log(`Filter by ${filter}`);
+    });
   };
 
   return (
@@ -40,10 +42,43 @@ export default function ProvincesPage() {
         />
         <Filter 
           onFilter={onFilter}
-          filterOptions={[
-            { category: 'ABC', options: ['a', 'b', 'c'] },
-            { category: 'DEF', options: ['d', 'e', 'f'] },
-            { category: 'GHI', options: ['g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'] },
+          filterOptionsGroups={[
+            { 
+              category: 'ABC', 
+              options: [
+                { label: 'a', value: 'a' },
+                { label: 'b', value: 'b' },
+                { label: 'c', value: 'c' },
+              ]
+            },
+            { 
+              category: 'DEF', 
+              options: [
+                { label: 'd', value: 'd' },
+                { label: 'e', value: 'e' },
+                { label: 'f', value: 'f' },
+              ] 
+
+            },
+            { 
+              category: 'GHI', 
+              options: [
+                { label: 'g', value: 'g' },
+                { label: 'h', value: 'h' },
+                { label: 'i', value: 'i' },
+                { label: 'j', value: 'j' },
+                { label: 'k', value: 'k' },
+                { label: 'l', value: 'l' },
+                { label: 'm', value: 'm' },
+                { label: 'n', value: 'n' },
+                { label: 'o', value: 'o' },
+                { label: 'p', value: 'p' },
+                { label: 'q', value: 'q' },
+                { label: 'r', value: 'r' },
+                { label: 's', value: 's' },
+                { label: 't', value: 't' },
+              ]  
+            },
           ]}
         />
       </div>
