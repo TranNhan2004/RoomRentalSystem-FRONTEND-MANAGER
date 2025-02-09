@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; // Import biểu tượng tìm kiếm từ Heroicons
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; 
 
 interface InputSearchProps {
   placeholder?: string;
@@ -28,7 +28,8 @@ const InputSearch = (props: InputSearchProps) => {
         value={searchQuery}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        className='w-full px-4 py-2 pl-10 border rounded-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm'
+        className='w-full px-4 py-2 pl-10 border rounded-full border-gray-300 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm'
         placeholder={props.placeholder ?? 'Tìm kiếm...'}
       />
 

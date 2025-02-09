@@ -12,7 +12,7 @@ interface SortingProps {
 
 const Sorting = (props: SortingProps) => {
   return (
-    <div className='flex items-center space-x-4 mt-5 ml-[180px]'>
+    <div className='flex items-center space-x-4 mt-5 ml-[15%]'>
       <span className='text-sm font-semibold'>Sắp xếp theo:</span>
       <select
         onChange={(e) => props.onSort(e.target.value)} 

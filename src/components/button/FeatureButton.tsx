@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { 
   CheckIcon,
   FunnelIcon, 
@@ -11,37 +11,37 @@ import {
   XMarkIcon 
 } from '@heroicons/react/24/outline';
 
+const colorVariants = {
+  blue: 'bg-blue-100 text-blue-800 hover:bg-blue-200',
+  green: 'bg-green-100 text-green-800 hover:bg-green-200',
+  yellow: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200',
+  red: 'bg-red-100 text-red-800 hover:bg-red-200',
+  gray: 'bg-gray-100 text-gray-800 hover:bg-gray-200',
+};
+
+
 interface ActionButtonProps {
   onClick: () => void;
-  icon: React.ReactNode;
-  color?: string;
+  icon?: React.ReactNode;
+  type?: 'button' | 'submit';
+  color?: keyof typeof colorVariants;
   children?: React.ReactNode;
 }
 
 const ActionButton = (props: ActionButtonProps) => {
-  const [px, setPx] = useState('0');
-  const [mr, setMr] = useState('0');
+  const color = props.color || 'gray';
+  const px = props.children ? 'px-4' : 'px-2';
+  const mr = props.children ? 'mr-2' : '';
 
-  useEffect(() => {
-    if (props.children) {
-      setPx('4');
-      setMr('2');
-    } else {
-      setPx('2');
-      setMr('0');
-    }
-  }, [props.children]);
-  
   return (
     <>
       <button
         onClick={props.onClick}
-        className={`flex items-center px-${px} py-2 
-                    bg-${props.color}-100 text-${props.color}-800 
-                    rounded-xl shadow-md hover:bg-${props.color}-200 transition-all`}
+        className={`flex items-center ${px} py-2 rounded-xl shadow-md ${colorVariants[color]} transition-all`}
+        type={props.type}
       > 
         {props.icon}
-        <span className={`mr-${mr}`}></span>
+        <span className={mr}></span>
         <span className='text-sm'>{props.children}</span>
       </button>
     </>
@@ -50,12 +50,13 @@ const ActionButton = (props: ActionButtonProps) => {
 
 
 
-type AddButtonProps = Omit<ActionButtonProps, 'icon'>;
+type AddButtonProps = ActionButtonProps;
 export const AddButton = (props: AddButtonProps) => {
   return (
     <ActionButton 
       onClick={props.onClick} 
       icon={<PlusIcon className='w-5 h-5' />}
+      type={props.type || 'button'}
       color={props.color || 'green'}
     >
       {props.children}
@@ -64,12 +65,13 @@ export const AddButton = (props: AddButtonProps) => {
 };
 
 
-type CancelButtonProps = Omit<ActionButtonProps, 'icon'>;
+type CancelButtonProps = ActionButtonProps;
 export const CancelButton = (props: CancelButtonProps) => {
   return (
     <ActionButton 
       onClick={props.onClick} 
       icon={<XMarkIcon className='w-5 h-5' />}
+      type={props.type || 'button'}
       color={props.color || 'gray'}
     >
       {props.children}
@@ -78,12 +80,13 @@ export const CancelButton = (props: CancelButtonProps) => {
 };
 
 
-type DeleteButtonProps = Omit<ActionButtonProps, 'icon'>;
+type DeleteButtonProps = ActionButtonProps;
 export const DeleteButton = (props: DeleteButtonProps) => {
   return (
     <ActionButton 
       onClick={props.onClick} 
       icon={<TrashIcon className='w-5 h-5' />}
+      type={props.type || 'button'}
       color={props.color || 'red'}
     >
       {props.children}
@@ -92,12 +95,13 @@ export const DeleteButton = (props: DeleteButtonProps) => {
 };
 
 
-type EditButtonProps = Omit<ActionButtonProps, 'icon'>;
+type EditButtonProps = ActionButtonProps;
 export const EditButton = (props: EditButtonProps) => {
   return (
     <ActionButton 
       onClick={props.onClick} 
       icon={<PencilSquareIcon className='w-5 h-5' />}
+      type={props.type || 'button'}
       color={props.color || 'yellow'}
     >
       {props.children}
@@ -106,12 +110,13 @@ export const EditButton = (props: EditButtonProps) => {
 };
 
 
-type FilterButtonProps = Omit<ActionButtonProps, 'icon'>;
+type FilterButtonProps = ActionButtonProps;
 export const FilterButton = (props: FilterButtonProps) => {
   return (
     <ActionButton 
       onClick={props.onClick} 
       icon={<FunnelIcon className='w-5 h-5' />}
+      type={props.type || 'button'}
       color={props.color || 'blue'}
     >
       {props.children}
@@ -120,12 +125,13 @@ export const FilterButton = (props: FilterButtonProps) => {
 };
 
 
-type InfoButtonProps = Omit<ActionButtonProps, 'icon'>;
+type InfoButtonProps = ActionButtonProps;
 export const InfoButton = (props: InfoButtonProps) => {
   return (
     <ActionButton 
       onClick={props.onClick} 
       icon={<InformationCircleIcon className='w-5 h-5' />}
+      type={props.type || 'button'}
       color={props.color || 'blue'}
     >
       {props.children}
@@ -134,12 +140,13 @@ export const InfoButton = (props: InfoButtonProps) => {
 };
 
 
-type SaveButtonProps = Omit<ActionButtonProps, 'icon'>;
+type SaveButtonProps = ActionButtonProps;
 export const SaveButton = (props: SaveButtonProps) => {
   return (
     <ActionButton 
       onClick={props.onClick} 
       icon={<CheckIcon className='w-5 h-5' />}
+      type={props.type || 'submit'}
       color={props.color || 'blue'}
     >
       {props.children}

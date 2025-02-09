@@ -79,7 +79,7 @@ const Filter = (props: FilterProps) => {
     <div>
       <button
         onClick={toggleFilter}
-        className="border border-gray-300 hover:bg-green-50 p-2 rounded-lg 
+        className="border border-gray-300 hover:bg-gray-100 p-2 rounded-lg 
                     flex items-center justify-center mt-5 ml-[40px]"
       >
         <FunnelIcon className="w-5 h-5 text-gray-600" />

@@ -2,11 +2,15 @@
 
 import Filter from "@/components/data/Filter";
 import InputSearch from "@/components/data/InputSearch";
+import PaginationNav from "@/components/data/PaginationNav";
 import Sorting from "@/components/data/Sorting";
 import Title from "@/components/data/Title";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function ProvincesPage() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 30;
+
   useEffect(() => {
     document.title = "Management | Provinces";
   }, []);
@@ -23,6 +27,11 @@ export default function ProvincesPage() {
     selectedFilters.forEach((filter) => {
       console.log(`Filter by ${filter}`);
     });
+  };
+
+  const onPageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    console.log(`Page ${currentPage}`);
   };
 
   return (
@@ -82,6 +91,13 @@ export default function ProvincesPage() {
           ]}
         />
       </div>
+
+      <PaginationNav 
+        totalPages={totalPages} 
+        currentPage={currentPage} 
+        onPageChange={onPageChange}
+        step={6}
+      />
     </div>
   );
 }

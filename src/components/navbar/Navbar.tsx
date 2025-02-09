@@ -31,6 +31,7 @@ const Navbar = () => {
               width={200} 
               height={200} 
               className='w-[95%]' 
+              priority={false}
             />
           </Link>
         </div>
