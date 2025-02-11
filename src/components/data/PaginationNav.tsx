@@ -42,7 +42,7 @@ const PaginationNav = (props: PaginationProps) => {
   };
 
   return (
-    <div className='flex items-center justify-center space-x-3 mt-[30%] p-6'>
+    <div className='flex items-center justify-center space-x-3 p-6'>
       <FirstButton
         onClick={() => handlePageChange(1)}
         disabled={props.currentPage === 1}

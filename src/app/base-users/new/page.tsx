@@ -3,10 +3,10 @@
 import Form from "@/components/form/Form";
 import Input from "@/components/form/Input";
 import Label from "@/components/form/Label";
-import BaseUserType from "@/interfaces/user-account/BaseUser.interface";
+import BaseUserType from "@/interfaces/user-account/User.interface";
 import { handleInputChange } from "@/lib/handleInputChange";
 import formatDate from "@/lib/formatDate";
-import BaseUserService from "@/services/user-account/BaseUser.service";
+import BaseUserService from "@/services/user-account/User.service";
 import { useState } from "react";
 
 export default function NewBaseUsersPage() {

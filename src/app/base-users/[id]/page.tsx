@@ -1,8 +1,8 @@
 'use client';
 
-import BaseUserType from "@/interfaces/user-account/BaseUser.interface";
+import BaseUserType from "@/interfaces/user-account/User.interface";
 import formatDate from "@/lib/formatDate";
-import BaseUserService from "@/services/user-account/BaseUser.service";
+import BaseUserService from "@/services/user-account/User.service";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 

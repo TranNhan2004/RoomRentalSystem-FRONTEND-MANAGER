@@ -15,9 +15,9 @@ export default async function NotFound() {
   const cookieStore = await cookies();
   const token = cookieStore.get('auth_token');
 
-  if (!token) {
-    redirect('/auth/login');
-  }
+  // if (!token) {
+  //   redirect('/auth/login');
+  // }
 
   return (
     <div className="fixed top-[120px] bottom-[120px] left-[220px]">

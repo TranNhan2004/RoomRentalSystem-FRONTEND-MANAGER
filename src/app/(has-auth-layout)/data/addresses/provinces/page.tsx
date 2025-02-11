@@ -2,14 +2,35 @@
 
 import Filter from "@/components/data/Filter";
 import InputSearch from "@/components/data/InputSearch";
-import PaginationNav from "@/components/data/PaginationNav";
 import Sorting from "@/components/data/Sorting";
+import Table from "@/components/data/Table";
 import Title from "@/components/data/Title";
+import ProvinceType from "@/interfaces/address/Province.interface";
+import ProvinceService from "@/services/address/Province.service";
 import { useEffect, useState } from "react";
 
 export default function ProvincesPage() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 30;
+  const [data, setData] = useState<ProvinceType[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const provinces = await ProvinceService.getMany();
+      setData(provinces);
+    };
+
+    fetchData();
+  }, []);
+
+  const generateDataForTable = () => {
+    const dataForTable = [];
+    for (const item of data) {
+      dataForTable.push({
+        id: `${item.id}`,
+        display: `${item.name}`
+      });
+    }
+    return dataForTable;
+  };
 
   useEffect(() => {
     document.title = "Management | Provinces";
@@ -27,11 +48,6 @@ export default function ProvincesPage() {
     selectedFilters.forEach((filter) => {
       console.log(`Filter by ${filter}`);
     });
-  };
-
-  const onPageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-    console.log(`Page ${currentPage}`);
   };
 
   return (
@@ -92,12 +108,10 @@ export default function ProvincesPage() {
         />
       </div>
 
-      <PaginationNav 
-        totalPages={totalPages} 
-        currentPage={currentPage} 
-        onPageChange={onPageChange}
-        step={6}
+      <Table 
+        data={generateDataForTable()}
       />
+
     </div>
   );
 }

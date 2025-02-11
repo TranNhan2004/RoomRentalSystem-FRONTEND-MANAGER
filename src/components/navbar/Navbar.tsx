@@ -4,13 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import NavLink from './NavLink';
 import React, { useEffect, useState } from 'react';
-import BaseUserType from '@/interfaces/user-account/BaseUser.interface';
+import UserType from '@/interfaces/user-account/User.interface';
 import AccountInfo from '../account/AccountInfo';
 import DropdownMenu from './DropdownMenu';
 import logoPicture from '../../../public/logo.png';
 
 const Navbar = () => {
-  const [userInfo, setUserInfo] = useState<BaseUserType>({});
+  const [userInfo, setUserInfo] = useState<UserType>({});
 
   useEffect(() => {
     setUserInfo({

@@ -2,12 +2,12 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import BaseUserType from '@/interfaces/user-account/BaseUser.interface';
+import UserType from '@/interfaces/user-account/User.interface';
 import { ArrowRightStartOnRectangleIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 
 interface DropdownMenuProps {
   children: React.ReactNode;
-  data: BaseUserType;
+  data: UserType;
 }
 
 const DropdownMenu = (props: DropdownMenuProps) => {

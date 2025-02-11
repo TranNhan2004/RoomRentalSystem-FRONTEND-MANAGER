@@ -2,11 +2,11 @@
 
 import React from 'react';
 import DropdownMenu from './DropdownMenu';
-import BaseUserType from '@/interfaces/user-account/BaseUser.interface';
+import UserType from '@/interfaces/user-account/User.interface';
 import PotraitAvatar from './PotraitAvatar';
 import StandardAvatar from './StandardAvatar';
 
-const AccountInfo = (props: BaseUserType) => {
+const AccountInfo = (props: UserType) => {
   return (
     <>
       <DropdownMenu data={props}>

@@ -1,6 +1,6 @@
 'use client';
 
-import BaseUserType from '@/interfaces/user-account/BaseUser.interface';
+import BaseUserType from '@/interfaces/user-account/User.interface';
 import Image from 'next/image';
 import React from 'react';
 

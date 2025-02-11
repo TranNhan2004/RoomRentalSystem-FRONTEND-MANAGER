@@ -1,7 +1,7 @@
 'use client';
 
-import BaseUserType from "@/interfaces/user-account/BaseUser.interface";
-import BaseUserService from "@/services/user-account/BaseUser.service";
+import BaseUserType from "@/interfaces/user-account/User.interface";
+import BaseUserService from "@/services/user-account/User.service";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
