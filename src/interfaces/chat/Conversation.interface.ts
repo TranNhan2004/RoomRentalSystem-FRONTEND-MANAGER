@@ -4,7 +4,6 @@ interface ConversationType {
   user2?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  [key: string]: unknown;
 }
 
 export default ConversationType;

@@ -14,7 +14,6 @@ interface UserType {
   workplaceAdditionalAddress?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  [key: string]: unknown;
 }
 
 export default UserType;

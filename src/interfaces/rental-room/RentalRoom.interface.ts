@@ -12,7 +12,6 @@ interface RentalRoomType {
   possessedBy?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  [key: string]: unknown;
 }
 
 export default RentalRoomType; 

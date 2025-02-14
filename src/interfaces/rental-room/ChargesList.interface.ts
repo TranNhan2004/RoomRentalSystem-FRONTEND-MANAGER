@@ -10,7 +10,6 @@ interface ChargesListType {
   rubbishCharges?: number;
   startDate?: Date;
   endDate?: Date;
-  [key: string]: unknown;
 }
 
 export default ChargesListType;

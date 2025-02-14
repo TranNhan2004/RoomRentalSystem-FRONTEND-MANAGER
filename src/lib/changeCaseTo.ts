@@ -5,15 +5,15 @@ const changeCases = {
   'camel': camelCase
 };
 
-const changeCaseTo = (obj: Record<string, unknown>, caseOption: 'snake' | 'camel'): Record<string, unknown> => {
+const changeCaseTo = <T extends object>(obj: T, caseOption: 'snake' | 'camel'): T => {
   const newObj: Record<string, unknown> = {};
 
   for (const key in obj) {
-    const snakeKey = changeCases[caseOption](key);  
-    newObj[snakeKey] = obj[key]; 
+    const newKey = changeCases[caseOption](key);  
+    newObj[newKey] = obj[key];
   }
 
-  return newObj;
+  return newObj as T;
 };
 
 export default changeCaseTo;

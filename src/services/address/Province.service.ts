@@ -6,54 +6,44 @@ import ProvinceType from "@/interfaces/address/Province.interface";
 class ProvinceService {
   private static baseURL: string = "/provinces";
 
-  private static smoothUploadedData(data: ProvinceType | Partial<ProvinceType>) { 
-    return changeCaseTo(data, 'snake');
-  }
-  
-  static async post(data: ProvinceType): Promise<ProvinceType> {
-    const response = await axiosInstance.post(
+  static async post(data: ProvinceType) {
+    const response = await axiosInstance.post<ProvinceType>(
       `${ProvinceService.baseURL}/`, 
-      ProvinceService.smoothUploadedData(data)
+      changeCaseTo<ProvinceType>(data, 'snake')
     );
 
-    changeCaseTo(response.data, 'camel');
-    return response.data;
+    return changeCaseTo<ProvinceType>(response.data, 'camel');
   }
 
-  static async getMany(): Promise<ProvinceType[]> {
-    const response = await axiosInstance.get(`${ProvinceService.baseURL}/`);
-    (response.data as Record<string, unknown>[]).forEach(element => changeCaseTo(element, 'camel'));
-    return response.data;
+  static async getMany() {
+    const response = await axiosInstance.get<ProvinceType[]>(`${ProvinceService.baseURL}/`);
+    return response.data.map(element => changeCaseTo<ProvinceType>(element, 'camel'));
   }
 
-  static async get(id: string): Promise<ProvinceType> {
+  static async get(id: string) {
     const response = await axiosInstance.get(`${ProvinceService.baseURL}/${id}/`);
-    changeCaseTo(response.data, 'camel');
-    return response.data;
+    return changeCaseTo<ProvinceType>(response.data, 'camel');
   } 
 
-  static async put(id: string, data: ProvinceType): Promise<ProvinceType> {
-    const response = await axiosInstance.put(
+  static async put(id: string, data: ProvinceType) {
+    const response = await axiosInstance.put<ProvinceType>(
       `${ProvinceService.baseURL}/${id}/`, 
-      ProvinceService.smoothUploadedData(data)
+      changeCaseTo<ProvinceType>(data, 'snake')
     );
-    changeCaseTo(response.data, 'camel');
-    return response.data;
+    return changeCaseTo<ProvinceType>(response.data, 'camel');
   }
 
-  static async patch(id: string, data: Partial<ProvinceType>): Promise<ProvinceType> {
-    const response = await axiosInstance.patch(
+  static async patch(id: string, data: ProvinceType) {
+    const response = await axiosInstance.patch<ProvinceType>(
       `${ProvinceService.baseURL}/${id}/`, 
-      ProvinceService.smoothUploadedData(data)
+      changeCaseTo<ProvinceType>(data, 'snake')
     );
-    changeCaseTo(response.data, 'camel');
-    return response.data;
+    return changeCaseTo<ProvinceType>(response.data, 'camel');
   }
 
-  static async delete(id: string): Promise<ProvinceType> {
-    const response = await axiosInstance.delete(`${ProvinceService.baseURL}/${id}/`);
-    changeCaseTo(response.data, 'camel');
-    return response.data;
+  static async delete(id: string) {
+    const response = await axiosInstance.delete<ProvinceType>(`${ProvinceService.baseURL}/${id}/`);
+    return changeCaseTo<ProvinceType>(response.data, 'camel');
   }
 }
 

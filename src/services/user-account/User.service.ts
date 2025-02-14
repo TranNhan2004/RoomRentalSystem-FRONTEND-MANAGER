@@ -8,70 +8,63 @@ import UserType from "@/interfaces/user-account/User.interface";
 class UserService {
   private static baseURL: string = "/users";
 
-  private static smoothUploadedData(data: UserType | Partial<UserType>) {
+  private static smoothUploadedData(data: UserType) {
     const dataToSend: Record<string, unknown> = {...data};
   
     if (data.dateOfBirth) {
       dataToSend.dateOfBirth = formatDate(data.dateOfBirth, 'ymd');
       dataToSend.role = 'M';
     }  
-    return changeCaseTo(dataToSend, 'snake');
+    return changeCaseTo<UserType>(dataToSend, 'snake');
   }
   
-  static async post(data: UserType): Promise<UserType> {
+  static async post(data: UserType) {
     let response;
     if (data instanceof FormData) {
-      response = await axiosInstance.post(
+      response = await axiosInstance.post<UserType>(
         `${UserService.baseURL}/`, 
         UserService.smoothUploadedData(data), {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
     } else {
-      response = await axiosInstance.post(
+      response = await axiosInstance.post<UserType>(
         `${UserService.baseURL}/`, 
         UserService.smoothUploadedData(data)
       );
     }
-
-    changeCaseTo(response.data, 'camel');
-    return response.data;
+    return changeCaseTo<UserType>(response.data, 'camel');
   }
 
-  static async getMany(): Promise<UserType[]> {
-    const response = await axiosInstance.get(`${UserService.baseURL}/`);
-    (response.data as Record<string, unknown>[]).forEach(element => changeCaseTo(element, 'camel'));
-    return response.data;
+  static async getMany() {
+    const response = await axiosInstance.get<UserType[]>(`${UserService.baseURL}/`);
+    return response.data.map(element => changeCaseTo<UserType>(element, 'camel'));
   }
 
-  static async get(id: string): Promise<UserType> {
-    const response = await axiosInstance.get(`${UserService.baseURL}/${id}/`);
-    changeCaseTo(response.data, 'camel');
-    return response.data;
+  static async get(id: string) {
+    const response = await axiosInstance.get<UserType>(`${UserService.baseURL}/${id}/`);
+    return changeCaseTo<UserType>(response.data, 'camel');
   } 
 
-  static async put(id: string, data: UserType): Promise<UserType> {
-    const response = await axiosInstance.put(
+  static async put(id: string, data: UserType) {
+    const response = await axiosInstance.put<UserType>(
       `${UserService.baseURL}/${id}/`, 
       UserService.smoothUploadedData(data)
     );
-    changeCaseTo(response.data, 'camel');
-    return response.data;
+    return changeCaseTo<UserType>(response.data, 'camel');
   }
 
-  static async patch(id: string, data: Partial<UserType>): Promise<UserType> {
-    const response = await axiosInstance.patch(
+  static async patch(id: string, data: UserType) {
+    const response = await axiosInstance.patch<UserType>(
       `${UserService.baseURL}/${id}/`, 
       UserService.smoothUploadedData(data)
     );
-    changeCaseTo(response.data, 'camel');
-    return response.data;
+    return changeCaseTo<UserType>(response.data, 'camel');
   }
 
-  static async delete(id: string): Promise<UserType> {
-    const response = await axiosInstance.delete(`${UserService.baseURL}/${id}/`);
-    changeCaseTo(response.data, 'camel');
-    return response.data;
+  static async delete(id: string) {
+    const response = await axiosInstance.delete<UserType>(`${UserService.baseURL}/${id}/`);
+    return changeCaseTo<UserType>(response.data, 'camel');
   }
 }
 

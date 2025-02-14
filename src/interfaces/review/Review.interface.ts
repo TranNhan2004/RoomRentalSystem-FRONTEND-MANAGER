@@ -6,7 +6,6 @@ interface ReviewsType {
   reviewedBy?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  [key: string]: unknown;
 }
 
 export default ReviewsType;

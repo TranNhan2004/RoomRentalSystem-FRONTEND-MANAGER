@@ -3,7 +3,6 @@ interface ContractType {
   document?: string;
   rentalRoom?: string;
   createdAt?: Date;
-  [key: string]: unknown;
 }
 
 export default ContractType;

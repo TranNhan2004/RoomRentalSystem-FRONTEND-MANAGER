@@ -4,7 +4,6 @@ interface MessageType {
   conversation?: string;
   sentBy?: string;
   createdAt?: Date;
-  [key: string]: unknown;
 }
 
 export default MessageType;

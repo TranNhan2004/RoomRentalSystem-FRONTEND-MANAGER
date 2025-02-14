@@ -5,7 +5,6 @@ interface RentalContractType {
   contract?: string;
   rentedBy?: string;
   createdAt?: Date;
-  [key: string]: unknown;
 }
 
 export default RentalContractType; 

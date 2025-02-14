@@ -6,7 +6,6 @@ interface DistanceType {
   renter?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  [key: string]: unknown;
 }
 
 export default DistanceType;

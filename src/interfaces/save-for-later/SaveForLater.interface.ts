@@ -4,7 +4,6 @@ interface SaveForLaterType {
   rentalRoom?: string;
   savedBy?: string;
   createdAt?: Date;
-  [key: string]: unknown;
 }
 
 export default SaveForLaterType;

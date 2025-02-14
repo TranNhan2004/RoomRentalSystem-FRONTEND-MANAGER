@@ -3,17 +3,23 @@
 import React, { useEffect, useState } from 'react';
 import Form from '@/components/form/Form';
 import Input from '@/components/form/Input';
+import AuthService from '@/services/user-account/Auth.service';
+import { LoginRequestType } from '@/interfaces/user-account/Login.interface';
+import { handleInputChange } from '@/lib/handleInputChange';
 
 
 export default function LoginPage() {
-  const [emailOrPhone, setEmailOrPhone] = useState('');
-  const [password, setPassword] = useState('');
+  const [loginData, setLoginData] = useState<LoginRequestType>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    console.log('Email or phone:', emailOrPhone);
-    console.log('Password:', password);
+    try {
+      const data = await AuthService.login(loginData);
+      localStorage.setItem('mananger_access_token', data.accessToken ?? '');
+      localStorage.setItem('manager_id', data.id ?? '');
+    } catch (error) {
+      alert(error);
+    }
   };
 
   useEffect(() => {
@@ -24,12 +30,12 @@ export default function LoginPage() {
     <Form label='Room Rental Management' onSubmit={handleSubmit}>
       <div>
         <Input 
-          id='email-or-phone'
-          name='emailOrPhone'
-          type='text'
-          placeholder='Email hoặc Số điện thoại'
-          value={emailOrPhone}
-          onChange={e => setEmailOrPhone(e.target.value)}
+          id='email'
+          name='email'
+          type='email'
+          placeholder='Email'
+          value={loginData.email}
+          onChange={(e) => handleInputChange(e, setLoginData)}
           required
         />
       </div>
@@ -40,8 +46,8 @@ export default function LoginPage() {
           name='password'
           type='password'
           placeholder='Mật khẩu'
-          value={password}
-          onChange={e => setPassword(e.target.value)}
+          value={loginData.password}
+          onChange={(e) => handleInputChange(e, setLoginData)}
           required
         />
       </div>
