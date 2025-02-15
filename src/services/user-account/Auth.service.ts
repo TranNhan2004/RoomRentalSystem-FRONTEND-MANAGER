@@ -2,6 +2,7 @@ import { LoginRequestType, LoginResponseType } from "@/interfaces/user-account/L
 import axiosInstance from "@/lib/axios";
 import changeCaseTo from "@/lib/changeCaseTo";
 import axios from "axios";
+import { removeCookie, setCookie } from "typescript-cookie";
 
 class AuthService {
   static async login(data: LoginRequestType) {
@@ -10,22 +11,36 @@ class AuthService {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
+      timeout: 10000
     });
 
     try {
       const response = await loginAxiosInstance.post<LoginResponseType>('/login/', data);
-      return changeCaseTo<LoginResponseType>(response.data, 'camel');
+      const camelData = changeCaseTo<LoginResponseType>(response.data, 'camel');
+
+      setCookie('access_token', camelData.access, { 
+        expires: 60 * 60, 
+        secure: true,
+        path: '/',
+        sameSite: 'none'
+      });
+      localStorage.setItem('id', camelData.id ?? '');
+      window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH}/`;
+
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data.message || 'Unknown Error');
+        throw new Error(error.response?.statusText);
       } else {
         throw new Error('An error occurred');
       }
     }
   }
 
-  static async logout(): Promise<void> {
+  static async logout() {
     await axiosInstance.post('/logout/', {});
+    removeCookie('access_token');
+    localStorage.removeItem('id');
   }
 }
 

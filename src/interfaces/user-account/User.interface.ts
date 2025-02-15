@@ -12,6 +12,7 @@ interface UserType {
   role?: 'M' | 'L' | 'R';
   workplaceCommune?: string;
   workplaceAdditionalAddress?: string;
+  isActive?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }

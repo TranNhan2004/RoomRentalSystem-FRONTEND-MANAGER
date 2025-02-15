@@ -5,5 +5,5 @@ export interface LoginRequestType {
 
 export interface LoginResponseType {
   id?: string;
-  accessToken?: string;
+  access?: string;
 }

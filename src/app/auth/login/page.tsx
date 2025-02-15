@@ -7,18 +7,18 @@ import AuthService from '@/services/user-account/Auth.service';
 import { LoginRequestType } from '@/interfaces/user-account/Login.interface';
 import { handleInputChange } from '@/lib/handleInputChange';
 
-
 export default function LoginPage() {
-  const [loginData, setLoginData] = useState<LoginRequestType>({});
-
+  const [loginData, setLoginData] = useState<LoginRequestType>({
+    email: '',
+    password: ''
+  });
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const data = await AuthService.login(loginData);
-      localStorage.setItem('mananger_access_token', data.accessToken ?? '');
-      localStorage.setItem('manager_id', data.id ?? '');
+      await AuthService.login(loginData);
     } catch (error) {
-      alert(error);
+      alert(JSON.stringify(error));
     }
   };
 
