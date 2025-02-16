@@ -8,6 +8,7 @@ import Title from "@/components/data/Title";
 import ProvinceType from "@/interfaces/address/Province.interface";
 import ProvinceService from "@/services/address/Province.service";
 import { useEffect, useState } from "react";
+import { handleDeleteAlert } from "@/lib/alert";
 
 export default function ProvincesPage() {
   const [data, setData] = useState<ProvinceType[]>([]);
@@ -48,6 +49,10 @@ export default function ProvincesPage() {
     selectedFilters.forEach((filter) => {
       console.log(`Filter by ${filter}`);
     });
+  };
+
+  const deleteOnClick = async () => {
+    await handleDeleteAlert('success', 'Xóa tỉnh thành công!');
   };
 
   return (
@@ -110,6 +115,7 @@ export default function ProvincesPage() {
 
       <Table 
         data={generateDataForTable()}
+        deleteOnClick={deleteOnClick}
       />
 
     </div>

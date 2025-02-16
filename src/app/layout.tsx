@@ -8,7 +8,10 @@ const aleo = Aleo({
 });
 
 export const metadata: Metadata = {
-  title: "Management",
+  title: {
+    default: "Management",
+    template: "Management | %s",
+  },
   description: "Hệ thống quản lý cho thuê phòng trọ tại TP Cần Thơ",
 };
 

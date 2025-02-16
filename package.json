@@ -15,10 +15,14 @@
     "axios": "^1.7.9",
     "change-case": "^5.4.4",
     "core-js-pure": "^3.40.0",
+    "crypto-ts": "^1.0.2",
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-avatar": "^5.0.3",
     "react-dom": "^19.0.0",
+    "react-toastify": "^11.0.3",
+    "sass": "^1.85.0",
+    "sweetalert2": "^11.17.2",
     "typescript-cookie": "^1.0.6"
   },
   "devDependencies": {

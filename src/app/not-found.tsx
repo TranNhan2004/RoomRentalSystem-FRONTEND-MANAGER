@@ -1,23 +1,15 @@
 import Image from 'next/image';
-import { cookies } from 'next/headers'; 
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import GoToHomeButton from '@/components/button/GoToHomeButton';
 import notFoundPicture from '../../public/not-found.png';
-
-export const dynamic = 'force-dynamic'; 
+import { checkLoginStatusForAuthPage } from '@/lib/auth-token/server';
 
 export const metadata: Metadata = {
-  title: "Management | 404 Error",
+  title: "404 Error",
 };
 
 export default async function NotFound() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('access_token');
-
-  if (!token) {
-    redirect('/auth/login');
-  }
+  await checkLoginStatusForAuthPage();
 
   return (
     <div className="fixed top-[120px] bottom-[120px] left-[220px]">

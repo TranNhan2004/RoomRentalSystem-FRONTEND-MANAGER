@@ -4,6 +4,7 @@ export interface LoginRequestType {
 }
 
 export interface LoginResponseType {
-  id?: string;
+  refresh?: string;
   access?: string;
+  id?: string;
 }

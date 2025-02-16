@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { DeleteButton, EditButton, InfoButton } from '../button/FeatureButton';
 import PaginationNav from './PaginationNav';

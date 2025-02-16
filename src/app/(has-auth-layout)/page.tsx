@@ -4,7 +4,7 @@ import managementPicture from "../../../public/management.png";
 import columnChartPicture from "../../../public/column-chart.png";
 
 export const metadata: Metadata = {
-  title: "Management | Home",
+  title: "Home",
 };
 
 export default function HomePage() {
