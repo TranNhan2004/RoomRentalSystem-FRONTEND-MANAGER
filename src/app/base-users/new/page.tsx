@@ -1,11 +1,11 @@
 'use client';
 
-import Form from "@/components/form/Form";
-import Input from "@/components/form/Input";
-import Label from "@/components/form/Label";
+import Form from "@/components/minor/form/Form";
+import Input from "@/components/minor/form/Input";
+import Label from "@/components/minor/form/Label";
 import BaseUserType from "@/interfaces/user-account/User.interface";
-import { handleInputChange } from "@/lib/handleInputChange";
-import formatDate from "@/lib/formatDate";
+import { handleInputChange } from "@/lib/client/handleInputChange";
+import formatDate from "@/lib/client/formatDate";
 import BaseUserService from "@/services/user-account/User.service";
 import { useState } from "react";
 

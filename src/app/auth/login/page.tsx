@@ -1,5 +1,5 @@
-import Login from "@/components/auth/Login";
-import { checkLoginStatusForLoginPage } from "@/lib/auth-token/server";
+import Login from "@/components/main/auth/Login";
+import { checkLoginStatusForLoginPage } from "@/lib/server/checkLogin";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

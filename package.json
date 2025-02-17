@@ -13,7 +13,6 @@
     "@faker-js/faker": "^9.4.0",
     "@heroicons/react": "^2.2.0",
     "axios": "^1.7.9",
-    "change-case": "^5.4.4",
     "core-js-pure": "^3.40.0",
     "crypto-ts": "^1.0.2",
     "next": "15.1.4",

@@ -7,7 +7,7 @@ import {
   DeleteButton,
   EditButton, 
   SaveButton
-} from "@/components/button/FeatureButton";
+} from "@/components/minor/button/FeatureButton";
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 

@@ -1,6 +1,6 @@
-import Footer from "@/components/footer/Footer";
-import Navbar from "@/components/navbar/Navbar";
-import { checkLoginStatusForAuthPage } from "@/lib/auth-token/server";
+import Footer from "@/components/main/Footer";
+import Navbar from "@/components/main/Navbar";
+import { checkLoginStatusForAuthPage } from "@/lib/server/checkLogin";
 import { ToastContainer } from "react-toastify";
 import "sweetalert2/src/sweetalert2.scss";
 

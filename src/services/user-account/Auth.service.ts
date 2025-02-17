@@ -1,5 +1,5 @@
 import { LoginRequestType, LoginResponseType } from "@/interfaces/user-account/Login.interface";
-import axiosInstance from "@/lib/axios";
+import axiosInstance from "@/lib/client/axios";
 
 class AuthService {
   static async login(data: LoginRequestType) {

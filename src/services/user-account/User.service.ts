@@ -1,6 +1,6 @@
-import axiosInstance from "@/lib/axios";
+import axiosInstance from "@/lib/client/axios";
 import changeCaseTo from "@/lib/changeCaseTo";
-import formatDate from "@/lib/formatDate";
+import formatDate from "@/lib/client/formatDate";
 
 import UserType from "@/interfaces/user-account/User.interface";
 
