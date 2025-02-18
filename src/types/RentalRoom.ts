@@ -1,4 +1,4 @@
-export interface RentalRoomType {
+export type RentalRoomType = {
   id?: string;
   name?: string;
   commune?: string;
@@ -10,21 +10,21 @@ export interface RentalRoomType {
   further_description?: string;
   average_rating?: number;
   lessor?: string;
-  manager?: string | null;
+  manager?: string;
   created_at?: Date;
   updated_at?: Date;
-};
+}
 
-export interface RoomChargesListType {
+export type RoomChargesListType = {
   id?: string;
   rental_room?: string;
   room_charges?: number;
   deposit?: number;
   start_date?: Date;
   end_date?: Date;
-};
+}
 
-export interface ElectricityWaterChargesListType {
+export type ElectricityWaterChargesListType = {
   id?: string;
   rental_room?: string;
   electricity_charges_type?: 'unit' | 'person';
@@ -33,18 +33,18 @@ export interface ElectricityWaterChargesListType {
   water_charges?: number;
   start_date?: Date;
   end_date?: Date;
-};
+}
 
-export interface OtherChargesListType {
+export type OtherChargesListType = {
   id?: string;
   rental_room?: string;
-  wifi_charges?: number | null;
+  wifi_charges?: number;
   rubbish_charges?: number;
   start_date?: Date;
   end_date?: Date;
-};
+}
 
-export interface RentalRoomImageType {
+export type RentalRoomImageType = {
   id?: string;
   rental_room?: string;
   image?: string;

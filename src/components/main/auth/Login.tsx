@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import AuthService from '@/services/user-account/Auth.service';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { useRouter } from 'next/navigation';
 import { handleLogin } from '@/lib/client/authToken';
-import { LoginRequestType } from '@/interfaces/UserAccount';
+import { LoginRequestType } from '@/types/UserAccount';
 import Input from '@/components/partial/form/Input';
 import Form from '@/components/partial/form/Form';
+import { AuthService } from '@/services/UserAccount';
 
 const Login = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const data = await AuthService.login(loginData);
+      const data = await (new AuthService()).login(loginData);
       alert(JSON.stringify(data));
       await handleLogin(data);
       router.replace('/');

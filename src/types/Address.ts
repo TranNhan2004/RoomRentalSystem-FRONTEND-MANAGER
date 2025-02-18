@@ -1,16 +1,16 @@
-export interface ProvinceType {
+export type ProvinceType = {
   id?: string;
   name?: string;
-};
+}
 
-export interface DistrictType {
+export type DistrictType = {
   id?: string;
   name?: string;
   province?: string;
-};
+}
 
-export interface CommuneType {
+export type CommuneType = {
   id?: string;
   name?: string;
   district?: string;
-};
+}

@@ -1,9 +1,9 @@
-export interface DistanceType {
+export type ReviewType = {
   id?: string;
-  value?: number;
-  duration_in_minutes?: number;
+  comment?: string;
+  rating?: number;
   rental_room?: string;
   renter?: string;
   created_at?: Date;
   updated_at?: Date;
-};
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import { UserType } from '@/interfaces/UserAccount';
+import { UserType } from '@/types/UserAccount';
 import React, { useEffect, useState } from 'react';
 import Avatar from 'react-avatar';
 

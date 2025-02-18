@@ -1,12 +1,12 @@
 'use server';
 
 import { cookies } from "next/headers";
-import { REFRESH_TOKEN_NAME } from "../client/authToken";
 import { redirect } from "next/navigation";
+import { REFRESH_TOKEN_CKNAME } from "../client/authToken";
 
 export const checkLoginStatusForAuthPage = async () => {
   const cookieStore = await cookies();
-  const refreshToken = cookieStore.get(REFRESH_TOKEN_NAME);
+  const refreshToken = cookieStore.get(REFRESH_TOKEN_CKNAME);
   console.log(refreshToken);
 
   if (!refreshToken) {
@@ -16,7 +16,7 @@ export const checkLoginStatusForAuthPage = async () => {
 
 export const checkLoginStatusForLoginPage = async () => {
   const cookieStore = await cookies();
-  const refreshToken = cookieStore.get(REFRESH_TOKEN_NAME);
+  const refreshToken = cookieStore.get(REFRESH_TOKEN_CKNAME);
   console.log(refreshToken);
 
   if (refreshToken) {

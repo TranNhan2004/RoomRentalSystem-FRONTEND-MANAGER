@@ -1,15 +1,18 @@
-export interface LoginRequestType {
+export type LoginRequestType = {
   email?: string;
   password?: string;
 }
 
-export interface LoginResponseType {
+export type LoginResponseType = {
   refresh?: string;
   access?: string;
   id?: string;
+  email?: string;
+  first_name?: string;
+  last_name?: string;
 }
 
-export interface UserType {
+export type UserType = {
   id?: string;
   email?: string;
   password?: string;

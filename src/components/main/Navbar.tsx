@@ -4,20 +4,32 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import logoPicture from '../../../public/logo.png';
-import { UserType } from '@/interfaces/UserAccount';
+import { UserType } from '@/types/UserAccount';
 import NavLink from '../partial/navbar/NavLink';
 import DropdownMenu from '../partial/navbar/DropdownMenu';
 import AccountInfo from '../partial/account/AccountInfo';
+import { getUserEmail, getUserFirstName, getUserLastName } from '@/lib/client/authToken';
+
 
 const Navbar = () => {
   const [userInfo, setUserInfo] = useState<UserType>({});
 
   useEffect(() => {
-    setUserInfo({
-      first_name: 'Nhan',
-      last_name: 'Tran',
-      email: 'nhan.tran@gmail.com'
-    });
+    const setUserInfoFromCookie = async () => {
+      const [email, first_name, last_name] = await Promise.all([
+        getUserEmail(),
+        getUserFirstName(),
+        getUserLastName()
+      ]);
+
+      setUserInfo({
+        email: email,
+        first_name: first_name,
+        last_name: last_name
+      });
+    };
+
+    setUserInfoFromCookie();
   }, []);
 
   return (

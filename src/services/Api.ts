@@ -1,6 +1,6 @@
 import axiosInstance from "@/lib/client/axios";
 
-class ApiService<T extends object> {
+export class ApiService<T extends object> {
   protected endpoint: string;
 
   constructor(endpoint: string) {

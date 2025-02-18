@@ -4,7 +4,7 @@ import React from 'react';
 import { ProvinceService } from '@/services/Address';
 import { useEffect, useState } from 'react';
 import { handleDeleteAlert } from '@/lib/client/alert';
-import { ProvinceType } from '@/interfaces/Address';
+import { ProvinceType } from '@/types/Address';
 import Title from '@/components/partial/data/Title';
 import InputSearch from '@/components/partial/data/InputSearch';
 import Sorting from '@/components/partial/data/Sorting';
