@@ -1,5 +1,5 @@
 import Logout from "@/components/main/auth/Logout";
-import { checkLoginStatusForAuthPage } from "@/lib/server/checkLogin";
+import { checkLoginStatusForAuthPage } from "@/lib/server/checkLoginStatus";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

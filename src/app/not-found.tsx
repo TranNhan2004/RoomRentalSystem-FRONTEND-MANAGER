@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Metadata } from 'next';
 import notFoundPicture from '../../public/not-found.png';
-import { checkLoginStatusForAuthPage } from '@/lib/server/checkLogin';
+import { checkLoginStatusForAuthPage } from '@/lib/server/checkLoginStatus';
 import GoToHomeButton from '@/components/partial/button/GoToHomeButton';
 
 export const metadata: Metadata = {
