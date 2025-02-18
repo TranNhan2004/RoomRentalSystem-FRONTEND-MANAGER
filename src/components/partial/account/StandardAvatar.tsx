@@ -1,6 +1,6 @@
 'use client';
 
-import { UserType } from '@/interfaces/UserAccount.interface';
+import { UserType } from '@/interfaces/UserAccount';
 import React, { useEffect, useState } from 'react';
 import Avatar from 'react-avatar';
 
@@ -14,11 +14,11 @@ const StandardAvatar = (props: UserType) => {
   const [avatarColor, setAvatarColor] = useState('');
 
   useEffect(() => {
-    let storedColor = localStorage.getItem('avatarColor');
+    let storedColor = localStorage.getItem('avatar_color');
     if (!storedColor) {
       const index = Math.floor(Math.random() * backgroundColors.length);
       storedColor = `#${backgroundColors[index]}`;
-      localStorage.setItem('avatarColor', storedColor);
+      localStorage.setItem('avatar_color', storedColor);
     }
     setAvatarColor(storedColor);
   }, []);
@@ -26,12 +26,12 @@ const StandardAvatar = (props: UserType) => {
   return (
     <div>
       <Avatar 
-        name={props.firstName?.at(0)?.toUpperCase() || '?'}
+        name={props.first_name?.at(0)?.toUpperCase() || '?'}
         size='40'
         round={true}
         color={avatarColor}
-        title={props.firstName}
-        alt={props.firstName}
+        title={props.first_name}
+        alt={props.first_name}
       />
     </div>
   );

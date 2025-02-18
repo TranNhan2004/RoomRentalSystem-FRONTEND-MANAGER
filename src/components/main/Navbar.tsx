@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import logoPicture from '../../../public/logo.png';
-import { UserType } from '@/interfaces/UserAccount.interface';
+import { UserType } from '@/interfaces/UserAccount';
 import NavLink from '../partial/navbar/NavLink';
 import DropdownMenu from '../partial/navbar/DropdownMenu';
 import AccountInfo from '../partial/account/AccountInfo';
@@ -14,8 +14,8 @@ const Navbar = () => {
 
   useEffect(() => {
     setUserInfo({
-      firstName: 'Nhan',
-      lastName: 'Tran',
+      first_name: 'Nhan',
+      last_name: 'Tran',
       email: 'nhan.tran@gmail.com'
     });
   }, []);

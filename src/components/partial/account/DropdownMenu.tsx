@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRightStartOnRectangleIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
-import { UserType } from '@/interfaces/UserAccount.interface';
+import { UserType } from '@/interfaces/UserAccount';
 
 interface DropdownMenuProps {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ const DropdownMenu = (props: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const fullName = props.data.firstName + ' ' + props.data.lastName;
+  const fullName = props.data.first_name + ' ' + props.data.last_name;
   const email = props.data.email ?? '';
 
   const truncate = (str: string) => str.length > 18 ? str.slice(0, 18) + '...' : str;
@@ -45,14 +45,14 @@ const DropdownMenu = (props: DropdownMenuProps) => {
       {
         isOpen && (
           <ul 
-            className='fixed top-16 right-2 bg-white shadow-md rounded-lg w-[15%] border border-gray-200' 
+            className='fixed top-16 right-2 bg-gray-50 shadow-md rounded-lg w-[15%] border border-gray-200' 
           >
             <li className='p-2 ml-[3%] mr-[3%] mt-[2%]'>
               <p className='text-sm text-gray-500'>{truncate(fullName)}</p>
               <p className='text-sm text-gray-500'>{truncate(email)}</p>
             </li>
 
-            <div className='border-2 border-t border-gray-100 ml-[6%] mr-[6%] mt-[2%] mb-[2%]'></div>
+            <div className='border-2 border-t border-gray-150 ml-[6%] mr-[6%] mt-[2%] mb-[2%] rounded-lg'></div>
 
             <li 
               className='p-2 hover:bg-green-100 rounded-lg ml-[3%] mr-[3%]' 

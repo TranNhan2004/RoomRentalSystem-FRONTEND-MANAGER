@@ -1,18 +1,23 @@
 'use client';
 
+import React from 'react';
+import { ProvinceService } from '@/services/Address';
+import { useEffect, useState } from 'react';
+import { handleDeleteAlert } from '@/lib/client/alert';
+import { ProvinceType } from '@/interfaces/Address';
+import Title from '@/components/partial/data/Title';
+import InputSearch from '@/components/partial/data/InputSearch';
+import Sorting from '@/components/partial/data/Sorting';
+import Filter from '@/components/partial/data/Filter';
+import Table from '@/components/partial/data/Table';
 
-import ProvinceService from "@/services/address/Province.service";
-import { useEffect, useState } from "react";
-import { handleDeleteAlert } from "@/lib/client/alert";
-import { ProvinceType } from "@/interfaces/Address.interface";
-
-export default function ProvincesPage() {
+const ProvincesList = () => {
   const [data, setData] = useState<ProvinceType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const provinces = await ProvinceService.getMany();
-      setData(provinces);
+      const data = await (new ProvinceService()).getMany();
+      setData(data);
     };
 
     fetchData();
@@ -28,10 +33,6 @@ export default function ProvincesPage() {
     }
     return dataForTable;
   };
-
-  useEffect(() => {
-    document.title = "Management | Provinces";
-  }, []);
 
   const onSearch = (searchQuery: string) => {
     console.log(`Search query: ${searchQuery}`);
@@ -53,13 +54,13 @@ export default function ProvincesPage() {
 
   return (
     <div>
-      <Title>Dữ liệu cấp tỉnh</Title>
-      <div className="flex items-center">
+      <Title>Danh sách các tỉnh</Title>
+      <div className='flex items-center'>
         <InputSearch 
-          placeholder="Tìm kiếm theo tên tỉnh"
+          placeholder='Tìm kiếm theo tên tỉnh'
           onSearch={onSearch}
         />
-        <Sorting 
+        <Sorting
           options={[
             { label: 'Tên tỉnh (A-Z)', value: 'inc-name' },
             { label: 'Tên tỉnh (Z-A)', value: 'dec-name' },
@@ -109,11 +110,12 @@ export default function ProvincesPage() {
         />
       </div>
 
-      <Table 
-        data={generateDataForTable()}
-        deleteOnClick={deleteOnClick}
-      />
-
-    </div>
+    <Table 
+      data={generateDataForTable()}
+      deleteOnClick={deleteOnClick}
+    />
+  </div>
   );
-}
+};
+
+export default ProvincesList;

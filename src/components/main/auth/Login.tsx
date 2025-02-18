@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import Form from '@/components/minor/form/Form';
-import Input from '@/components/minor/form/Input';
 import AuthService from '@/services/user-account/Auth.service';
-import { LoginRequestType } from '@/interfaces/user-account/Login.interface';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { useRouter } from 'next/navigation';
 import { handleLogin } from '@/lib/client/authToken';
+import { LoginRequestType } from '@/interfaces/UserAccount';
+import Input from '@/components/partial/form/Input';
+import Form from '@/components/partial/form/Form';
 
 const Login = () => {
   const router = useRouter();
