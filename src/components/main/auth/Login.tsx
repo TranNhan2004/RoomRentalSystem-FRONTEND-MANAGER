@@ -8,6 +8,7 @@ import { LoginRequestType } from '@/types/UserAccount';
 import Input from '@/components/partial/form/Input';
 import Form from '@/components/partial/form/Form';
 import { AuthService } from '@/services/UserAccount';
+import Link from 'next/link';
 
 const Login = () => {
   const router = useRouter();
@@ -29,7 +30,7 @@ const Login = () => {
   };
 
   return (
-    <Form label='Room Rental Management' onSubmit={handleSubmit}>
+    <Form label='Trang quản lý' className='w-[300px]' onSubmit={handleSubmit}>
       <div>
         <Input 
           id='email'
@@ -54,8 +55,12 @@ const Login = () => {
         />
       </div>
 
+      <div>
+        <Link href={'/auth/reset-password'} className='underline text-blue-500 text-left'>Quên mật khẩu?</Link>
+      </div>
+
       <div className='flex justify-center'>
-        <button type='submit' className='font-semibold p-2 w-[50%] mt-4 text-white bg-mygreen rounded-lg 
+        <button type='submit' className='font-semibold p-2 w-[50%] mt-2 text-white bg-mygreen rounded-lg 
                                           hover:bg-mydarkgreen transition duration-300 ease-in-out'>
           Đăng nhập
         </button>

@@ -1,8 +1,11 @@
-type Params = Promise<{
-  provinceId: string
-}>
 
-export default async function ProvinceDetailsPage({ params }: { params: Params }) {
+export default async function ProvinceDetailsPage({
+  params,
+}: {
+  params: Promise<{
+    provinceId: string;
+  }>
+}) {
 
   const { provinceId } = await params;
 

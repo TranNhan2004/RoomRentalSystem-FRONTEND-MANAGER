@@ -2,6 +2,14 @@ import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import '@/app/toast.css';
 
+export const toastSuccess = async (message: string) => {
+  toast.success(message, { className: 'toast-success' });
+};
+
+export const toastError = async (message: string) => {
+  toast.error(message, { className: 'toast-error' });
+};
+
 export const handleDeleteAlert = async (status: 'success' | 'error', message: string) => {
   const result = await Swal.fire({
     title: 'Bạn có chắc chắn không?',
@@ -14,9 +22,9 @@ export const handleDeleteAlert = async (status: 'success' | 'error', message: st
 
   if (result.isConfirmed) {
     if (status === 'success') {
-      toast.success(message, { className: 'toast-success' });
+      await toastSuccess(message);
     } else {
-      toast.error(message, { className: 'toast-error' });
+      await toastError(message);
     }
   }
 };

@@ -2,8 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 
 export const handleInputChange = <T>(
   e: React.ChangeEvent<HTMLInputElement>,
-  setState: Dispatch<SetStateAction<T>>,
-  transformValue?: (value: unknown) => unknown  
+  setState: Dispatch<SetStateAction<T>>
 ) => {
   const { name, value, type, files } = e.target;
 
@@ -15,10 +14,6 @@ export const handleInputChange = <T>(
 
   if (type === "date") {
     newValue = value ? new Date(value) : null;
-  }
-
-  if (transformValue) {
-    newValue = transformValue(value);
   }
 
   console.log(newValue);

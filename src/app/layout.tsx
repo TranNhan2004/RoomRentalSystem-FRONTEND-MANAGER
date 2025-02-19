@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Aleo } from "next/font/google"; 
+import { ToastContainer } from "react-toastify";
 import "./globals.css";
+import "sweetalert2/src/sweetalert2.scss";
 
 const aleo = Aleo({
   variable: "--font-aleo", 
@@ -9,8 +11,8 @@ const aleo = Aleo({
 
 export const metadata: Metadata = {
   title: {
-    default: "Management",
-    template: "Management | %s",
+    default: "Manager",
+    template: "Manager | %s",
   },
   description: "Hệ thống quản lý cho thuê phòng trọ tại TP Cần Thơ",
 };
@@ -24,6 +26,11 @@ export default function RootLayout({
     <html lang="vi">
       <body className={`${aleo.variable} antialiased`}>
         {children}
+        <ToastContainer 
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+        />
       </body>
     </html>
   );

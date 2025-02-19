@@ -1,8 +1,7 @@
 import Footer from "@/components/main/Footer";
 import Navbar from "@/components/main/Navbar";
 import { checkLoginStatusForAuthPage } from "@/lib/server/checkLoginStatus";
-import { ToastContainer } from "react-toastify";
-import "sweetalert2/src/sweetalert2.scss";
+
 
 export default async function HasAuthLayout({
   children
@@ -17,11 +16,6 @@ export default async function HasAuthLayout({
         <main className="flex-grow">
           <div className="ml-[17%] mt-[5%] mr-[4%] p-6">
             {children}
-            <ToastContainer 
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-            />
           </div>
         </main>
         <Footer />

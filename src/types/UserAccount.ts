@@ -12,6 +12,15 @@ export type LoginResponseType = {
   last_name?: string;
 }
 
+export type ResetPasswordRequestBeforeType = {
+  email?: string;
+}
+
+export type ResetPasswordRequestAfterType = {
+  new_password?: string;
+  confirm_new_password?: string;
+}
+
 export type UserType = {
   id?: string;
   email?: string;
