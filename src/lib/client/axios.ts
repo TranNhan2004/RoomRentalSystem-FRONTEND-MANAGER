@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAccessToken, getRefreshedAccessToken } from '@/lib/client/authToken';
+import { getAccessToken, getRefreshedAccessToken, resetAuthTokens } from '@/lib/client/authToken';
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -34,7 +34,7 @@ axiosInstance.interceptors.response.use(
     
     if (error.response && error.response.status === 401) {
       if (originalRequest._retry) {
-        return Promise.reject(error);
+        await resetAuthTokens();
       }
 
       originalRequest._retry = true;
@@ -42,7 +42,7 @@ axiosInstance.interceptors.response.use(
       originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
       return axios(originalRequest);
     }
-    console.log(JSON.stringify(error));
+
     return Promise.reject(error);
   }
 );
