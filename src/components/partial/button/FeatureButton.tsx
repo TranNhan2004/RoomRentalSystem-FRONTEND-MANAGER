@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { 
+  ArrowUpTrayIcon,
   CheckIcon,
   FunnelIcon, 
   InformationCircleIcon, 
@@ -25,6 +26,7 @@ interface ActionButtonProps {
   icon?: React.ReactNode;
   type?: 'button' | 'submit';
   color?: keyof typeof colorVariants;
+  disabled?: boolean;
   children?: React.ReactNode;
 }
 
@@ -37,8 +39,12 @@ const ActionButton = (props: ActionButtonProps) => {
     <>
       <button
         onClick={props.onClick}
-        className={`flex items-center ${px} py-2 rounded-xl shadow-md ${colorVariants[color]} transition-all`}
+        className={`flex items-center ${px} py-2 rounded-xl shadow-md 
+                      ${props.disabled ? 
+                        'cursor-not-allowed bg-gray-400 text-gray-600' : 
+                        `${colorVariants[color]} transition-all hover:bg-opacity-80`}`}
         type={props.type}
+        disabled={props.disabled}
       > 
         {props.icon}
         <span className={mr}></span>
@@ -58,6 +64,7 @@ export const AddButton = (props: AddButtonProps) => {
       icon={<PlusIcon className='w-5 h-5' />}
       type={props.type || 'button'}
       color={props.color || 'green'}
+      disabled={props.disabled}
     >
       {props.children}
     </ActionButton>
@@ -73,6 +80,7 @@ export const CancelButton = (props: CancelButtonProps) => {
       icon={<XMarkIcon className='w-5 h-5' />}
       type={props.type || 'button'}
       color={props.color || 'gray'}
+      disabled={props.disabled}
     >
       {props.children}
     </ActionButton>
@@ -88,6 +96,7 @@ export const DeleteButton = (props: DeleteButtonProps) => {
       icon={<TrashIcon className='w-5 h-5' />}
       type={props.type || 'button'}
       color={props.color || 'red'}
+      disabled={props.disabled}
     >
       {props.children}
     </ActionButton>
@@ -103,6 +112,7 @@ export const EditButton = (props: EditButtonProps) => {
       icon={<PencilSquareIcon className='w-5 h-5' />}
       type={props.type || 'button'}
       color={props.color || 'yellow'}
+      disabled={props.disabled}
     >
       {props.children}
     </ActionButton>
@@ -118,6 +128,7 @@ export const FilterButton = (props: FilterButtonProps) => {
       icon={<FunnelIcon className='w-5 h-5' />}
       type={props.type || 'button'}
       color={props.color || 'blue'}
+      disabled={props.disabled}
     >
       {props.children}
     </ActionButton>
@@ -133,6 +144,7 @@ export const InfoButton = (props: InfoButtonProps) => {
       icon={<InformationCircleIcon className='w-5 h-5' />}
       type={props.type || 'button'}
       color={props.color || 'blue'}
+      disabled={props.disabled}
     >
       {props.children}
     </ActionButton>
@@ -148,6 +160,23 @@ export const SaveButton = (props: SaveButtonProps) => {
       icon={<CheckIcon className='w-5 h-5' />}
       type={props.type || 'submit'}
       color={props.color || 'blue'}
+      disabled={props.disabled}
+    >
+      {props.children}
+    </ActionButton>
+  );
+};
+
+
+type UploadButtonProps = ActionButtonProps;
+export const UploadButton = (props: UploadButtonProps) => {
+  return (
+    <ActionButton 
+      onClick={props.onClick} 
+      icon={<ArrowUpTrayIcon className='w-5 h-5' />}
+      type={props.type || 'button'}
+      color={props.color || 'blue'}
+      disabled={props.disabled}
     >
       {props.children}
     </ActionButton>

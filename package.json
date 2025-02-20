@@ -17,7 +17,6 @@
     "crypto-ts": "^1.0.2",
     "next": "15.1.4",
     "react": "^19.0.0",
-    "react-avatar": "^5.0.3",
     "react-dom": "^19.0.0",
     "react-toastify": "^11.0.3",
     "sass": "^1.85.0",

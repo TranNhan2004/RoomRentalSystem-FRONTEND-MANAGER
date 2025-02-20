@@ -34,7 +34,7 @@ const DropdownMenu = (props: DropdownMenuProps) => {
   }, []);
 
   return (
-    <div className='relative' ref={dropdownRef}>
+    <div className='relative text-[14px]' ref={dropdownRef}>
       <button 
         className='flex items-center w-full text-left' 
         onClick={() => setIsOpen(!isOpen)}
@@ -61,7 +61,7 @@ const DropdownMenu = (props: DropdownMenuProps) => {
               <Link href={'/profile'}>
                 <div className='flex items-center p-[2%]'>
                   <PencilSquareIcon className='w-5 h-5 mr-2'/>
-                  Chỉnh sửa
+                  Hồ sơ của tôi
                 </div>
               </Link>
             </li>

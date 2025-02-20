@@ -2,7 +2,6 @@
 
 import { UserType } from '@/types/UserAccount';
 import React, { useEffect, useState } from 'react';
-import Avatar from 'react-avatar';
 
 const backgroundColors = [
   '27445D', '497D74', '71BBB2', '3674B5', '578FCA', 
@@ -10,7 +9,15 @@ const backgroundColors = [
   'F2B28C', 'EFB036'
 ];
 
-const StandardAvatar = (props: UserType) => {
+type DefaultAvatarProps = {
+  width: number;
+  height: number;
+  fontSize: number;
+  shape: 'square' | 'circle';
+  data: UserType;
+}
+
+const DefaultAvatar = (props: DefaultAvatarProps) => {
   const [avatarColor, setAvatarColor] = useState('');
 
   useEffect(() => {
@@ -24,17 +31,21 @@ const StandardAvatar = (props: UserType) => {
   }, []);
 
   return (
-    <div>
-      <Avatar 
-        name={props.first_name?.at(0)?.toUpperCase() || '?'}
-        size='40'
-        round={true}
-        color={avatarColor}
-        title={props.first_name}
-        alt={props.first_name}
-      />
+    <div
+      className={`${props.shape === 'square' ? 'rounded-sm' : 'rounded-full'} flex justify-center 
+                    items-center text-white`}
+      style={{
+        backgroundColor: avatarColor,
+        width: `${props.width}px`,
+        height: `${props.height}px`,
+        fontFamily: 'Arial',
+        fontSize: `${props.fontSize}px`
+      }}
+      title={props.data.first_name}
+    >
+      {props.data.first_name?.at(0)?.toUpperCase() || '?'}
     </div>
   );
 };
 
-export default StandardAvatar;
+export default DefaultAvatar;

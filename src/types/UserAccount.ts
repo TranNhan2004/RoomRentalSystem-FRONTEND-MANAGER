@@ -27,8 +27,8 @@ export type UserType = {
   password?: string;
   first_name?: string;
   last_name?: string;
-  citizen_number?: string;
   phone_number?: string;
+  citizen_number?: string;
   date_of_birth?: Date;
   gender?: 'M' | 'F' | 'U';
   avatar?: string | null;
