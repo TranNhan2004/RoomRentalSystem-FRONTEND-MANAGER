@@ -12,16 +12,6 @@ export class ApiService<T extends object> {
     return response.data;
   }
 
-  public async postFormData(data: T) {
-    const response = await axiosInstance.post<T>(this.endpoint, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  
-    return response.data; 
-  }
-  
   public async getMany() {
     const response = await axiosInstance.get<T[]>(this.endpoint);
     return response.data;
@@ -32,24 +22,30 @@ export class ApiService<T extends object> {
     return response.data;
   }
 
-  public async put(id: string, data: T) {
-    const response = await axiosInstance.put<T>(`${this.endpoint}/${id}`, data);
+  public async patch(id: string, data: T) {
+    const response = await axiosInstance.patch<T>(`${this.endpoint}/${id}`, data);
     return response.data;
   }
 
-  public async putFormData(id: string, data: T) {
-    const response = await axiosInstance.put<T>(`${this.endpoint}/${id}`, data, {
+  public async delete(id: string) {
+    await axiosInstance.delete(`${this.endpoint}/${id}`);
+  }
+}
+
+
+export class ApiServiceWithFormData<T extends object> extends ApiService<T> {
+  constructor(endpoint: string) {
+    super(endpoint);
+  }
+
+  public async postFormData(data: T) {
+    const response = await axiosInstance.post<T>(this.endpoint, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
   
     return response.data; 
-  }
-
-  public async patch(id: string, data: T) {
-    const response = await axiosInstance.patch<T>(`${this.endpoint}/${id}`, data);
-    return response.data;
   }
 
   public async patchFormData(id: string, data: T) {
@@ -61,10 +57,4 @@ export class ApiService<T extends object> {
   
     return response.data; 
   }
-
-  public async delete(id: string) {
-    await axiosInstance.delete(`${this.endpoint}/${id}`);
-  }
 }
-
-export default ApiService;

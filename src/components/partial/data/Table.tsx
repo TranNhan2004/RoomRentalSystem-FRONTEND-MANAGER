@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { DeleteButton, EditButton, InfoButton } from '../button/FeatureButton';
 import PaginationNav from './PaginationNav';
 
-interface TableProps {
+type TableProps = {
   data: Array<{ id: string; display: string }>;
   detailOnClick?: () => void;
   editOnClick?: () => void;
@@ -32,7 +32,7 @@ const Table = (props: TableProps) => {
 
   return (
     <div className='min-h-screen flex flex-col'>
-      <div className='flex-grow overflow-x-auto mt-10'>
+      <div className='flex-grow overflow-x-auto mt-8'>
         <table className='min-w-full border border-gray-200'>
           <thead>
             <tr className='bg-gray-100 text-center'>

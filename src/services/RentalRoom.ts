@@ -5,7 +5,7 @@ import {
   RentalRoomType, 
   RoomChargesListType 
 } from "@/types/RentalRoom";
-import ApiService from "./Api";
+import { ApiService, ApiServiceWithFormData } from "./Api";
 
 
 export class RentalRoomService extends ApiService<RentalRoomType> {
@@ -32,7 +32,7 @@ export class OtherChargesListService extends ApiService<OtherChargesListType> {
   }
 };
 
-export class RentalRoomImageService extends ApiService<RentalRoomImageType> {
+export class RentalRoomImageService extends ApiServiceWithFormData<RentalRoomImageType> {
   constructor() {
     super('/rental-room-images');
   }

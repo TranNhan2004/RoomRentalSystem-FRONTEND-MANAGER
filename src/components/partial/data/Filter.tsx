@@ -5,7 +5,7 @@ import { FunnelIcon } from '@heroicons/react/24/outline';
 import { CancelButton, FilterButton } from '../button/FeatureButton';
 
 
-interface FilterOptionsGroupType {
+type FilterOptionsGroupType = {
   category: string;
   options: {
     label: string;
@@ -13,7 +13,7 @@ interface FilterOptionsGroupType {
   }[];
 }
 
-interface FilterProps {
+type FilterProps = {
   onFilter: (selectedFilters: Set<string>) => void; 
   filterOptionsGroups: FilterOptionsGroupType[]; 
 }
@@ -80,7 +80,7 @@ const Filter = (props: FilterProps) => {
       <button
         onClick={toggleFilter}
         className="border border-gray-300 hover:bg-gray-100 p-2 rounded-lg 
-                    flex items-center justify-center mt-5 ml-[40px]"
+                    flex items-center justify-center"
       >
         <FunnelIcon className="w-5 h-5 text-gray-600" />
       </button>

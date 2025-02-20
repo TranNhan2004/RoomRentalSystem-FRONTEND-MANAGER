@@ -40,9 +40,9 @@ const ActionButton = (props: ActionButtonProps) => {
       <button
         onClick={props.onClick}
         className={`flex items-center ${px} py-2 rounded-xl shadow-md 
-                      ${props.disabled ? 
-                        'cursor-not-allowed bg-gray-400 text-gray-600' : 
-                        `${colorVariants[color]} transition-all hover:bg-opacity-80`}`}
+                    ${props.disabled ? 
+                      'cursor-not-allowed bg-gray-400 text-gray-600' : 
+                      `${colorVariants[color]} transition-all hover:bg-opacity-80`}`}
         type={props.type}
         disabled={props.disabled}
       > 

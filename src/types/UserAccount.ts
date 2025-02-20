@@ -6,10 +6,7 @@ export type LoginRequestType = {
 export type LoginResponseType = {
   refresh?: string;
   access?: string;
-  id?: string;
-  email?: string;
-  first_name?: string;
-  last_name?: string;
+  user?: UserType;
 }
 
 export type ResetPasswordRequestBeforeType = {
@@ -36,6 +33,7 @@ export type UserType = {
   workplace_commune?: string;
   workplace_additional_address?: string;
   is_active?: boolean;
+  last_login?: Date;
   created_at?: Date;
   updated_at?: Date;
 }

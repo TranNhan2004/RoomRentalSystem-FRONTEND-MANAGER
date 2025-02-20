@@ -8,7 +8,7 @@ import { UserType } from '@/types/UserAccount';
 import NavLink from '../partial/navbar/NavLink';
 import DropdownMenu from '../partial/navbar/DropdownMenu';
 import AccountInfo from '../partial/account/AccountInfo';
-import { getUserEmail, getUserFirstName, getUserLastName } from '@/lib/client/authToken';
+import { getUserInfo } from '@/lib/client/authToken';
 
 
 const Navbar = () => {
@@ -16,17 +16,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const setUserInfoFromCookie = async () => {
-      const [email, first_name, last_name] = await Promise.all([
-        getUserEmail(),
-        getUserFirstName(),
-        getUserLastName()
-      ]);
-
-      setUserInfo({
-        email: email,
-        first_name: first_name,
-        last_name: last_name
-      });
+      setUserInfo(await getUserInfo());
     };
 
     setUserInfoFromCookie();

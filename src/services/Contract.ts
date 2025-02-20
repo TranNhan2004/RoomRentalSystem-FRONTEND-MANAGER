@@ -1,5 +1,5 @@
 import { ContractType, RentalContractType } from "@/types/Contract";
-import ApiService from "./Api";
+import { ApiService } from "./Api";
 
 export class ContractService extends ApiService<ContractType> {
   constructor() {

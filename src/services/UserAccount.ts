@@ -1,8 +1,14 @@
-import { LoginRequestType, LoginResponseType, ResetPasswordRequestAfterType, ResetPasswordRequestBeforeType, UserType } from "@/types/UserAccount";
-import ApiService from "./Api";
+import { 
+  LoginRequestType, 
+  LoginResponseType, 
+  ResetPasswordRequestAfterType, 
+  ResetPasswordRequestBeforeType, 
+  UserType 
+} from "@/types/UserAccount";
+import { ApiServiceWithFormData } from "./Api";
 import axiosInstance from "@/lib/client/axios";
 
-export class UserService extends ApiService<UserType> {
+export class UserService extends ApiServiceWithFormData<UserType> {
   constructor() {
     super('/users');
   }

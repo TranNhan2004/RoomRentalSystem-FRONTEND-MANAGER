@@ -32,7 +32,7 @@ const DefaultAvatar = (props: DefaultAvatarProps) => {
 
   return (
     <div
-      className={`${props.shape === 'square' ? 'rounded-sm' : 'rounded-full'} flex justify-center 
+      className={`${props.shape === 'square' ? 'rounded-lg' : 'rounded-full'} flex justify-center 
                     items-center text-white`}
       style={{
         backgroundColor: avatarColor,

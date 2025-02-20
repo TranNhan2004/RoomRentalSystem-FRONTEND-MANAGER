@@ -7,7 +7,6 @@ import { REFRESH_TOKEN_CKNAME } from "../client/authToken";
 export const checkLoginStatusForAuthPage = async () => {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get(REFRESH_TOKEN_CKNAME);
-  console.log(refreshToken);
 
   if (!refreshToken) {
     redirect('/auth/login');
@@ -17,7 +16,6 @@ export const checkLoginStatusForAuthPage = async () => {
 export const checkLoginStatusForLoginPage = async () => {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get(REFRESH_TOKEN_CKNAME);
-  console.log(refreshToken);
 
   if (refreshToken) {
     redirect('/');

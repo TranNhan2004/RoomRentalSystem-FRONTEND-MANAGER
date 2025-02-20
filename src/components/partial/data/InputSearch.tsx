@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; 
 
-interface InputSearchProps {
+type InputSearchProps = {
   placeholder?: string;
   onSearch: (query: string) => void;
 }
@@ -22,7 +22,7 @@ const InputSearch = (props: InputSearchProps) => {
   };
 
   return (
-    <div className='relative w-full max-w-md mt-5'>
+    <div className='relative w-full max-w-md'>
       <input
         type='text'
         value={searchQuery}

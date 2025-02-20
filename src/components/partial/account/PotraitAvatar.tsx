@@ -19,7 +19,7 @@ const PotraitAvatar = (props: PotraitAvatarProps) => {
         alt="Avatar"
         width={props.width}
         height={props.height}
-        className={props.shape == 'square' ? 'rounded-sm' : 'rounded-full'}
+        className={props.shape == 'square' ? 'rounded-lg' : 'rounded-full'}
       />
     </div>
   );

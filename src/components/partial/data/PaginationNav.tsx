@@ -3,7 +3,7 @@
 import React from 'react';
 import { FirstButton, LastButton, NextButton, PrevButton } from '../button/ChangePageButton';
 
-interface PaginationProps {
+type PaginationProps = {
   currentPage: number;
   totalPages: number;
   step: number;

@@ -1,5 +1,6 @@
 import { CommuneType, DistrictType, ProvinceType } from "@/types/Address";
-import ApiService from "./Api";
+import { ApiService } from "./Api";
+
 
 export class ProvinceService extends ApiService<ProvinceType> {
   constructor() {

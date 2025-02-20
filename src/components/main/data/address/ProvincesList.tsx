@@ -10,6 +10,7 @@ import InputSearch from '@/components/partial/data/InputSearch';
 import Sorting from '@/components/partial/data/Sorting';
 import Filter from '@/components/partial/data/Filter';
 import Table from '@/components/partial/data/Table';
+import { AddButton } from '@/components/partial/button/FeatureButton';
 
 const ProvincesList = () => {
   const [data, setData] = useState<ProvinceType[]>([]);
@@ -52,62 +53,78 @@ const ProvincesList = () => {
     await handleDeleteAlert('success', 'Xóa tỉnh thành công!');
   };
 
+  const addOnClick = () => {
+    console.log('Add new province');
+  };
+
   return (
     <div>
       <Title>Danh sách các tỉnh</Title>
       <div className='flex items-center'>
-        <InputSearch 
-          placeholder='Tìm kiếm theo tên tỉnh'
-          onSearch={onSearch}
-        />
-        <Sorting
-          options={[
-            { label: 'Tên tỉnh (A-Z)', value: 'inc-name' },
-            { label: 'Tên tỉnh (Z-A)', value: 'dec-name' },
-          ]}
-          onSort={onSort}
-        />
-        <Filter 
-          onFilter={onFilter}
-          filterOptionsGroups={[
-            { 
-              category: 'ABC', 
-              options: [
-                { label: 'a', value: 'a' },
-                { label: 'b', value: 'b' },
-                { label: 'c', value: 'c' },
-              ]
-            },
-            { 
-              category: 'DEF', 
-              options: [
-                { label: 'd', value: 'd' },
-                { label: 'e', value: 'e' },
-                { label: 'f', value: 'f' },
-              ] 
+        <div className='w-[40%]'>
+          <InputSearch 
+            placeholder='Tìm kiếm theo tên tỉnh'
+            onSearch={onSearch}
+          />
+        </div>
 
-            },
-            { 
-              category: 'GHI', 
-              options: [
-                { label: 'g', value: 'g' },
-                { label: 'h', value: 'h' },
-                { label: 'i', value: 'i' },
-                { label: 'j', value: 'j' },
-                { label: 'k', value: 'k' },
-                { label: 'l', value: 'l' },
-                { label: 'm', value: 'm' },
-                { label: 'n', value: 'n' },
-                { label: 'o', value: 'o' },
-                { label: 'p', value: 'p' },
-                { label: 'q', value: 'q' },
-                { label: 'r', value: 'r' },
-                { label: 's', value: 's' },
-                { label: 't', value: 't' },
-              ]  
-            },
-          ]}
-        />
+        <div className='ml-[30px]'>
+          <Sorting
+            options={[
+              { label: 'Tên tỉnh (A-Z)', value: 'inc-name' },
+              { label: 'Tên tỉnh (Z-A)', value: 'dec-name' },
+            ]}
+            onSort={onSort}
+          />
+        </div>
+        
+        <div className='ml-[20px]'>
+          <Filter 
+            onFilter={onFilter}
+            filterOptionsGroups={[
+              { 
+                category: 'ABC', 
+                options: [
+                  { label: 'a', value: 'a' },
+                  { label: 'b', value: 'b' },
+                  { label: 'c', value: 'c' },
+                ]
+              },
+              { 
+                category: 'DEF', 
+                options: [
+                  { label: 'd', value: 'd' },
+                  { label: 'e', value: 'e' },
+                  { label: 'f', value: 'f' },
+                ] 
+
+              },
+              { 
+                category: 'GHI', 
+                options: [
+                  { label: 'g', value: 'g' },
+                  { label: 'h', value: 'h' },
+                  { label: 'i', value: 'i' },
+                  { label: 'j', value: 'j' },
+                  { label: 'k', value: 'k' },
+                  { label: 'l', value: 'l' },
+                  { label: 'm', value: 'm' },
+                  { label: 'n', value: 'n' },
+                  { label: 'o', value: 'o' },
+                  { label: 'p', value: 'p' },
+                  { label: 'q', value: 'q' },
+                  { label: 'r', value: 'r' },
+                  { label: 's', value: 's' },
+                  { label: 't', value: 't' },
+                ]  
+              },
+            ]}
+          />
+        </div>
+
+        <div className='ml-auto'>
+          <AddButton onClick={addOnClick}>Thêm mới</AddButton>
+        </div>
       </div>
 
     <Table 
