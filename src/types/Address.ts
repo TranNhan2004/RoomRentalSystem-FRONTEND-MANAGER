@@ -9,8 +9,12 @@ export type DistrictType = {
   province?: string;
 }
 
+export type DistrictQueryType = Pick<DistrictType, 'province'>;
+
 export type CommuneType = {
   id?: string;
   name?: string;
   district?: string;
 }
+
+export type CommuneQueryType = Pick<CommuneType, 'district'>;

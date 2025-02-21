@@ -40,7 +40,7 @@ const ResetPasswordAfter = (props: ResetPasswordAfterProps) => {
   };
 
   return (
-    <Form label='Đặt lại mật khẩu' className='w-[300px]' onSubmit={handleSubmit}>
+    <Form label='Đặt lại mật khẩu' className='w-[300px]' onSubmit={handleSubmit} useModal>
       <div>
         <Input 
           id='new-password'

@@ -2,7 +2,7 @@ import EditInfo from "@/components/main/profile/EditInfo";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Edit Info",
+  title: "Edit infomation",
   description: "Edit your personal information page",
 };
 

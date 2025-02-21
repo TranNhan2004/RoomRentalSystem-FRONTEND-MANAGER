@@ -7,3 +7,5 @@ export type ReviewType = {
   created_at?: Date;
   updated_at?: Date;
 }
+
+export type ReviewQueryType = Pick<ReviewType, 'rental_room' | 'renter'>;

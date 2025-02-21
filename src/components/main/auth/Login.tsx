@@ -30,7 +30,7 @@ const Login = () => {
   };
 
   return (
-    <Form label='Trang quản lý' className='w-[300px]' onSubmit={handleSubmit}>
+    <Form label='Trang quản lý' className='w-[300px]' onSubmit={handleSubmit} useModal>
       <div>
         <Input 
           id='email'

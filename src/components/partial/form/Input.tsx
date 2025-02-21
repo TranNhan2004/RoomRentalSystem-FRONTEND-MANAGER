@@ -6,8 +6,8 @@ interface InputProps {
   id: string;
   type: string;
   name: string;
-  value?: string | number | readonly string[] | undefined;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string | number | readonly string[] | undefined;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   disabled?: boolean;
   error?: string;
@@ -24,9 +24,9 @@ const Input = (props: InputProps) => {
         id={id}
         type={type}
         name={name}
-        className={`mt-1 w-full h-auto block px-4 py-2 border border-gray-300 rounded-md shadow-sm 
+        className={`mt-1 h-auto block px-4 py-2 border border-gray-300 rounded-md shadow-sm 
                     focus:outline-none focus:ring-2 focus:ring-indigo-500 
-                    ${className}`}
+                    ${className ? className : 'w-full'}`}
         {...rest}
       />
     </>

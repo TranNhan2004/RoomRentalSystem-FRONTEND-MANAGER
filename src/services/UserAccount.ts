@@ -7,8 +7,9 @@ import {
 } from "@/types/UserAccount";
 import { ApiServiceWithFormData } from "./Api";
 import axiosInstance from "@/lib/client/axios";
+import { UnknownQueryType } from "@/types/UnknownQuery";
 
-export class UserService extends ApiServiceWithFormData<UserType> {
+export class UserService extends ApiServiceWithFormData<UserType, UnknownQueryType> {
   constructor() {
     super('/users');
   }
@@ -28,7 +29,7 @@ export class AuthService {
   }
 
   public async resetPassword(data: ResetPasswordRequestAfterType, uidb64: string, token: string) {
-    const response = await axiosInstance.post(`/auth/reset-password-confirm/${uidb64}/${token}/`, { ...data });
+    const response = await axiosInstance.post(`/auth/reset-password-confirm/${uidb64}/${token}/`, data);
     return response.data;
   }
 };

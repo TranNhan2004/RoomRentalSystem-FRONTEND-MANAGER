@@ -2,7 +2,7 @@ import ChangePassword from "@/components/main/profile/ChangePassword";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Change Password",
+  title: "Change password",
   description: "Change your password page",
 };
 

@@ -14,6 +14,7 @@ export default {
         "mygreen": "#13C394",
         "mydarkgreen": "#11AB82",
         "mylightgreen": "#CFF9E0",
+        "mybtnbg": "#DEE6E8"
       },
     },
   },

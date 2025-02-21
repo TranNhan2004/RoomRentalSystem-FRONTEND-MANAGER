@@ -24,6 +24,8 @@ export type RoomChargesListType = {
   end_date?: Date;
 }
 
+export type RoomChargesListQueryType = Pick<RoomChargesListType, 'rental_room'>;
+
 export type ElectricityWaterChargesListType = {
   id?: string;
   rental_room?: string;
@@ -35,6 +37,8 @@ export type ElectricityWaterChargesListType = {
   end_date?: Date;
 }
 
+export type ElectricityWaterChargesListQueryType = Pick<ElectricityWaterChargesListType, 'rental_room'>;
+
 export type OtherChargesListType = {
   id?: string;
   rental_room?: string;
@@ -44,8 +48,12 @@ export type OtherChargesListType = {
   end_date?: Date;
 }
 
+export type OtherChargesListQueryType = Pick<OtherChargesListType, 'rental_room'>;
+
 export type RentalRoomImageType = {
   id?: string;
   rental_room?: string;
   image?: string;
 }
+
+export type RentalRoomImageQueryType = Pick<RentalRoomImageType, 'rental_room'>;

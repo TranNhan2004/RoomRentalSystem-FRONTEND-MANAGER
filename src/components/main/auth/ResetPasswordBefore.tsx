@@ -10,10 +10,12 @@ import { AuthService } from '@/services/UserAccount';
 const INITIAL_COUNTDOWN = 60;
 
 const ResetPasswordBefore = () => {
-  const [reqData, setReqData] = useState<ResetPasswordRequestBeforeType>({ email: '' });
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); 
   const [buttonText, setButtonText] = useState('Gửi'); 
   const [countdown, setCountdown] = useState(INITIAL_COUNTDOWN); 
+  const [reqData, setReqData] = useState<ResetPasswordRequestBeforeType>({ 
+    email: '' 
+  });
 
   useEffect(() => {
     let timer = setInterval(() => {}, 0);
@@ -51,7 +53,7 @@ const ResetPasswordBefore = () => {
 
 
   return (
-    <Form label='Đặt lại mật khẩu' onSubmit={handleSubmit}>
+    <Form label='Đặt lại mật khẩu' onSubmit={handleSubmit} useModal>
       <div>
         <Input 
           id='email'

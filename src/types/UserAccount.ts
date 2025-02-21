@@ -1,7 +1,4 @@
-export type LoginRequestType = {
-  email?: string;
-  password?: string;
-}
+export type LoginRequestType = Pick<UserType, 'email' | 'password'>;
 
 export type LoginResponseType = {
   refresh?: string;
@@ -9,9 +6,7 @@ export type LoginResponseType = {
   user?: UserType;
 }
 
-export type ResetPasswordRequestBeforeType = {
-  email?: string;
-}
+export type ResetPasswordRequestBeforeType = Pick<UserType, 'email'>;
 
 export type ResetPasswordRequestAfterType = {
   new_password?: string;

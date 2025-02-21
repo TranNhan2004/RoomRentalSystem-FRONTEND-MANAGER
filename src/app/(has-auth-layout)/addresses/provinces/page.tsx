@@ -1,4 +1,4 @@
-import ProvincesList from "@/components/main/data/address/ProvincesList";
+import ProvincesList from "@/components/main/address/ProvincesList";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

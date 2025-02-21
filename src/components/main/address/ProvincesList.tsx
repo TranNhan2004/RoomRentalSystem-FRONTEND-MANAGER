@@ -3,16 +3,18 @@
 import React from 'react';
 import { ProvinceService } from '@/services/Address';
 import { useEffect, useState } from 'react';
-import { handleDeleteAlert } from '@/lib/client/alert';
+import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
 import { ProvinceType } from '@/types/Address';
 import Title from '@/components/partial/data/Title';
 import InputSearch from '@/components/partial/data/InputSearch';
 import Sorting from '@/components/partial/data/Sorting';
-import Filter from '@/components/partial/data/Filter';
 import Table from '@/components/partial/data/Table';
 import { AddButton } from '@/components/partial/button/FeatureButton';
+import { useRouter } from 'next/navigation';
+import { ProvinceMessage } from '@/messages/Address';
 
 const ProvincesList = () => {
+  const router = useRouter();
   const [data, setData] = useState<ProvinceType[]>([]);
 
   useEffect(() => {
@@ -43,18 +45,32 @@ const ProvincesList = () => {
     console.log(`Sort by: ${optionValue}`);
   };
 
-  const onFilter = (selectedFilters: Set<string>) => {
-    selectedFilters.forEach((filter) => {
-      console.log(`Filter by ${filter}`);
-    });
+  const deleteElement = async (id: string) => {
+    try {
+      await handleDeleteAlert(async () => {
+        setData(data.filter((item) => item.id !== id)); 
+        await (new ProvinceService()).delete(id);
+      });
+      await toastSuccess(ProvinceMessage.DELETE_SUCCESS);
+    } catch {
+      await toastError(ProvinceMessage.DELETE_ERROR);
+    }
   };
 
-  const deleteOnClick = async () => {
-    await handleDeleteAlert('success', 'Xóa tỉnh thành công!');
+  const detailElement = (id: string) => {
+    router.push(`provinces/${id}`);
+  };
+
+  const editElement = (id: string) => {
+    router.push(`provinces/${id}/edit`);
+  };
+
+  const routeToDistrictsOfProvince = (id: string) => {
+    router.push(`provinces/${id}/districts`);
   };
 
   const addOnClick = () => {
-    console.log('Add new province');
+    router.push('provinces/new');
   };
 
   return (
@@ -77,50 +93,6 @@ const ProvincesList = () => {
             onSort={onSort}
           />
         </div>
-        
-        <div className='ml-[20px]'>
-          <Filter 
-            onFilter={onFilter}
-            filterOptionsGroups={[
-              { 
-                category: 'ABC', 
-                options: [
-                  { label: 'a', value: 'a' },
-                  { label: 'b', value: 'b' },
-                  { label: 'c', value: 'c' },
-                ]
-              },
-              { 
-                category: 'DEF', 
-                options: [
-                  { label: 'd', value: 'd' },
-                  { label: 'e', value: 'e' },
-                  { label: 'f', value: 'f' },
-                ] 
-
-              },
-              { 
-                category: 'GHI', 
-                options: [
-                  { label: 'g', value: 'g' },
-                  { label: 'h', value: 'h' },
-                  { label: 'i', value: 'i' },
-                  { label: 'j', value: 'j' },
-                  { label: 'k', value: 'k' },
-                  { label: 'l', value: 'l' },
-                  { label: 'm', value: 'm' },
-                  { label: 'n', value: 'n' },
-                  { label: 'o', value: 'o' },
-                  { label: 'p', value: 'p' },
-                  { label: 'q', value: 'q' },
-                  { label: 'r', value: 'r' },
-                  { label: 's', value: 's' },
-                  { label: 't', value: 't' },
-                ]  
-              },
-            ]}
-          />
-        </div>
 
         <div className='ml-auto'>
           <AddButton onClick={addOnClick}>Thêm mới</AddButton>
@@ -129,7 +101,15 @@ const ProvincesList = () => {
 
     <Table 
       data={generateDataForTable()}
-      deleteOnClick={deleteOnClick}
+      deleteElement={deleteElement}
+      detailElement={detailElement}
+      editElement={editElement}
+      otherDetails={[
+        {
+          rowName: 'DS huyện',
+          detailElement: routeToDistrictsOfProvince 
+        }
+      ]}
     />
   </div>
   );

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import UserList from "@/components/main/data/user/UserList";
+import UserList from "@/components/main/user/UserList";
 
 export const metadata: Metadata = {
   title: "Users",

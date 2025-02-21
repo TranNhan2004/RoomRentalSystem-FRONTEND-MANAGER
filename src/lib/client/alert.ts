@@ -21,14 +21,10 @@ export const toastError = async (message: string) => {
   toast.error(message, { className: 'toast-error' });
 };
 
-export const handleDeleteAlert = async (status: 'success' | 'error', message: string) => {
+export const handleDeleteAlert = async (deleteMethod: () => void) => {
   const result = await getConfirmSwal();
   if (result.isConfirmed) {
-    if (status === 'success') {
-      await toastSuccess(message);
-    } else {
-      await toastError(message);
-    }
+    deleteMethod();
   }
 };
 
