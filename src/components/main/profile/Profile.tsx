@@ -2,11 +2,11 @@
 
 import DefaultAvatar from '@/components/partial/account/DefaultAvatar';
 import PotraitAvatar from '@/components/partial/account/PotraitAvatar';
-import { DeleteButton, EditButton, UploadButton } from '@/components/partial/button/FeatureButton';
+import { DeleteButton, EditButton, UploadButton } from '@/components/partial/button/ActionButton';
 import { getUserInfo } from '@/lib/client/authToken';
 import { displayGender, displayRole } from '@/lib/client/display';
 import formatDate from '@/lib/client/formatDate';
-import { UserType } from '@/types/UserAccount';
+import { UserType } from '@/types/UserAccount.type';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 

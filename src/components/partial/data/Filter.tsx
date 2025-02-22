@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import { FunnelIcon } from '@heroicons/react/24/outline'; 
-import { CancelButton, FilterButton } from '../button/FeatureButton';
-
+import { ActionButton } from '../button/ActionButton';
 
 type FilterOptionsGroupType = {
   category: string;
@@ -107,11 +106,11 @@ const Filter = (props: FilterProps) => {
 
               <div className='flex justify-end'>
                 <div className="mt-6 mr-2">
-                  <FilterButton onClick={handleApplyFilter}>Lọc</FilterButton>
+                  <ActionButton mode='filter' onClick={handleApplyFilter}>Lọc</ActionButton>
                 </div>
 
                 <div className="mt-6">
-                  <CancelButton onClick={handleExitModal}>Thoát</CancelButton>
+                  <ActionButton mode='cancel' onClick={handleExitModal}>Thoát</ActionButton>
                 </div>
               </div>
             </div>

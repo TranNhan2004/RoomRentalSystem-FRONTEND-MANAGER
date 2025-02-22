@@ -1,4 +1,4 @@
-import ProvinceAddForm from "@/components/main/address/ProvinceAddForm";
+import ProvinceAdd from "@/components/main/address/province/ProvinceAdd";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,10 +6,10 @@ export const metadata: Metadata = {
   description: "This is a new page",
 };
 
-export default function NewProvincePage() {
+export default function ProvinceAddPage() {
   return (
     <>
-      <ProvinceAddForm />
+      <ProvinceAdd />
     </>
   );
 }

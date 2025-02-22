@@ -43,6 +43,7 @@ axiosInstance.interceptors.response.use(
       return axios(originalRequest);
     }
 
+    console.log(JSON.stringify(error.response));
     return Promise.reject(error);
   }
 );

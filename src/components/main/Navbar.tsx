@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import logoPicture from '../../../public/logo.png';
-import { UserType } from '@/types/UserAccount';
+import { UserType } from '@/types/UserAccount.type';
 import NavLink from '../partial/navbar/NavLink';
 import DropdownMenu from '../partial/navbar/DropdownMenu';
 import AccountInfo from '../partial/account/AccountInfo';
@@ -40,15 +40,15 @@ const Navbar = () => {
 
         <ul className='space-y-4 ml-[3%]'>
           <li><NavLink href='/'>Trang chủ</NavLink></li>
-          <li><NavLink href='/data/users'>QL người dùng</NavLink></li>
-          <li><NavLink href='/data/rental-rooms'>QL phòng trọ</NavLink></li>
+          <li><NavLink href='/users'>QL người dùng</NavLink></li>
+          <li><NavLink href='/rental-rooms'>QL phòng trọ</NavLink></li>
           <li>
             <DropdownMenu
               label='QL địa chỉ'  
               links={[
-                { label: 'Cấp tỉnh', href: '/data/addresses/provinces' },
-                { label: 'Cấp huyện', href: '/data/addresses/districts' },
-                { label: 'Cấp xã', href: '/data/addresses/communes' }
+                { label: 'Cấp tỉnh', href: '/addresses/provinces' },
+                { label: 'Cấp huyện', href: '/addresses/districts' },
+                { label: 'Cấp xã', href: '/addresses/communes' }
               ]}
             />
           </li>

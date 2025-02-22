@@ -1,3 +1,4 @@
+import ProvinceEdit from "@/components/main/address/province/ProvinceEdit";
 
 export default async function ProvinceEditDetailsPage({
   params,
@@ -10,8 +11,8 @@ export default async function ProvinceEditDetailsPage({
   const { provinceId } = await params;
 
   return (
-    <div>
-      Province Edit Details Page {provinceId}
-    </div>
+    <>
+      <ProvinceEdit id={provinceId} />
+    </>
   );
 }

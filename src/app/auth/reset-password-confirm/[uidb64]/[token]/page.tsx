@@ -1,5 +1,5 @@
 import ResetPasswordAfter from "@/components/main/auth/ResetPasswordAfter";
-import { checkLoginStatusForLoginPage } from "@/lib/server/checkLoginStatus";
+import { checkLoginStatusForNotAuthPage } from "@/lib/server/checkLoginStatus";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default async function ResetPasswordAfterPage({
     token: string
   }>
 }) {
-  await checkLoginStatusForLoginPage();
+  await checkLoginStatusForNotAuthPage();
   const { uidb64, token } = await params;
 
   return (

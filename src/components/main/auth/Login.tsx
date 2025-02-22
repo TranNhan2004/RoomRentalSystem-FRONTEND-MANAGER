@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { useRouter } from 'next/navigation';
 import { handleLogin } from '@/lib/client/authToken';
-import { LoginRequestType } from '@/types/UserAccount';
+import { LoginRequestType } from '@/types/UserAccount.type';
 import Input from '@/components/partial/form/Input';
 import Form from '@/components/partial/form/Form';
-import { AuthService } from '@/services/UserAccount';
+import { AuthService } from '@/services/UserAccount.service';
 import Link from 'next/link';
 
 const Login = () => {

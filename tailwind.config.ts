@@ -14,7 +14,21 @@ export default {
         "mygreen": "#13C394",
         "mydarkgreen": "#11AB82",
         "mylightgreen": "#CFF9E0",
-        "mybtnbg": "#DEE6E8"
+      },
+      animation: {
+        bounce1: 'bounce 1.2s infinite ease-in-out 0s',
+        bounce2: 'bounce 1.2s infinite ease-in-out 0.2s',
+        bounce3: 'bounce 1.2s infinite ease-in-out 0.4s',
+      },
+      keyframes: {
+        bounce: {
+          '0%, 100%': {
+            transform: 'translateY(0)',
+          },
+          '50%': {
+            transform: 'translateY(-10px)',
+          },
+        },
       },
     },
   },

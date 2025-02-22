@@ -4,9 +4,9 @@ import {
   DistrictQueryType, 
   DistrictType, 
   ProvinceType 
-} from "@/types/Address";
-import { ApiService } from "./Api";
-import { UnknownQueryType } from "@/types/UnknownQuery";
+} from "@/types/Address.type";
+import { ApiService } from "./Api.service";
+import { UnknownQueryType } from "@/types/UnknownQuery.type";
 
 
 export class ProvinceService extends ApiService<ProvinceType, UnknownQueryType> {

@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { handleInputChange } from '@/lib/client/handleInputChange';
-import { ResetPasswordRequestBeforeType } from '@/types/UserAccount';
+import { ResetPasswordRequestBeforeType } from '@/types/UserAccount.type';
 import Input from '@/components/partial/form/Input';
 import Form from '@/components/partial/form/Form';
-import { AuthService } from '@/services/UserAccount';
+import { AuthService } from '@/services/UserAccount.service';
 
 const INITIAL_COUNTDOWN = 60;
 

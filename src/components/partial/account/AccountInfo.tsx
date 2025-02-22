@@ -4,7 +4,7 @@ import React from 'react';
 import DropdownMenu from './DropdownMenu';
 import PotraitAvatar from './PotraitAvatar';
 import StandardAvatar from './DefaultAvatar';
-import { UserType } from '@/types/UserAccount';
+import { UserType } from '@/types/UserAccount.type';
 
 
 const AccountInfo = (props: UserType) => {

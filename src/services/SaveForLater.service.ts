@@ -1,5 +1,5 @@
-import { SaveForLaterType } from "@/types/SaveForLater";
-import { ApiService } from "./Api";
+import { SaveForLaterType } from "@/types/SaveForLater.type";
+import { ApiService } from "./Api.service";
 
 export class SaveForLaterService extends ApiService<SaveForLaterType, SaveForLaterType> {
   constructor() {

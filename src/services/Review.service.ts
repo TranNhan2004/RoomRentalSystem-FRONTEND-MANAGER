@@ -1,5 +1,5 @@
-import { ReviewQueryType, ReviewType } from "@/types/Review";
-import { ApiService } from "./Api";
+import { ReviewQueryType, ReviewType } from "@/types/Review.type";
+import { ApiService } from "./Api.service";
 
 export class ReviewService extends ApiService<ReviewType, ReviewQueryType> {
   constructor() {

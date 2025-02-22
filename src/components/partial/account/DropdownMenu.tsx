@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRightStartOnRectangleIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
-import { UserType } from '@/types/UserAccount';
+import { UserType } from '@/types/UserAccount.type';
 
 interface DropdownMenuProps {
   children: React.ReactNode;

@@ -1,6 +1,6 @@
 'use client';
 
-import { UserType } from '@/types/UserAccount';
+import { UserType } from '@/types/UserAccount.type';
 import React, { useEffect, useState } from 'react';
 
 const backgroundColors = [

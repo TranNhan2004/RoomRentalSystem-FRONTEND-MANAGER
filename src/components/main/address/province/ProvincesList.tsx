@@ -1,17 +1,17 @@
 'use client';
 
 import React from 'react';
-import { ProvinceService } from '@/services/Address';
+import { ProvinceService } from '@/services/Address.service';
 import { useEffect, useState } from 'react';
 import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
-import { ProvinceType } from '@/types/Address';
+import { ProvinceType } from '@/types/Address.type';
 import Title from '@/components/partial/data/Title';
 import InputSearch from '@/components/partial/data/InputSearch';
 import Sorting from '@/components/partial/data/Sorting';
 import Table from '@/components/partial/data/Table';
-import { AddButton } from '@/components/partial/button/FeatureButton';
 import { useRouter } from 'next/navigation';
-import { ProvinceMessage } from '@/messages/Address';
+import { ProvinceMessage } from '@/messages/Address.message';
+import { ActionButton } from '@/components/partial/button/ActionButton';
 
 const ProvincesList = () => {
   const router = useRouter();
@@ -19,8 +19,12 @@ const ProvincesList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await (new ProvinceService()).getMany();
-      setData(data);
+      try {
+        const data = await (new ProvinceService()).getMany();
+        setData(data);
+      } catch {
+        toastError(ProvinceMessage.GET_MANY_ERROR);
+      }
     };
 
     fetchData();
@@ -31,7 +35,7 @@ const ProvincesList = () => {
     for (const item of data) {
       dataForTable.push({
         id: `${item.id}`,
-        display: `${item.name}`
+        basicInfo: `${item.name}`
       });
     }
     return dataForTable;
@@ -45,7 +49,7 @@ const ProvincesList = () => {
     console.log(`Sort by: ${optionValue}`);
   };
 
-  const deleteElement = async (id: string) => {
+  const deleteFunction = async (id: string) => {
     try {
       await handleDeleteAlert(async () => {
         setData(data.filter((item) => item.id !== id)); 
@@ -57,16 +61,12 @@ const ProvincesList = () => {
     }
   };
 
-  const detailElement = (id: string) => {
+  const detailFunction = (id: string) => {
     router.push(`provinces/${id}`);
   };
 
-  const editElement = (id: string) => {
+  const editFunction = (id: string) => {
     router.push(`provinces/${id}/edit`);
-  };
-
-  const routeToDistrictsOfProvince = (id: string) => {
-    router.push(`provinces/${id}/districts`);
   };
 
   const addOnClick = () => {
@@ -95,21 +95,15 @@ const ProvincesList = () => {
         </div>
 
         <div className='ml-auto'>
-          <AddButton onClick={addOnClick}>Thêm mới</AddButton>
+          <ActionButton mode='add' onClick={addOnClick}>Thêm mới</ActionButton>
         </div>
       </div>
 
     <Table 
       data={generateDataForTable()}
-      deleteElement={deleteElement}
-      detailElement={detailElement}
-      editElement={editElement}
-      otherDetails={[
-        {
-          rowName: 'DS huyện',
-          detailElement: routeToDistrictsOfProvince 
-        }
-      ]}
+      deleteFunction={deleteFunction}
+      detailFunction={detailFunction}
+      editFunction={editFunction}
     />
   </div>
   );

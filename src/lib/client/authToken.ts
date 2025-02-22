@@ -1,7 +1,6 @@
-import { LoginResponseType, UserType } from "@/types/UserAccount";
+import { LoginResponseType, UserType } from "@/types/UserAccount.type";
 import { encryptValue, decryptValue } from "../server/aesCrypto";
 import { setCookie, getCookie, removeCookie } from "typescript-cookie";
-
 
 const setSecureCookie = async (name: string, value: string, expires: number) => {
   const encryptedValue = await encryptValue(value);
@@ -21,13 +20,13 @@ const removeSecureCookie = async (name: string) => {
 };
 
 
-export const REFRESH_TOKEN_CKNAME = 'session_refresh_token';
-export const ACCESS_TOKEN_CKNAME = 'session_access_token';
-export const USER_INFO_CKNAME = 'session_user_info';
+export const REFRESH_TOKEN_CKNAME = 'session_manager_refresh_token';
+export const ACCESS_TOKEN_CKNAME = 'session_manager_access_token';
+export const USER_INFO_CKNAME = 'session_manager_user_info';
 
-export const REFRESH_COOKIE_EXPIRES = 7;
+export const REFRESH_COOKIE_EXPIRES = 3;
 export const ACCESS_COOKIE_EXPIRES = 1 / 24;
-export const USER_INFO_EXPIRES = 7;
+export const USER_INFO_EXPIRES = 3;
 
 export const handleLogin = async (data: LoginResponseType) => {  
   await setSecureCookie(REFRESH_TOKEN_CKNAME, data.refresh || '', REFRESH_COOKIE_EXPIRES);
@@ -44,14 +43,14 @@ export const getRefreshedAccessToken = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/token/refresh/`, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify({ refresh: refreshToken }),
     });
 
     const data = await response.json();
-
+  
     if (data.access) {
       await setSecureCookie(ACCESS_TOKEN_CKNAME, data.access, ACCESS_COOKIE_EXPIRES);
       return data.access;

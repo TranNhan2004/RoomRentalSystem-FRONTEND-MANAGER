@@ -8,9 +8,9 @@ import {
   RentalRoomType, 
   RoomChargesListQueryType, 
   RoomChargesListType 
-} from "@/types/RentalRoom";
-import { ApiService, ApiServiceWithFormData } from "./Api";
-import { UnknownQueryType } from "@/types/UnknownQuery";
+} from "@/types/RentalRoom.type";
+import { ApiService, ApiServiceWithFormData } from "./Api.service";
+import { UnknownQueryType } from "@/types/UnknownQuery.type";
 
 
 export class RentalRoomService extends ApiService<RentalRoomType, UnknownQueryType> {

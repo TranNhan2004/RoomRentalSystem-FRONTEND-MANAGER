@@ -1,22 +1,24 @@
 'use client';
 
 import React, { useState } from 'react';
-import { DeleteButton, EditButton, DetailButton } from '../button/FeatureButton';
 import PaginationNav from './PaginationNav';
+import { ActionButton, ActionButtonProps } from '../button/ActionButton';
 
 type TableProps = {
-  data: Array<{ id: string; display: string }>;
-  detailElement: (id: string) => void;
-  editElement: (id: string) => void;
-  deleteElement: (id: string) => void;
-  otherDetails?: {
+  data: Array<{ id: string; basicInfo: string }>;
+  detailFunction: (id: string) => void;
+  editFunction: (id: string) => void;
+  deleteFunction: (id: string) => void;
+  otherFunctions?: {
     rowName: string;
-    detailElement: (id: string) => void;
+    function: (id: string) => void;
+    buttonMode: ActionButtonProps['mode'];
   }[];
 }
 
 const Table = (props: TableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
+
   const rowsPerPage = 10;
   const totalPages = Math.ceil(props.data.length / rowsPerPage);
 
@@ -25,43 +27,43 @@ const Table = (props: TableProps) => {
     console.log(`Page ${currentPage}`);
   };
 
-  const displayedData = props.data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  const basicInfoedData = props.data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
-  const generateOtherDetailsRowName = () => {
-    return props.otherDetails && props.otherDetails.map((otherDetail, index) => (
-      <th key={index} className='p-2 border w-[6%]'>{otherDetail.rowName}</th>
+  const generateOtherRowNames = () => {
+    return props.otherFunctions && props.otherFunctions.map((otherFunction, index) => (
+      <th key={index} className='p-2 border w-[8%]'>{otherFunction.rowName}</th>
     ));
   };
 
-  const generateOtherDetailsElementFunction = (item: { id: string, display: string }) => {
-    return props.otherDetails && props.otherDetails.map((otherDetail, index) => (
+  const generateOtherFunctions = (item: { id: string; basicInfo: string }) => {
+    return props.otherFunctions && props.otherFunctions.map((otherFunction, index) => (
       <td key={index} className='p-2 border text-center'>
         <div className='flex justify-center'>
-          <DetailButton onClick={() => otherDetail.detailElement(item.id)} />
+          <ActionButton mode={otherFunction.buttonMode} onClick={() => otherFunction.function(item.id)}/>
         </div>
       </td>
     ));
   };
 
   const generateBody = () => {
-    return displayedData.map((item, index) => (
+    return basicInfoedData.map((item, index) => (
       <tr key={item.id} className='border'>
         <td className='p-2 border'>{(currentPage - 1) * rowsPerPage + index + 1}</td>
-        <td className='p-2 border'>{item.display}</td>
+        <td className='p-2 border'>{item.basicInfo}</td>
         <td className='p-2 border text-center'>
           <div className='flex justify-center'>
-            <DetailButton onClick={() => props.detailElement(item.id)} />
+            <ActionButton mode='detail' onClick={() => props.detailFunction(item.id)} />
           </div>
         </td>
-        {generateOtherDetailsElementFunction(item)}
+        {generateOtherFunctions(item)}
         <td className='p-2 border text-center'>
           <div className='flex justify-center'>
-            <EditButton onClick={() => props.editElement(item.id)} />
+            <ActionButton mode='edit' onClick={() => props.editFunction(item.id)} />
           </div>
         </td>
         <td className='p-2 border text-center'>
           <div className='flex justify-center'>
-            <DeleteButton onClick={() => props.deleteElement(item.id)} />
+            <ActionButton mode='delete' onClick={() => props.deleteFunction(item.id)} />
           </div>
         </td>
       </tr>
@@ -75,11 +77,11 @@ const Table = (props: TableProps) => {
           <thead>
             <tr className='bg-gray-100 text-center'>
               <th className='p-2 border w-[6%]'>STT</th>
-              <th className='p-2 border'>Dữ liệu hiển thị</th>
-              <th className='p-2 border w-[6%]'>Chi tiết</th>
-              {generateOtherDetailsRowName()}
-              <th className='p-2 border w-[6%]'>Sửa</th>
-              <th className='p-2 border w-[6%]'>Xóa</th>
+              <th className='p-2 border'>Thông tin cơ bản</th>
+              <th className='p-2 border w-[8%]'>Chi tiết</th>
+              {generateOtherRowNames()}
+              <th className='p-2 border w-[8%]'>Sửa</th>
+              <th className='p-2 border w-[8%]'>Xóa</th>
             </tr>
           </thead>
           <tbody>

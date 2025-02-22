@@ -1,6 +1,6 @@
-import { ContractType, RentalContractType } from "@/types/Contract";
-import { ApiService } from "./Api";
-import { UnknownQueryType } from "@/types/UnknownQuery";
+import { ContractType, RentalContractType } from "@/types/Contract.type";
+import { ApiService } from "./Api.service";
+import { UnknownQueryType } from "@/types/UnknownQuery.type";
 
 export class ContractService extends ApiService<ContractType, UnknownQueryType> {
   constructor() {
@@ -13,3 +13,4 @@ export class RentalContractService extends ApiService<RentalContractType, Unknow
     super("/rental_contracts");
   }
 }
+

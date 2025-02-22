@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     default: "Manager",
     template: "Manager | %s",
   },
-  description: "Hệ thống quản lý cho thuê phòng trọ tại TP Cần Thơ",
+  description: "Rental room finding system in Can Tho",
 };
 
 export default function RootLayout({

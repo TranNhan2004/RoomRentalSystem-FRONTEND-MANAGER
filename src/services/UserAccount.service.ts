@@ -4,10 +4,10 @@ import {
   ResetPasswordRequestAfterType, 
   ResetPasswordRequestBeforeType, 
   UserType 
-} from "@/types/UserAccount";
-import { ApiServiceWithFormData } from "./Api";
+} from "@/types/UserAccount.type";
+import { ApiServiceWithFormData } from "./Api.service";
 import axiosInstance from "@/lib/client/axios";
-import { UnknownQueryType } from "@/types/UnknownQuery";
+import { UnknownQueryType } from "@/types/UnknownQuery.type";
 
 export class UserService extends ApiServiceWithFormData<UserType, UnknownQueryType> {
   constructor() {

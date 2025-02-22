@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { handleInputChange } from '@/lib/client/handleInputChange';
-import { ResetPasswordRequestAfterType } from '@/types/UserAccount';
+import { ResetPasswordRequestAfterType } from '@/types/UserAccount.type';
 import Input from '@/components/partial/form/Input';
 import Form from '@/components/partial/form/Form';
-import { AuthService } from '@/services/UserAccount';
+import { AuthService } from '@/services/UserAccount.service';
 import { useRouter } from 'next/navigation';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 
