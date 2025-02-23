@@ -62,22 +62,23 @@ export type ActionButtonProps = {
   isSubmit?: boolean;
   name?: string;
   value?: string;
+  color?: keyof typeof colorVariants;
   disabled?: boolean;
   children?: React.ReactNode;
 }
 
 export const ActionButton = (props: ActionButtonProps) => {  
-  const { icon, color } = buttonConfig[props.mode];
-
+  const icon = buttonConfig[props.mode].icon;
+  const color = props.color ?? buttonConfig[props.mode].color;
   const px = props.children ? 'px-4' : 'px-2';
-
+  const classNameForDisabledOrNot = props.disabled ?
+                                    'cursor-not-allowed bg-gray-400 text-gray-600' :
+                                    `${colorVariants[color]} transition-all hover:bg-opacity-80`;
+  
   return (
     <button
       onClick={props.onClick}
-      className={`flex items-center ${px} py-2 rounded-xl shadow-md 
-                  ${props.disabled ? 
-                    'cursor-not-allowed bg-gray-400 text-gray-600' : 
-                    `${colorVariants[color]} transition-all hover:bg-opacity-80`}`}
+      className={`flex items-center ${px} py-2 rounded-xl shadow-md ${classNameForDisabledOrNot}`}
       type={props.isSubmit ? 'submit' : 'button'}
       name={props.name}
       value={props.value}

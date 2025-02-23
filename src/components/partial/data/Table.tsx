@@ -4,8 +4,13 @@ import React, { useState } from 'react';
 import PaginationNav from './PaginationNav';
 import { ActionButton, ActionButtonProps } from '../button/ActionButton';
 
-type TableProps = {
-  data: Array<{ id: string; basicInfo: string }>;
+export type DisplayDataType = {
+  id: string;
+  basicInfo: string | number;
+}
+
+export type TableProps = {
+  data: DisplayDataType[];
   detailFunction: (id: string) => void;
   editFunction: (id: string) => void;
   deleteFunction: (id: string) => void;
@@ -16,7 +21,7 @@ type TableProps = {
   }[];
 }
 
-const Table = (props: TableProps) => {
+export const Table = (props: TableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const rowsPerPage = 10;
@@ -35,7 +40,7 @@ const Table = (props: TableProps) => {
     ));
   };
 
-  const generateOtherFunctions = (item: { id: string; basicInfo: string }) => {
+  const generateOtherFunctions = (item: DisplayDataType) => {
     return props.otherFunctions && props.otherFunctions.map((otherFunction, index) => (
       <td key={index} className='p-2 border text-center'>
         <div className='flex justify-center'>
@@ -98,5 +103,3 @@ const Table = (props: TableProps) => {
     </div>
   );
 };
-
-export default Table;

@@ -3,12 +3,12 @@
 import Image from 'next/image'; 
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import logoPicture from '../../../public/logo.png';
 import { UserType } from '@/types/UserAccount.type';
 import NavLink from '../partial/navbar/NavLink';
 import DropdownMenu from '../partial/navbar/DropdownMenu';
 import AccountInfo from '../partial/account/AccountInfo';
 import { getUserInfo } from '@/lib/client/authToken';
+import { getImageSrc } from '@/lib/client/getImageSrc';
 
 
 const Navbar = () => {
@@ -28,7 +28,7 @@ const Navbar = () => {
         <div className='mt-2 mb-8'>
           <Link href={'/'}>
             <Image 
-              src={logoPicture} 
+              src={getImageSrc('logo.png')} 
               alt='Logo' 
               width={200} 
               height={200} 
@@ -46,9 +46,9 @@ const Navbar = () => {
             <DropdownMenu
               label='QL địa chỉ'  
               links={[
-                { label: 'Cấp tỉnh', href: '/addresses/provinces' },
-                { label: 'Cấp huyện', href: '/addresses/districts' },
-                { label: 'Cấp xã', href: '/addresses/communes' }
+                { label: 'Tỉnh', href: '/addresses/provinces' },
+                { label: 'Huyện', href: '/addresses/districts' },
+                { label: 'Xã', href: '/addresses/communes' }
               ]}
             />
           </li>

@@ -1,7 +1,6 @@
+import { getImageSrc } from "@/lib/client/getImageSrc";
 import { Metadata } from "next";
 import Image from "next/image";
-import managementPicture from "../../../public/management.png";
-import columnChartPicture from "../../../public/column-chart.png";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -17,7 +16,7 @@ export default function HomePage() {
       <div className="grid grid-cols-2 gap-8 mb-[3%]">
         <div className="flex justify-center ml-[-30%]">
           <Image 
-            src={managementPicture}
+            src={getImageSrc("management.png")}
             alt="Management Image"
             width={300}
             height={300}
@@ -41,7 +40,7 @@ export default function HomePage() {
         </div>
         <div className="flex justify-center ml-[10%]">
           <Image 
-            src={columnChartPicture}
+            src={getImageSrc("column-chart.png")}
             alt="Management Image"
             width={300}
             height={300}

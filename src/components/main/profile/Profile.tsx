@@ -2,26 +2,15 @@
 
 import DefaultAvatar from '@/components/partial/account/DefaultAvatar';
 import PotraitAvatar from '@/components/partial/account/PotraitAvatar';
-import { DeleteButton, EditButton, UploadButton } from '@/components/partial/button/ActionButton';
+import { ActionButton } from '@/components/partial/button/ActionButton';
 import { getUserInfo } from '@/lib/client/authToken';
 import { displayGender, displayRole } from '@/lib/client/display';
 import formatDate from '@/lib/client/formatDate';
 import { UserType } from '@/types/UserAccount.type';
 import { useRouter } from 'next/navigation';
+import { DataLine } from '@/components/partial/data/DataLine';
 import React, { useEffect, useState } from 'react';
 
-type TextProps = {
-  title: string;
-  content: string | undefined;
-}
-
-const Text = (props: TextProps) => {
-  return (
-    <p className='text-gray-800'>
-      <span className='text-gray-600'>{props.title}:&nbsp;&nbsp;</span>{props.content}
-    </p>
-  );
-};
 
 const Profile = () => {
   const router = useRouter();
@@ -47,18 +36,26 @@ const Profile = () => {
             } 
           </div>
           <div className='flex items-center space-x-4'>
-            <UploadButton onClick={() => console.log('Upload Photo')}>Tải ảnh lên</UploadButton>
-            <DeleteButton 
+            <ActionButton
+              mode='upload' 
+              onClick={() => console.log('Upload Photo')}
+            >
+              Tải ảnh lên
+            </ActionButton>
+
+            <ActionButton
+              mode='delete'
               onClick={() => console.log('Delete Photo')}
               disabled={!userInfo.avatar}
             >
               Gỡ ảnh
-            </DeleteButton>
+            </ActionButton>
+
           </div>
           <div className='text-lef italic space-y-2'>
-            <Text title='Ngày tạo tài khoản' content={formatDate(userInfo.created_at, 'dmy')} />
-            <Text title='Lần cập nhật gần nhất' content={formatDate(userInfo.updated_at, 'dmy')} />
-            <Text title='Lần đăng nhập gần nhất' content={formatDate(userInfo.last_login, 'dmy')} />
+            <DataLine label='Ngày tạo tài khoản' value={formatDate(userInfo.created_at, 'dmy')} />
+            <DataLine label='Lần cập nhật gần nhất' value={formatDate(userInfo.updated_at, 'dmy')} />
+            <DataLine label='Lần đăng nhập gần nhất' value={formatDate(userInfo.last_login, 'dmy')} />
           </div>
         </div>
 
@@ -66,16 +63,27 @@ const Profile = () => {
         
         <div className='flex flex-col justify-center space-y-4 ml-[-65%] mt-[-15%]'>
           <h2 className='text-3xl font-semibold text-gray-800'>{userInfo.first_name + ' ' + userInfo.last_name}</h2>
-          <Text title='Email' content={userInfo.email} />
-          <Text title='Số điện thoại' content={userInfo.phone_number} />
-          <Text title='Số CCCD' content={userInfo.citizen_number} />
-          <Text title='Giới tính' content={displayGender(userInfo.gender)} />
-          <Text title='Ngày sinh' content={formatDate(userInfo.date_of_birth, 'dmy')} />
-          <Text title='Vai trò' content={displayRole(userInfo.role)} />
+          <DataLine label='Email' value={userInfo.email} />
+          <DataLine label='Số điện thoại' value={userInfo.phone_number} />
+          <DataLine label='Số CCCD' value={userInfo.citizen_number} />
+          <DataLine label='Giới tính' value={displayGender(userInfo.gender)} />
+          <DataLine label='Ngày sinh' value={formatDate(userInfo.date_of_birth, 'dmy')} />
+          <DataLine label='Vai trò' value={displayRole(userInfo.role)} />
           
           <div className='flex space-x-4'>
-            <EditButton onClick={() => router.push('/profile/edit-info')}>Chỉnh sửa thông tin</EditButton>
-            <EditButton onClick={() => router.push('/profile/change-password')}>Đổi mật khẩu</EditButton>
+            <ActionButton 
+              mode='edit' 
+              onClick={() => router.push('/profile/edit-info')}
+            >
+              Chỉnh sửa thông tin
+            </ActionButton>
+            
+            <ActionButton 
+              mode='edit'
+              onClick={() => router.push('/profile/change-password')}
+            >
+              Đổi mật khẩu
+            </ActionButton>
           </div>
         </div>
       </div>

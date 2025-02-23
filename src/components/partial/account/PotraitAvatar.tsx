@@ -15,7 +15,7 @@ const PotraitAvatar = (props: PotraitAvatarProps) => {
   return (
     <div>
       <Image 
-        src={props.data.avatar || '/avatar.svg'}
+        src={props.data.avatar || 'avatar.svg'}
         alt="Avatar"
         width={props.width}
         height={props.height}

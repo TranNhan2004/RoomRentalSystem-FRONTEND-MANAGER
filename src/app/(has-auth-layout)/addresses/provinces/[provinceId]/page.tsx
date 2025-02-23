@@ -1,3 +1,4 @@
+import ProvinceDetail from "@/components/main/address/province/ProvinceDetail";
 
 export default async function ProvinceDetailsPage({
   params,
@@ -10,8 +11,8 @@ export default async function ProvinceDetailsPage({
   const { provinceId } = await params;
 
   return (
-    <div>
-      Province Details Page {provinceId}
-    </div>
+    <>
+      <ProvinceDetail id={provinceId} />
+    </>
   );
 }

@@ -8,7 +8,7 @@ import { ProvinceType } from '@/types/Address.type';
 import Title from '@/components/partial/data/Title';
 import InputSearch from '@/components/partial/data/InputSearch';
 import Sorting from '@/components/partial/data/Sorting';
-import Table from '@/components/partial/data/Table';
+import { Table, DisplayDataType } from '@/components/partial/data/Table';
 import { useRouter } from 'next/navigation';
 import { ProvinceMessage } from '@/messages/Address.message';
 import { ActionButton } from '@/components/partial/button/ActionButton';
@@ -31,7 +31,7 @@ const ProvincesList = () => {
   }, []);
 
   const generateDataForTable = () => {
-    const dataForTable = [];
+    const dataForTable: DisplayDataType[] = [];
     for (const item of data) {
       dataForTable.push({
         id: `${item.id}`,
@@ -43,10 +43,6 @@ const ProvincesList = () => {
 
   const onSearch = (searchQuery: string) => {
     console.log(`Search query: ${searchQuery}`);
-  };
-
-  const onSort = (optionValue: string) => {
-    console.log(`Sort by: ${optionValue}`);
   };
 
   const deleteFunction = async (id: string) => {
@@ -70,7 +66,7 @@ const ProvincesList = () => {
   };
 
   const addOnClick = () => {
-    router.push('provinces/new');
+    router.push('provinces/add');
   };
 
   return (
@@ -87,10 +83,10 @@ const ProvincesList = () => {
         <div className='ml-[30px]'>
           <Sorting
             options={[
-              { label: 'Tên tỉnh (A-Z)', value: 'inc-name' },
-              { label: 'Tên tỉnh (Z-A)', value: 'dec-name' },
+              { label: 'Tên tỉnh (A-Z)', value: 'asc-name' },
+              { label: 'Tên tỉnh (Z-A)', value: 'desc-name' },
             ]}
-            onSort={onSort}
+            setData={setData}
           />
         </div>
 
