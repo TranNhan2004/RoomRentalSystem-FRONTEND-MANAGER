@@ -19,6 +19,7 @@ export default {
         bounce1: 'bounce 1.2s infinite ease-in-out 0s',
         bounce2: 'bounce 1.2s infinite ease-in-out 0.2s',
         bounce3: 'bounce 1.2s infinite ease-in-out 0.4s',
+        spin: 'spin 2s linear infinite'
       },
       keyframes: {
         bounce: {
@@ -29,6 +30,10 @@ export default {
             transform: 'translateY(-10px)',
           },
         },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        }
       },
     },
   },

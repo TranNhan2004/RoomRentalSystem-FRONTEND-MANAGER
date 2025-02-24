@@ -1,24 +1,44 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; 
+import { search } from '@/lib/client/search';
 
-type InputSearchProps = {
-  placeholder?: string;
-  onSearch: (query: string) => void;
+type InputSearchProps<T extends object> = {
+  placeholder: string;
+  options: (keyof T)[];
+  originialData: T[];
+  data: T[];
+  setData: React.Dispatch<React.SetStateAction<T[]>>;
 }
 
-const InputSearch = (props: InputSearchProps) => {
+const InputSearch = <T extends object>(props: InputSearchProps<T>) => {
   const [searchQuery, setSearchQuery] = useState('');
 
+  // useEffect(() => {
+  //   if (searchQuery === '') {
+  //     props.setData(props.originialData);
+  //     setSearchQuery('');
+  //   }
+  // }, [searchQuery, props]);
+
+  const getSearchedData = () => {
+    const setValues = new Set<string>();
+    props.options.forEach(option => {
+      const values = search(props.data, option, searchQuery);
+      values.forEach(value => setValues.add(JSON.stringify(value)));
+    });  
+    return Array.from(setValues).map(value => JSON.parse(value));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
+    setSearchQuery(e.target.value.trim());
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && searchQuery.trim() !== '') {
-      props.onSearch(searchQuery);
-    }
+    if (searchQuery !== '' && e.key === 'Enter') {
+      props.setData(getSearchedData());
+    } 
   };
 
   return (

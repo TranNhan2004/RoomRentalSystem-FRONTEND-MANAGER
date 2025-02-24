@@ -1,0 +1,1 @@
+export const NOT_FOUND_URL = '/404';

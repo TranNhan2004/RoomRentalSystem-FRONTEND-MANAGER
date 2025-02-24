@@ -23,7 +23,7 @@ export class AuthService {
     return response.data;
   }
 
-  public async generateURLForResetPassword(data: ResetPasswordRequestBeforeType) {
+  public async getResetPasswordURL(data: ResetPasswordRequestBeforeType) {
     const response = await axiosInstance.post('/auth/reset-password/', data);
     return response.data;
   }

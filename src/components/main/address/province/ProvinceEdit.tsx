@@ -11,6 +11,7 @@ import ProvinceForm from './ProvinceForm';
 import { INITIAL_PROVINCE } from '@/initials/Address.initial';
 import { objectEquals } from '@/lib/client/objectEquals';
 import Loading from '@/components/partial/data/Loading';
+import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
 
 type ProvinceEditProps = {
   id: string;
@@ -58,7 +59,7 @@ const ProvinceEdit = (props: ProvinceEditProps) => {
         const province = await (new ProvinceService()).get(props.id);
         setReqData(province);
       } catch {
-        router.push('/404');
+        router.push(NOT_FOUND_URL);
       }
     };
 

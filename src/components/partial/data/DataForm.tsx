@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Form from '../form/Form';
 import { ActionButton } from '../button/ActionButton';
+import { allTrue } from '@/lib/client/isValidForm';
 
 export type DataFormProps = {
   formLabel: string;
+  isValids?: boolean[];
   saveOnClick: () => void;
   saveAndExitOnClick: () => void;
   cancelOnClick: () => void;
@@ -15,7 +17,10 @@ export const DataForm = (props: DataFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form');
+    if (!allTrue(props.isValids ?? [])) {
+      return;
+    }
+
     if (action === 'save') {
       props.saveOnClick();
     } else {

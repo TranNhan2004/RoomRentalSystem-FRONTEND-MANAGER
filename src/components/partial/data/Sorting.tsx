@@ -9,6 +9,7 @@ type SortingProps<T extends object> = {
     label: string;
     value: string;
   }[];
+  data: T[];
   setData: React.Dispatch<React.SetStateAction<T[]>>;
 }
 
@@ -17,10 +18,10 @@ const Sorting = <T extends object>(props: SortingProps<T>) => {
     const [mode, key] = e.target.value.split('-');
     switch (mode) {
       case 'asc':
-        props.setData(prevData => sort(prevData, key as keyof T, true));
+        props.setData(sort(props.data, key as keyof T, true));
         return;
       case 'desc':
-        props.setData(prevData => sort(prevData, key as keyof T, false));
+        props.setData(sort(props.data, key as keyof T, false));
         return;
       default:
         await toastError('Lỗi mode của sorting!');

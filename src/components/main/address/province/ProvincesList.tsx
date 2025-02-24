@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { ProvinceService } from '@/services/Address.service';
 import { useEffect, useState } from 'react';
 import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
@@ -16,14 +16,16 @@ import { ActionButton } from '@/components/partial/button/ActionButton';
 const ProvincesList = () => {
   const router = useRouter();
   const [data, setData] = useState<ProvinceType[]>([]);
+  const originalDataRef = useRef<ProvinceType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await (new ProvinceService()).getMany();
+        originalDataRef.current = data;
         setData(data);
       } catch {
-        toastError(ProvinceMessage.GET_MANY_ERROR);
+        await toastError(ProvinceMessage.GET_MANY_ERROR);
       }
     };
 
@@ -41,17 +43,13 @@ const ProvincesList = () => {
     return dataForTable;
   };
 
-  const onSearch = (searchQuery: string) => {
-    console.log(`Search query: ${searchQuery}`);
-  };
-
   const deleteFunction = async (id: string) => {
     try {
       await handleDeleteAlert(async () => {
-        setData(data.filter((item) => item.id !== id)); 
+        setData(originalDataRef.current.filter((item) => item.id !== id)); 
         await (new ProvinceService()).delete(id);
+        await toastSuccess(ProvinceMessage.DELETE_SUCCESS);
       });
-      await toastSuccess(ProvinceMessage.DELETE_SUCCESS);
     } catch {
       await toastError(ProvinceMessage.DELETE_ERROR);
     }
@@ -76,7 +74,10 @@ const ProvincesList = () => {
         <div className='w-[40%]'>
           <InputSearch 
             placeholder='Tìm kiếm theo tên tỉnh'
-            onSearch={onSearch}
+            options={['name']}
+            originialData={originalDataRef.current}
+            data={data}
+            setData={setData}
           />
         </div>
 
@@ -86,6 +87,7 @@ const ProvincesList = () => {
               { label: 'Tên tỉnh (A-Z)', value: 'asc-name' },
               { label: 'Tên tỉnh (Z-A)', value: 'desc-name' },
             ]}
+            data={data}
             setData={setData}
           />
         </div>

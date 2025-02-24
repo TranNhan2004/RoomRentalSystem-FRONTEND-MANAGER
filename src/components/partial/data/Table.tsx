@@ -32,7 +32,7 @@ export const Table = (props: TableProps) => {
     console.log(`Page ${currentPage}`);
   };
 
-  const basicInfoedData = props.data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+  const basicInfoData = props.data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
   const generateOtherRowNames = () => {
     return props.otherFunctions && props.otherFunctions.map((otherFunction, index) => (
@@ -51,7 +51,7 @@ export const Table = (props: TableProps) => {
   };
 
   const generateBody = () => {
-    return basicInfoedData.map((item, index) => (
+    return basicInfoData.map((item, index) => (
       <tr key={item.id} className='border'>
         <td className='p-2 border'>{(currentPage - 1) * rowsPerPage + index + 1}</td>
         <td className='p-2 border'>{item.basicInfo}</td>
@@ -90,9 +90,18 @@ export const Table = (props: TableProps) => {
             </tr>
           </thead>
           <tbody>
-            {generateBody()}
+            {
+              props.data.length === 0 ? (
+                <tr className='italic'>
+                  <td colSpan={5 + (props.otherFunctions?.length ?? 0)} className='p-2 border text-center'>
+                    Không có dữ liệu
+                  </td>
+                </tr>
+              ) : generateBody()  
+            }
           </tbody>
         </table>
+        <p className='italic mt-2 flex justify-end'>Tổng cộng {props.data.length} dòng</p>
       </div>
       <PaginationNav 
         totalPages={totalPages} 

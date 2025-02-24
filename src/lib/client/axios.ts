@@ -31,7 +31,8 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    
+    console.log(JSON.stringify(error));
+
     if (error.response && error.response.status === 401) {
       if (originalRequest._retry) {
         await resetAuthTokens();
@@ -43,7 +44,6 @@ axiosInstance.interceptors.response.use(
       return axios(originalRequest);
     }
 
-    console.log(JSON.stringify(error.response));
     return Promise.reject(error);
   }
 );

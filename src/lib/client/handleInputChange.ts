@@ -16,8 +16,6 @@ export const handleInputChange = <T>(
     newValue = value ? new Date(value) : null;
   }
 
-  console.log(newValue);
-
   setState((prevState) => ({
     ...prevState,
     [name]: newValue,

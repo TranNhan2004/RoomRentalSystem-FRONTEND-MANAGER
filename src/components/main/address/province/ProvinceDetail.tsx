@@ -3,6 +3,7 @@
 import DataDetail from '@/components/partial/data/DataDetail';
 import Loading from '@/components/partial/data/Loading';
 import { INITIAL_PROVINCE } from '@/initials/Address.initial';
+import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
 import { objectEquals } from '@/lib/client/objectEquals';
 import { ProvinceService } from '@/services/Address.service';
 import { ProvinceType } from '@/types/Address.type';
@@ -23,7 +24,7 @@ const ProvinceDetail = (props: ProvinceDetailProps) => {
         const data = await (new ProvinceService()).get(props.id);
         setData(data);
       } catch {
-        router.push('/404');
+        router.push(NOT_FOUND_URL);
       }
     };
 
