@@ -1,17 +1,16 @@
 'use client';
 
+import React, { useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { ProvinceMessage } from '@/messages/Address.message';
 import { ProvinceService } from '@/services/Address.service';
 import { ProvinceType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import ProvinceForm from './ProvinceForm';
+import { ProvinceForm } from './ProvinceForm';
 import { INITIAL_PROVINCE } from '@/initials/Address.initial';
 
-
-const ProvinceAdd = () => {
+export const ProvinceAdd = () => {
   const router = useRouter();
   const [reqData, setReqData] = useState<ProvinceType>(INITIAL_PROVINCE);
 
@@ -61,5 +60,3 @@ const ProvinceAdd = () => {
     </>
   );
 };
-
-export default ProvinceAdd;

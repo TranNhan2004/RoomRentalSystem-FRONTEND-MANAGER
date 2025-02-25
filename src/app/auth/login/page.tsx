@@ -1,4 +1,4 @@
-import Login from "@/components/main/auth/Login";
+import { Login } from "@/components/main/auth/Login";
 import { checkLoginStatusForNotAuthPage } from "@/lib/server/checkLoginStatus";
 import { Metadata } from "next";
 

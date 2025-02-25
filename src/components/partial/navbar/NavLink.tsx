@@ -3,13 +3,13 @@
 import Link from 'next/link';
 import React from 'react';
 
-interface NavLinkProps {
+type NavLinkProps = {
   href: string;
   children: React.ReactNode;
   className?: string;
 }
 
-const NavLink = (props: NavLinkProps) => {
+export const NavLink = (props: NavLinkProps) => {
   return (
     <>
       <Link 
@@ -21,5 +21,3 @@ const NavLink = (props: NavLinkProps) => {
     </>
   );
 };
-
-export default NavLink;

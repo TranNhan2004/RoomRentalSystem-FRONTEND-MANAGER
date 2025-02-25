@@ -17,7 +17,7 @@ type DefaultAvatarProps = {
   data: UserType;
 }
 
-const DefaultAvatar = (props: DefaultAvatarProps) => {
+export const DefaultAvatar = (props: DefaultAvatarProps) => {
   const [avatarColor, setAvatarColor] = useState('');
 
   useEffect(() => {
@@ -47,5 +47,3 @@ const DefaultAvatar = (props: DefaultAvatarProps) => {
     </div>
   );
 };
-
-export default DefaultAvatar;

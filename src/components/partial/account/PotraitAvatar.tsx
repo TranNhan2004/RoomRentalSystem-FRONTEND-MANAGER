@@ -11,7 +11,7 @@ type PotraitAvatarProps = {
   data: UserType;
 }
 
-const PotraitAvatar = (props: PotraitAvatarProps) => {
+export const PotraitAvatar = (props: PotraitAvatarProps) => {
   return (
     <div>
       <Image 
@@ -24,5 +24,3 @@ const PotraitAvatar = (props: PotraitAvatarProps) => {
     </div>
   );
 };
-
-export default PotraitAvatar;

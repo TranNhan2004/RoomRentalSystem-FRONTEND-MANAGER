@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { ArrowRightStartOnRectangleIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { UserType } from '@/types/UserAccount.type';
 
-interface DropdownMenuProps {
+type DropdownMenuProps = {
   children: React.ReactNode;
   data: UserType;
 }
 
-const DropdownMenu = (props: DropdownMenuProps) => {
+export const DropdownMenu = (props: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -83,5 +83,3 @@ const DropdownMenu = (props: DropdownMenuProps) => {
     </div>
   );
 };
-
-export default DropdownMenu;

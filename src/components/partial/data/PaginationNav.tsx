@@ -10,7 +10,7 @@ type PaginationProps = {
   onPageChange: (page: number) => void;
 }
 
-const PaginationNav = (props: PaginationProps) => {
+export const PaginationNav = (props: PaginationProps) => {
 
   const getPaginationRange = () => {
     const range: number[] = [];
@@ -82,5 +82,3 @@ const PaginationNav = (props: PaginationProps) => {
     </div>
   );
 };
-
-export default PaginationNav;

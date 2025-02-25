@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import NavLink from './NavLink';
+import { NavLink } from './NavLink';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
-interface DropdownMenuProps {
+type DropdownMenuProps = {
   label: string;
   links: { 
     label: string; 
@@ -12,7 +12,7 @@ interface DropdownMenuProps {
   }[];
 }
 
-const DropdownMenu = (props: DropdownMenuProps) => {
+export const DropdownMenu = (props: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -50,5 +50,3 @@ const DropdownMenu = (props: DropdownMenuProps) => {
     </>
   );
 };
-
-export default DropdownMenu;

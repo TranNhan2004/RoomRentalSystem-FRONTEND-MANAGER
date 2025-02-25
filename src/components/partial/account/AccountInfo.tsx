@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import DropdownMenu from './DropdownMenu';
-import PotraitAvatar from './PotraitAvatar';
-import StandardAvatar from './DefaultAvatar';
 import { UserType } from '@/types/UserAccount.type';
+import { DropdownMenu } from './DropdownMenu';
+import { PotraitAvatar } from './PotraitAvatar';
+import { DefaultAvatar } from './DefaultAvatar';
 
 
-const AccountInfo = (props: UserType) => {
+export const AccountInfo = (props: UserType) => {
   return (
     <>
       <DropdownMenu data={props}>
@@ -16,12 +16,10 @@ const AccountInfo = (props: UserType) => {
           {
             props.avatar ? 
             <PotraitAvatar data={props} width={40} height={40} shape='circle' /> :
-            <StandardAvatar data={props} width={40} height={40} fontSize={18} shape='circle' /> 
+            <DefaultAvatar data={props} width={40} height={40} fontSize={18} shape='circle' /> 
           }
         </div>
       </DropdownMenu>
     </>
   );
 };
-
-export default AccountInfo;

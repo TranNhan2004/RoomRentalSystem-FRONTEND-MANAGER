@@ -5,24 +5,24 @@ import { ProvinceService } from '@/services/Address.service';
 import { useEffect, useState } from 'react';
 import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
 import { ProvinceType } from '@/types/Address.type';
-import Title from '@/components/partial/data/Title';
-import InputSearch from '@/components/partial/data/InputSearch';
-import Sorting from '@/components/partial/data/Sorting';
 import { Table, DisplayDataType } from '@/components/partial/data/Table';
 import { useRouter } from 'next/navigation';
 import { ProvinceMessage } from '@/messages/Address.message';
 import { ActionButton } from '@/components/partial/button/ActionButton';
+import { Title } from '@/components/partial/data/Title';
+import { InputSearch } from '@/components/partial/data/InputSearch';
+import { Sorting } from '@/components/partial/data/Sorting';
 
-const ProvincesList = () => {
+export const ProvincesList = () => {
   const router = useRouter();
+  const originialDataRef = useRef<ProvinceType[]>([]);
   const [data, setData] = useState<ProvinceType[]>([]);
-  const originalDataRef = useRef<ProvinceType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await (new ProvinceService()).getMany();
-        originalDataRef.current = data;
+        originialDataRef.current = [...data];
         setData(data);
       } catch {
         await toastError(ProvinceMessage.GET_MANY_ERROR);
@@ -46,7 +46,8 @@ const ProvincesList = () => {
   const deleteFunction = async (id: string) => {
     try {
       await handleDeleteAlert(async () => {
-        setData(originalDataRef.current.filter((item) => item.id !== id)); 
+        originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
+        setData([...originialDataRef.current]); 
         await (new ProvinceService()).delete(id);
         await toastSuccess(ProvinceMessage.DELETE_SUCCESS);
       });
@@ -75,7 +76,7 @@ const ProvincesList = () => {
           <InputSearch 
             placeholder='Tìm kiếm theo tên tỉnh'
             options={['name']}
-            originialData={originalDataRef.current}
+            originalData={originialDataRef.current}
             data={data}
             setData={setData}
           />
@@ -106,5 +107,3 @@ const ProvincesList = () => {
   </div>
   );
 };
-
-export default ProvincesList;

@@ -4,7 +4,7 @@ import { HomeIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const GoToHomeButton = () => {
+export const GoToHomeButton = () => {
   const router = useRouter();
   
   const handleGoToHome = () => {
@@ -24,5 +24,3 @@ const GoToHomeButton = () => {
     </>
   );
 };
-
-export default GoToHomeButton;

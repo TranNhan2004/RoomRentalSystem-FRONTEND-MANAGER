@@ -1,4 +1,4 @@
-import ProvinceEdit from "@/components/main/address/province/ProvinceEdit";
+import { ProvinceEdit } from "@/components/main/address/province/ProvinceEdit";
 
 export default async function ProvinceEditDetailsPage({
   params,

@@ -13,7 +13,7 @@ type SortingProps<T extends object> = {
   setData: React.Dispatch<React.SetStateAction<T[]>>;
 }
 
-const Sorting = <T extends object>(props: SortingProps<T>) => {
+export const Sorting = <T extends object>(props: SortingProps<T>) => {
   const handleOptionSelect = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const [mode, key] = e.target.value.split('-');
     switch (mode) {
@@ -47,5 +47,3 @@ const Sorting = <T extends object>(props: SortingProps<T>) => {
     </div>
   );
 };
-
-export default Sorting;

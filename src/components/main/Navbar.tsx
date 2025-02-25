@@ -4,14 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { UserType } from '@/types/UserAccount.type';
-import NavLink from '../partial/navbar/NavLink';
-import DropdownMenu from '../partial/navbar/DropdownMenu';
-import AccountInfo from '../partial/account/AccountInfo';
 import { getUserInfo } from '@/lib/client/authToken';
 import { getImageSrc } from '@/lib/client/getImageSrc';
+import { AccountInfo } from '../partial/account/AccountInfo';
+import { NavLink } from '../partial/navbar/NavLink';
+import { DropdownMenu } from '../partial/navbar/DropdownMenu';
 
 
-const Navbar = () => {
+export const Navbar = () => {
   const [userInfo, setUserInfo] = useState<UserType>({});
 
   useEffect(() => {
@@ -60,5 +60,3 @@ const Navbar = () => {
     </div>
   );
 };
-
-export default Navbar;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-interface FormProps {
+type FormProps = {
   label: string;
   onSubmit: (e: React.FormEvent) => void;
   children: React.ReactNode;
@@ -10,7 +10,7 @@ interface FormProps {
   className?: string;
 }
 
-const Form = (props: FormProps) => {
+export const Form = (props: FormProps) => {
   return props.useModal ? (
     <div className='flex justify-center items-center min-h-screen'>
       <div className='bg-white p-8 rounded-lg shadow-lg w-full max-w-md'>
@@ -29,5 +29,3 @@ const Form = (props: FormProps) => {
     </div>
   );
 };
-
-export default Form;

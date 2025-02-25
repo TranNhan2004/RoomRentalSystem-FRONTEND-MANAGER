@@ -1,7 +1,5 @@
 'use client';
 
-import DefaultAvatar from '@/components/partial/account/DefaultAvatar';
-import PotraitAvatar from '@/components/partial/account/PotraitAvatar';
 import { ActionButton } from '@/components/partial/button/ActionButton';
 import { getUserInfo } from '@/lib/client/authToken';
 import { displayGender, displayRole } from '@/lib/client/display';
@@ -10,9 +8,11 @@ import { UserType } from '@/types/UserAccount.type';
 import { useRouter } from 'next/navigation';
 import { DataLine } from '@/components/partial/data/DataLine';
 import React, { useEffect, useState } from 'react';
+import { PotraitAvatar } from '@/components/partial/account/PotraitAvatar';
+import { DefaultAvatar } from '@/components/partial/account/DefaultAvatar';
 
 
-const Profile = () => {
+export const Profile = () => {
   const router = useRouter();
   const [userInfo, setUserInfo] = useState<UserType>({});
 
@@ -90,5 +90,3 @@ const Profile = () => {
     </div>
   );
 };
-
-export default Profile;

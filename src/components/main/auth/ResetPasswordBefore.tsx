@@ -3,23 +3,23 @@
 import React, { useState, useEffect } from 'react';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { ResetPasswordRequestBeforeType } from '@/types/UserAccount.type';
-import Input from '@/components/partial/form/Input';
-import Form from '@/components/partial/form/Form';
+import { Input } from '@/components/partial/form/Input';
+import { Form } from '@/components/partial/form/Form';
 import { AuthService } from '@/services/UserAccount.service';
 import { toastError } from '@/lib/client/alert';
 import { INITIAL_RESET_PASSWORD_REQUEST_BEFORE } from '@/initials/UserAccount.initial';
 import { AuthMessage } from '@/messages/UserAccount.message';
-import { allTrue, EMAIL_REG_EXP, initIsValids } from '@/lib/client/isValidForm';
+import { EMAIL_REG_EXP, isValidatedForm } from '@/lib/client/isValidForm';
+import { useInputRefs } from '@/hooks/useInputRefs';
 
 const INITIAL_COUNTDOWN = 60;
-const INPUT_NUM = 1;
 
-const ResetPasswordBefore = () => {
+export const ResetPasswordBefore = () => {
+  const { inputRefs, setRef } = useInputRefs(Object.keys(INITIAL_RESET_PASSWORD_REQUEST_BEFORE));  
+  const [reqData, setReqData] = useState<ResetPasswordRequestBeforeType>(INITIAL_RESET_PASSWORD_REQUEST_BEFORE);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); 
   const [buttonText, setButtonText] = useState('Gửi'); 
   const [countdown, setCountdown] = useState(INITIAL_COUNTDOWN); 
-  const [reqData, setReqData] = useState<ResetPasswordRequestBeforeType>(INITIAL_RESET_PASSWORD_REQUEST_BEFORE);
-  const [isValids, setIsValids] = useState<boolean[]>([]);
 
   useEffect(() => {
     let timer = setInterval(() => {}, 0);
@@ -38,15 +38,27 @@ const ResetPasswordBefore = () => {
       }
     }
 
-    setIsValids(initIsValids(INPUT_NUM));
-
     return () => clearInterval(timer);
   }, [isButtonDisabled, countdown]);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    return handleInputChange(e, setReqData);
+  };
+  
+  const validators = {
+    email: () => {
+      if (!EMAIL_REG_EXP.test(reqData.email ?? '')) {
+        return AuthMessage.EMAIL_INPUT_ERROR;
+      }
+      return null;
+    }
+  };
 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!allTrue(isValids)) {
+
+    if (!isValidatedForm(inputRefs)) {
       return;
     }
 
@@ -62,14 +74,6 @@ const ResetPasswordBefore = () => {
   };
 
 
-  const emailValidate = () => {
-    if (!EMAIL_REG_EXP.test(reqData.email ?? '')) {
-      return AuthMessage.EMAIL_INPUT_ERROR;
-    }
-    return null;
-  };
-
-  
   return (
     <Form label='Đặt lại mật khẩu' onSubmit={handleSubmit} useModal>
       <div>
@@ -78,14 +82,11 @@ const ResetPasswordBefore = () => {
           name='email'
           type='text'
           placeholder='Email'
-          value={reqData.email}
-          onChange={(e) => handleInputChange(e, setReqData)}
           required
-          validator={{
-            validate: emailValidate,
-            setIsValids: setIsValids,
-            isValidIndex: 0
-          }}
+          value={reqData.email}
+          onChange={handleOnChange}
+          validate={validators.email}
+          ref={setRef('email')}
         />
       </div>
       <div>
@@ -110,5 +111,3 @@ const ResetPasswordBefore = () => {
     </Form>
   );
 };
-
-export default ResetPasswordBefore;

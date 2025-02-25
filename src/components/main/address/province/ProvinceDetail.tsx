@@ -1,7 +1,8 @@
 'use client';
 
-import DataDetail from '@/components/partial/data/DataDetail';
-import Loading from '@/components/partial/data/Loading';
+
+import { DataDetail } from '@/components/partial/data/DataDetail';
+import { Loading } from '@/components/partial/data/Loading';
 import { INITIAL_PROVINCE } from '@/initials/Address.initial';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
 import { objectEquals } from '@/lib/client/objectEquals';
@@ -14,7 +15,7 @@ type ProvinceDetailProps = {
   id: string;
 }
 
-const ProvinceDetail = (props: ProvinceDetailProps) => {
+export const ProvinceDetail = (props: ProvinceDetailProps) => {
   const router = useRouter();
   const [data, setData] = useState<ProvinceType>(INITIAL_PROVINCE);
 
@@ -41,7 +42,7 @@ const ProvinceDetail = (props: ProvinceDetailProps) => {
 
   return (
     <>
-      <DataDetail 
+      <DataDetail
         title={`Thông tin chi tiết của ${data.name}`}
         data={[
           {
@@ -58,5 +59,3 @@ const ProvinceDetail = (props: ProvinceDetailProps) => {
     </>
   );
 };
-
-export default ProvinceDetail;

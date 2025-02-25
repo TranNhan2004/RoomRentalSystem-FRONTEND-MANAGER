@@ -3,7 +3,7 @@
 import { ChevronDoubleUpIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 
-const Footer = () => {
+export const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -27,5 +27,3 @@ const Footer = () => {
     </>
   );
 };
-
-export default Footer;

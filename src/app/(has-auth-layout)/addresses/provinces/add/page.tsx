@@ -1,4 +1,4 @@
-import ProvinceAdd from "@/components/main/address/province/ProvinceAdd";
+import { ProvinceAdd } from "@/components/main/address/province/ProvinceAdd";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

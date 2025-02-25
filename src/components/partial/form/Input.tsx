@@ -1,49 +1,57 @@
-'use client';
+import React, { useState, useRef, useImperativeHandle, forwardRef, useEffect } from 'react';
 
-import React, { useEffect, useState } from 'react';
-
-interface InputProps {
+type InputProps = {
   id: string;
   type: string;
   name: string;
   value: string | number | undefined;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  validator: {
-    validate: () => string | null;
-    setIsValids: React.Dispatch<React.SetStateAction<boolean[]>>;
-    isValidIndex: number;
-  };
+  validate: () => string | null;
   placeholder?: string;
   required?: boolean;
   className?: string;
-}
+};
 
+export type InputRefHandler = {
+  formValidate: () => boolean;
+};
 
-const Input = (props: InputProps) => {
-  const [error, setError] = useState<string | null>(null);
+export const Input = forwardRef<InputRefHandler, InputProps>((props, ref) => {
+  const [error, setError] = useState<string | null>(null); 
+  const errorRef = useRef<string | null>(null); 
 
-  useEffect(() => { 
-    props.validator.setIsValids(prevIsValids => {
-      prevIsValids[props.validator.isValidIndex] = !error;
-      return prevIsValids;
-    });
-
-  }, [error, props]);
-
-  const handleOnBlur = () => {
+  const validate = () => {
     if (props.required && !props.value) {
-      setError('Trường này không được bỏ trống!');
+      errorRef.current = 'Trường này không được bỏ trống!';
+      setError(errorRef.current); 
       return;
     }
+    errorRef.current = props.validate();
+    setError(errorRef.current); 
+  };
 
-    setError(props.validator.validate());
+  const handleOnBlur = () => {
+    validate();
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.onChange(e);
-    setError(null);
-    setError(props.validator.validate());
+    validate();
   };
+
+  useImperativeHandle(ref, () => ({
+    formValidate: () => {
+      validate();
+      return errorRef.current ? false : true; 
+    }
+  }));
+
+  useEffect(() => {
+    if (props.value) {
+      errorRef.current = props.validate();
+      setError(errorRef.current);  
+    }
+  }, [props]);
 
   return (
     <div>
@@ -56,14 +64,13 @@ const Input = (props: InputProps) => {
         className={`mt-1 h-auto block px-4 py-2 border border-gray-300 rounded-md shadow-sm 
                     focus:outline-none focus:ring-2 focus:ring-indigo-500 
                     ${props.className ?? 'w-full'}`}
-        required={props.required}
-        onChange={(e) => handleOnChange(e)}
+        onChange={handleOnChange}
         onBlur={handleOnBlur}
         onInvalid={(e) => e.preventDefault()}
       />
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>} 
     </div>
   );
-};
+});
 
-export default Input;
+Input.displayName = 'Input';

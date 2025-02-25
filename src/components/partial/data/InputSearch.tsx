@@ -1,26 +1,19 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'; 
 import { search } from '@/lib/client/search';
 
 type InputSearchProps<T extends object> = {
   placeholder: string;
   options: (keyof T)[];
-  originialData: T[];
+  originalData: T[];
   data: T[];
   setData: React.Dispatch<React.SetStateAction<T[]>>;
 }
 
-const InputSearch = <T extends object>(props: InputSearchProps<T>) => {
+export const InputSearch = <T extends object>(props: InputSearchProps<T>) => {
   const [searchQuery, setSearchQuery] = useState('');
-
-  // useEffect(() => {
-  //   if (searchQuery === '') {
-  //     props.setData(props.originialData);
-  //     setSearchQuery('');
-  //   }
-  // }, [searchQuery, props]);
 
   const getSearchedData = () => {
     const setValues = new Set<string>();
@@ -38,7 +31,9 @@ const InputSearch = <T extends object>(props: InputSearchProps<T>) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (searchQuery !== '' && e.key === 'Enter') {
       props.setData(getSearchedData());
-    } 
+    } else {
+      props.setData(props.originalData);
+    }
   };
 
   return (
@@ -57,5 +52,3 @@ const InputSearch = <T extends object>(props: InputSearchProps<T>) => {
     </div>
   );
 };
-
-export default InputSearch;

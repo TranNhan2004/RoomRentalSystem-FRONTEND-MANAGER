@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import Form from '../form/Form';
+import { Form } from '../form/Form';
 import { ActionButton } from '../button/ActionButton';
-import { allTrue } from '@/lib/client/isValidForm';
+import { InputRefHandler } from '../form/Input';
+import { isValidatedForm } from '@/lib/client/isValidForm';
 
 export type DataFormProps = {
   formLabel: string;
-  isValids?: boolean[];
+  inputRefs: React.RefObject<{[key: string]: InputRefHandler | null}>;
   saveOnClick: () => void;
   saveAndExitOnClick: () => void;
   cancelOnClick: () => void;
@@ -15,9 +16,10 @@ export type DataFormProps = {
 export const DataForm = (props: DataFormProps) => {
   const [action, setAction] = useState<'save' | 'save-and-exit'>('save');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!allTrue(props.isValids ?? [])) {
+
+    if (!isValidatedForm(props.inputRefs)) {
       return;
     }
 

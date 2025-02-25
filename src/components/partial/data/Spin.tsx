@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const Spin = () => {
+export const Spin = () => {
   return (
     <div className='flex items-center justify-center'>
       <span className='w-5 h-5 border-2 border-t-2 border-t-white 
@@ -11,5 +11,3 @@ const Spin = () => {
     </div>
   );
 };
-
-export default Spin;

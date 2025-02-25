@@ -1,29 +1,23 @@
 'use client';
 
 import { DataForm, DataFormProps } from '@/components/partial/data/DataForm';
-import Input from '@/components/partial/form/Input';
-import Label from '@/components/partial/form/Label';
+import { Input } from '@/components/partial/form/Input';
+import { Label } from '@/components/partial/form/Label';
+import { useInputRefs } from '@/hooks/useInputRefs';
 import { handleCancelAlert } from '@/lib/client/alert';
 import { handleInputChange } from '@/lib/client/handleInputChange';
-import { initIsValids } from '@/lib/client/isValidForm';
 import { ProvinceType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 type ProvinceFormProps = {
   reqData: ProvinceType;
   setReqData: React.Dispatch<React.SetStateAction<ProvinceType>>;
-} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'isValids'>;
+} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'inputRefs'>;
 
-const INPUT_NUM = 1;
-
-const ProvinceForm = (props: ProvinceFormProps) => {
+export const ProvinceForm = (props: ProvinceFormProps) => {
   const router = useRouter();
-  const [isValids, setIsValids] = useState<boolean[]>([]);
-
-  useEffect(() => {
-    setIsValids(initIsValids(INPUT_NUM));
-  }, []);
+  const { inputRefs, setRef } = useInputRefs(Object.keys(props.reqData));
 
   const cancelOnClick = async () => {
     await handleCancelAlert(() => {
@@ -31,14 +25,22 @@ const ProvinceForm = (props: ProvinceFormProps) => {
     });
   };
 
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    return handleInputChange(e, props.setReqData);
+  };
+
+  const validators = {
+    name: () => null
+  };
+
   return (
     <>
       <DataForm 
         formLabel={props.formLabel}
-        isValids={isValids}
         saveOnClick={props.saveOnClick}
         saveAndExitOnClick={props.saveAndExitOnClick}
         cancelOnClick={cancelOnClick}
+        inputRefs={inputRefs}
       >
         <div className='flex items-center space-x-2'>
           <Label htmlFor='name' required>Tên tỉnh: </Label>
@@ -49,17 +51,12 @@ const ProvinceForm = (props: ProvinceFormProps) => {
             className='w-[300px]'
             required
             value={props.reqData.name}
-            onChange={(e) => handleInputChange(e, props.setReqData)}
-            validator={{
-              validate: () => { return null; },
-              setIsValids: setIsValids,
-              isValidIndex: 0
-            }}
+            onChange={handleOnChange}
+            validate={validators.name}
+            ref={setRef('name')}
           />
         </div>
       </DataForm>
     </>
   );
 };
-
-export default ProvinceForm;

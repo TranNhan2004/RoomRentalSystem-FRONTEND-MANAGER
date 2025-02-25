@@ -1,4 +1,4 @@
-import ProvinceDetail from "@/components/main/address/province/ProvinceDetail";
+import { ProvinceDetail } from "@/components/main/address/province/ProvinceDetail";
 
 export default async function ProvinceDetailsPage({
   params,

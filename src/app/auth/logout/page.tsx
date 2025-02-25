@@ -1,4 +1,4 @@
-import Logout from "@/components/main/auth/Logout";
+import { Logout } from "@/components/main/auth/Logout";
 import { checkLoginStatusForAuthPage } from "@/lib/server/checkLoginStatus";
 import { Metadata } from "next";
 

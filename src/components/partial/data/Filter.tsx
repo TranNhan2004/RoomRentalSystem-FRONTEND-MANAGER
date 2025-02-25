@@ -17,7 +17,7 @@ type FilterProps = {
   filterOptionsGroups: FilterOptionsGroupType[]; 
 }
 
-const Filter = (props: FilterProps) => {
+export const Filter = (props: FilterProps) => {
   const [isOpen, setIsOpen] = useState(false); 
   const [selectedFilters, setSelectedFilters] = useState<Set<string>>(new Set()); 
 
@@ -120,5 +120,3 @@ const Filter = (props: FilterProps) => {
     </div>
   );
 };
-
-export default Filter;

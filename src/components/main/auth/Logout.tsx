@@ -4,7 +4,7 @@ import { resetAuthTokens } from '@/lib/client/authToken';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
-const Logout = () => {
+export const Logout = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -22,5 +22,3 @@ const Logout = () => {
     </div>
   );
 };
-
-export default Logout;

@@ -1,17 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { ResetPasswordRequestAfterType } from '@/types/UserAccount.type';
-import Input from '@/components/partial/form/Input';
-import Form from '@/components/partial/form/Form';
 import { AuthService } from '@/services/UserAccount.service';
 import { useRouter } from 'next/navigation';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { INITIAL_RESET_PASSWORD_REQUEST_AFTER } from '@/initials/UserAccount.initial';
-import { initIsValids, allTrue, PASSWORD_REG_EXP } from '@/lib/client/isValidForm';
+import { isValidatedForm, PASSWORD_REG_EXP } from '@/lib/client/isValidForm';
 import { AuthMessage } from '@/messages/UserAccount.message';
-import Spin from '@/components/partial/data/Spin';
+import { Form } from '@/components/partial/form/Form';
+import { Input } from '@/components/partial/form/Input';
+import { Spin } from '@/components/partial/data/Spin';
+import { useInputRefs } from '@/hooks/useInputRefs';
 
 
 type ResetPasswordURLProps = {
@@ -19,21 +20,37 @@ type ResetPasswordURLProps = {
   token: string;
 }
 
-const INPUT_NUM = 2;
-
-const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
+export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
   const router = useRouter();
+  const { inputRefs, setRef } = useInputRefs(Object.keys(INITIAL_RESET_PASSWORD_REQUEST_AFTER));
   const [reqData, setReqData] = useState<ResetPasswordRequestAfterType>(INITIAL_RESET_PASSWORD_REQUEST_AFTER);
-  const [isValids, setIsValids] = useState<boolean[]>([]);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    return handleInputChange(e, setReqData);
+  };
 
-  useEffect(() => {
-    setIsValids(initIsValids(INPUT_NUM));
-  }, []);
+
+  const validators = {
+    new_password: () => {
+      if (!PASSWORD_REG_EXP.test(reqData.new_password ?? '')) {
+        return AuthMessage.PASSWORD_INPUT_ERROR;
+      }
+      return null;
+    },
+    confirm_new_password: () => {
+      if (reqData.confirm_new_password !== reqData.new_password) {
+        return AuthMessage.CONFIRM_PASSWORD_INPUT_NOT_MATCH;
+      }
+      return null;
+    }
+  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!allTrue(isValids)) {
+    
+    if (!isValidatedForm(inputRefs)) {
       return;
     }
 
@@ -49,55 +66,34 @@ const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
     }
   };
 
-  const newPasswordValidate = () => {
-    if (!PASSWORD_REG_EXP.test(reqData.new_password ?? '')) {
-      return AuthMessage.PASSWORD_INPUT_ERROR;
-    }
-    return null;
-  };
-
-  const confirmNewPasswordValidate = () => {
-    if (reqData.confirm_new_password !== reqData.new_password) {
-      return AuthMessage.CONFIRM_PASSWORD_INPUT_NOT_MATCH;
-    }
-    return null;
-  };
-
 
   return (
     <Form label='Đặt lại mật khẩu' className='w-[300px]' onSubmit={handleSubmit} useModal>
       <div>
-        <Input 
+        <Input
           id='new-password'
           name='new_password'
           type='password'
           placeholder='Mật khẩu mới'
           required
           value={reqData.new_password}
-          onChange={(e) => handleInputChange(e, setReqData)}
-          validator={{
-            validate: newPasswordValidate,
-            setIsValids: setIsValids,
-            isValidIndex: 0
-          }}
-          
+          onChange={handleOnChange}
+          validate={validators.new_password}
+          ref={setRef('new_password')}
         />
       </div>
 
       <div>
-        <Input 
+        <Input
           id='confirm-new-password'
           name='confirm_new_password'
           type='password'
           placeholder='Nhập lại mật khẩu mới'
           required
           value={reqData.confirm_new_password}
-          onChange={(e) => handleInputChange(e, setReqData)}
-          validator={{
-            validate: confirmNewPasswordValidate,
-            setIsValids: setIsValids,
-            isValidIndex: 1
-          }}
+          onChange={handleOnChange}
+          validate={validators.confirm_new_password}
+          ref={setRef('confirm_new_password')}
         />
       </div>
 
@@ -112,5 +108,3 @@ const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
     </Form>
   );
 };
-
-export default ResetPasswordAfter;

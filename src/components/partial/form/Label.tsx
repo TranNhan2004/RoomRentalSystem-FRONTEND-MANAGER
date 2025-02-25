@@ -2,14 +2,14 @@
 
 import React from 'react';
 
-interface LabelProps {
+type LabelProps = {
   htmlFor: string;
   children: React.ReactNode;
   className?: string;
   required?: boolean; 
 }
 
-const Label = (props: LabelProps) => {
+export const Label = (props: LabelProps) => {
   return (
     <>
       <label 
@@ -22,5 +22,3 @@ const Label = (props: LabelProps) => {
     </>
   );
 };
-
-export default Label;

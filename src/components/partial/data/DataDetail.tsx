@@ -10,7 +10,7 @@ type DataDetailProps = {
   cancelOnClick: () => void;
 }; 
 
-const DataDetail = (props: DataDetailProps) => {
+export const DataDetail = (props: DataDetailProps) => {
   return (
     <div className='p-8 mt-[-3%] ml-[-3%]'>
       <h2 className='text-left text-2xl mb-5 font-bold'>{props.title}</h2>
@@ -31,5 +31,3 @@ const DataDetail = (props: DataDetailProps) => {
     </div>
   );
 };
-
-export default DataDetail;

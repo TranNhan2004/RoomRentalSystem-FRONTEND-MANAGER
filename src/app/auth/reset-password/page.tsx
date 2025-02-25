@@ -1,4 +1,4 @@
-import ResetPasswordBefore from "@/components/main/auth/ResetPasswordBefore";
+import { ResetPasswordBefore } from "@/components/main/auth/ResetPasswordBefore";
 import { checkLoginStatusForNotAuthPage } from "@/lib/server/checkLoginStatus";
 import { Metadata } from "next";
 

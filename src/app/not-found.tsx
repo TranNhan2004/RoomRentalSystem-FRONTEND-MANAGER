@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { Metadata } from 'next';
-import notFoundPicture from '../../public/not-found.png';
 import { checkLoginStatusForAuthPage } from '@/lib/server/checkLoginStatus';
-import GoToHomeButton from '@/components/partial/button/GoToHomeButton';
+import { GoToHomeButton } from '@/components/partial/button/GoToHomeButton';
+import { getImageSrc } from '@/lib/client/getImageSrc';
 
 export const metadata: Metadata = {
   title: "404 Error",
@@ -16,7 +16,7 @@ export default async function NotFound() {
       <div className="grid grid-cols-12 gap-8 items-center justify-center w-full max-w-7xl">
         <div className="col-span-4">
           <Image
-            src={notFoundPicture}
+            src={getImageSrc('not-found.png')}
             alt="404 Illustration"
             className="w-full h-full object-cover"
             width={400}

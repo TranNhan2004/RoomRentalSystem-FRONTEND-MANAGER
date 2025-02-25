@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/24/outline';
 import React from 'react';
 
-interface ChangePageButtonProps {
+type ChangePageButtonProps = {
   onClick: () => void;
   disabled: boolean;
   children?: React.ReactNode;

@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
-import PaginationNav from './PaginationNav';
+import React, { useEffect, useState } from 'react';
+import { PaginationNav } from './PaginationNav';
 import { ActionButton, ActionButtonProps } from '../button/ActionButton';
+import { Loading } from './Loading';
 
 export type DisplayDataType = {
   id: string;
@@ -23,6 +24,12 @@ export type TableProps = {
 
 export const Table = (props: TableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [noData, setIsNoData] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => { setIsNoData(true); }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const rowsPerPage = 10;
   const totalPages = Math.ceil(props.data.length / rowsPerPage);
@@ -94,7 +101,13 @@ export const Table = (props: TableProps) => {
               props.data.length === 0 ? (
                 <tr className='italic'>
                   <td colSpan={5 + (props.otherFunctions?.length ?? 0)} className='p-2 border text-center'>
-                    Không có dữ liệu
+                    {
+                      noData ? 
+                      'Không có dữ liệu' : 
+                      <div className='flex items-center justify-center'>
+                        <Loading textSize={12} />
+                      </div>
+                    }
                   </td>
                 </tr>
               ) : generateBody()  

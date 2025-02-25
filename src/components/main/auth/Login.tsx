@@ -1,35 +1,51 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import Link from 'next/link';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { useRouter } from 'next/navigation';
 import { handleLogin } from '@/lib/client/authToken';
 import { LoginRequestType } from '@/types/UserAccount.type';
-import Input from '@/components/partial/form/Input';
-import Form from '@/components/partial/form/Form';
 import { AuthService } from '@/services/UserAccount.service';
-import Link from 'next/link';
 import { toastError } from '@/lib/client/alert';
 import { AuthMessage } from '@/messages/UserAccount.message';
 import { INITIAL_LOGIN_REQUEST } from '@/initials/UserAccount.initial';
-import { allTrue, EMAIL_REG_EXP, initIsValids, PASSWORD_REG_EXP } from '@/lib/client/isValidForm';
-import Spin from '@/components/partial/data/Spin';
+import { EMAIL_REG_EXP, isValidatedForm, PASSWORD_REG_EXP } from '@/lib/client/isValidForm';
+import { Form } from '@/components/partial/form/Form';
+import { Input } from '@/components/partial/form/Input';
+import { Spin } from '@/components/partial/data/Spin';
+import { useInputRefs } from '@/hooks/useInputRefs';
 
-const INPUT_NUM = 2;
 
-const Login = () => {
+export const Login = () => {
   const router = useRouter();
+  const { inputRefs, setRef } = useInputRefs(Object.keys(INITIAL_LOGIN_REQUEST));
   const [reqData, setReqData] = useState<LoginRequestType>(INITIAL_LOGIN_REQUEST);
-  const [isValids, setIsValids] = useState<boolean[]>([]);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsValids(initIsValids(INPUT_NUM));
-  }, []);
   
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    return handleInputChange(e, setReqData);
+  };
+
+  const validators = {
+    email: () => {
+      if (!EMAIL_REG_EXP.test(reqData.email ?? '')) {
+        return AuthMessage.EMAIL_INPUT_ERROR;
+      }
+      return null;
+    },
+    password: () => {
+      if (!PASSWORD_REG_EXP.test(reqData.password ?? '')) {
+        return AuthMessage.PASSWORD_INPUT_ERROR;
+      }
+      return null;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!allTrue(isValids)) {
+
+    if (!isValidatedForm(inputRefs)) {
       return;
     }
     
@@ -45,36 +61,19 @@ const Login = () => {
     }
   };
 
-  const emailValidate = () => {
-    if (!EMAIL_REG_EXP.test(reqData.email ?? '')) {
-      return AuthMessage.EMAIL_INPUT_ERROR;
-    }
-    return null;
-  };
-  
-  const passwordValidate = () => {
-    if (!PASSWORD_REG_EXP.test(reqData.password ?? '')) {
-      return AuthMessage.PASSWORD_INPUT_ERROR;
-    }
-    return null;
-  };
-
   return (
     <Form label='Trang quản lý' className='w-[300px]' onSubmit={handleSubmit} useModal>
       <div>
-        <Input 
+        <Input
           id='email'
           name='email'
           type='text'
           placeholder='Email'
           required
           value={reqData.email}
-          onChange={(e) => handleInputChange(e, setReqData)}
-          validator={{
-            validate: emailValidate,
-            setIsValids: setIsValids,
-            isValidIndex: 0
-          }}
+          onChange={handleOnChange}
+          validate={validators.email}
+          ref={setRef('email')}
         />
       </div>
 
@@ -86,12 +85,9 @@ const Login = () => {
           placeholder='Mật khẩu'
           required
           value={reqData.password}
-          onChange={(e) => handleInputChange(e, setReqData)}
-          validator={{
-            validate: passwordValidate,
-            setIsValids: setIsValids,
-            isValidIndex: 1
-          }}
+          onChange={handleOnChange}
+          validate={validators.password}
+          ref={setRef('password')}
         />
       </div>
 
@@ -110,5 +106,3 @@ const Login = () => {
     </Form>
   );
 };
-
-export default Login;

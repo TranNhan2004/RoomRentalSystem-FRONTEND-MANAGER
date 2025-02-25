@@ -6,7 +6,7 @@ type TitleProps = {
   children: React.ReactNode;
 }
 
-const Title = (props: TitleProps) => {
+export const Title = (props: TitleProps) => {
   return (
     <div className='inline-block w-full mb-5'>
       <h1 className='text-2xl font-bold relative mb-1'>{props.children}</h1>
@@ -14,5 +14,3 @@ const Title = (props: TitleProps) => {
     </div>
   );
 };
-
-export default Title;
