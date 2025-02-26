@@ -3,6 +3,6 @@ import { ApiService } from "./Api.service";
 
 export class ReviewService extends ApiService<ReviewType, ReviewQueryType> {
   constructor() {
-    super('/reviews');
+    super('/app.review/reviews');
   }
 };

@@ -11,18 +11,18 @@ import { UnknownQueryType } from "@/types/UnknownQuery.type";
 
 export class ProvinceService extends ApiService<ProvinceType, UnknownQueryType> {
   constructor() {
-    super('/provinces');
+    super('/app.address/provinces');
   }
 }
 
 export class DistrictService extends ApiService<DistrictType, DistrictQueryType> {
   constructor() {
-    super('/districts');
+    super('/app.address/districts');
   }
 }
 
 export class CommuneService extends ApiService<CommuneType, CommuneQueryType> {
   constructor() {
-    super('/communes');
+    super('/app.address/communes');
   }
 }

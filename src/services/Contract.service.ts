@@ -4,13 +4,13 @@ import { UnknownQueryType } from "@/types/UnknownQuery.type";
 
 export class ContractService extends ApiService<ContractType, UnknownQueryType> {
   constructor() {
-    super("/contracts");
+    super("/app.contract/contracts");
   }
 }
 
 export class RentalContractService extends ApiService<RentalContractType, UnknownQueryType> {
   constructor() {
-    super("/rental_contracts");
+    super("/app.contract/rental_contracts");
   }
 }
 

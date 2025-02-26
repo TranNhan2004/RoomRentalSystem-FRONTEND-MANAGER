@@ -15,7 +15,7 @@ import { UnknownQueryType } from "@/types/UnknownQuery.type";
 
 export class RentalRoomService extends ApiService<RentalRoomType, UnknownQueryType> {
   constructor() {
-    super('/rental-rooms');
+    super('/app.rental-room/rental-rooms');
   }
 };
 
@@ -26,7 +26,7 @@ ApiService<
 > {
 
   constructor() {
-    super('/room-charges-lists');
+    super('/app.rental-room/room-charges-lists');
   }
 };
 
@@ -37,7 +37,7 @@ ApiService<
 > {
 
   constructor() {
-    super('/electricity-water-charges-lists');
+    super('/app.rental-room/electricity-water-charges-lists');
   }
 };
 
@@ -48,7 +48,7 @@ ApiService<
 > {
 
   constructor() {
-    super('/other-charges-lists');
+    super('/app.rental-room/other-charges-lists');
   }
 };
 
@@ -59,6 +59,6 @@ ApiServiceWithFormData<
 > {
 
   constructor() {
-    super('/rental-room-images');
+    super('/app.rental-room/rental-room-images');
   }
 };

@@ -3,6 +3,6 @@ import { ApiService } from "./Api.service";
 
 export class SaveForLaterService extends ApiService<SaveForLaterType, SaveForLaterType> {
   constructor() {
-    super('/save-for-later');
+    super('/app.save-for-later/save-for-later');
   }
 };
