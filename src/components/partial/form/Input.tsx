@@ -54,16 +54,15 @@ export const Input = forwardRef<InputRefHandler, InputProps>((props, ref) => {
   }, [props]);
 
   return (
-    <div>
+    <div className={props.className}>
       <input
         id={props.id}
         type={props.type}
         name={props.name}
         placeholder={props.placeholder}
         value={props.value}
-        className={`mt-1 h-auto block px-4 py-2 border border-gray-300 rounded-md shadow-sm 
-                    focus:outline-none focus:ring-2 focus:ring-indigo-500 
-                    ${props.className ?? 'w-full'}`}
+        className='block h-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm 
+                    focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full'
         onChange={handleOnChange}
         onBlur={handleOnBlur}
         onInvalid={(e) => e.preventDefault()}

@@ -2,25 +2,25 @@
 
 import React, { useEffect, useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
-import { ProvinceMessage } from '@/messages/Address.message';
-import { ProvinceService } from '@/services/Address.service';
-import { ProvinceType } from '@/types/Address.type';
+import { DistrictMessage } from '@/messages/Address.message';
+import { DistrictService } from '@/services/Address.service';
+import { DistrictType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { ProvinceForm } from './ProvinceForm';
-import { INITIAL_PROVINCE } from '@/initials/Address.initial';
+import { DistrictForm } from './DistrictForm';
+import { INITIAL_DISTRICT } from '@/initials/Address.initial';
+import { PublicMessage } from '@/messages/Public.message';
+import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
 import { objectEquals } from '@/lib/client/objectEquals';
 import { Loading } from '@/components/partial/data/Loading';
-import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
-import { PublicMessage } from '@/messages/Public.message';
 
-type ProvinceEditProps = {
+type DistrictEditProps = {
   id: string;
 }
 
-export const ProvinceEdit = (props: ProvinceEditProps) => {
+export const DistrictEdit = (props: DistrictEditProps) => {
   const router = useRouter();
-  const [reqData, setReqData] = useState<ProvinceType>(INITIAL_PROVINCE);
+  const [reqData, setReqData] = useState<DistrictType>(INITIAL_DISTRICT);
 
   const handlePatchError = async (error: unknown) => {
     if (!(error instanceof AxiosError)) {
@@ -29,22 +29,22 @@ export const ProvinceEdit = (props: ProvinceEditProps) => {
     }
 
     if (error.response?.status !== 400) {
-      await toastError(ProvinceMessage.PATCH_ERROR);
+      await toastError(DistrictMessage.PATCH_ERROR);
       return;
     }
 
-    if (error.response.data.name[0] === ProvinceMessage.BACKEND_NAME_UNIQUE_ERROR) {
-      await toastError(ProvinceMessage.NAME_UNIQUE_ERROR);
+    if (error.response.data.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR) {
+      await toastError(DistrictMessage.REQUIRED_PROVINCE_ERROR);
       return;
-    } 
+    }
   };
 
   const patchData = async (actionAfter?: () => void) => {
     try {
-      const data = await (new ProvinceService()).patch(props.id, reqData);
+      const data = await (new DistrictService()).patch(props.id, reqData);
       setReqData(data);
-      
-      await toastSuccess(ProvinceMessage.PATCH_SUCCESS);
+
+      await toastSuccess(DistrictMessage.PATCH_SUCCESS);
       actionAfter?.();
     } catch (error) {
       await handlePatchError(error);
@@ -57,30 +57,30 @@ export const ProvinceEdit = (props: ProvinceEditProps) => {
 
   const saveAndExitOnClick = async () => {
     await patchData(() => {
-      router.push('/addresses/provinces');
+      router.push('/addresses/districts');
     });
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const province = await (new ProvinceService()).get(props.id);
-        setReqData(province);
+        const data = await (new DistrictService()).get(props.id);
+        setReqData(data);
       } catch {
         router.push(NOT_FOUND_URL);
       }
     };
 
     fetchData();
-  }, [props.id, router]);
+  }, [router, props.id]);
 
-  if (objectEquals(reqData, INITIAL_PROVINCE)) {
+  if (objectEquals(reqData, INITIAL_DISTRICT)) {
     return <Loading />;
   }
 
   return (
     <>
-      <ProvinceForm 
+      <DistrictForm 
         formLabel={`Chỉnh sửa thông tin của ${reqData.name}`}
         saveOnClick={saveOnClick}
         saveAndExitOnClick={saveAndExitOnClick}

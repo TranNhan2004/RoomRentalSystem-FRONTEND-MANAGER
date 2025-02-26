@@ -3,26 +3,37 @@
 
 import { DataDetail } from '@/components/partial/data/DataDetail';
 import { Loading } from '@/components/partial/data/Loading';
-import { INITIAL_PROVINCE } from '@/initials/Address.initial';
+import { INITIAL_DISTRICT, INITIAL_PROVINCE } from '@/initials/Address.initial';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
 import { objectEquals } from '@/lib/client/objectEquals';
-import { ProvinceService } from '@/services/Address.service';
-import { ProvinceType } from '@/types/Address.type';
+import { DistrictService, ProvinceService } from '@/services/Address.service';
+import { DistrictType, ProvinceType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-type ProvinceDetailProps = {
+type DistrictDetailsProps = {
   id: string;
 }
 
-export const ProvinceDetail = (props: ProvinceDetailProps) => {
+export const DistrictDetails = (props: DistrictDetailsProps) => {
   const router = useRouter();
-  const [data, setData] = useState<ProvinceType>(INITIAL_PROVINCE);
+  const [data, setData] = useState<DistrictType>(INITIAL_DISTRICT);
+  const [provinceData, setProvinceData] = useState<ProvinceType>(INITIAL_PROVINCE);
+
+  const cancelOnClick = () => {
+    router.push('/addresses/districts');
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await (new ProvinceService()).get(props.id);
+        const data = await (new DistrictService()).get(props.id);
+        
+        if (data.province) {
+          const provinceData = await (new ProvinceService()).get(data.province);
+          setProvinceData(provinceData);
+        }
+
         setData(data);
       } catch {
         router.push(NOT_FOUND_URL);
@@ -32,11 +43,7 @@ export const ProvinceDetail = (props: ProvinceDetailProps) => {
     fetchData();
   }, [props.id, router]);
 
-  const cancelOnClick = () => {
-    router.push('/addresses/provinces');
-  };
-
-  if (objectEquals(data, INITIAL_PROVINCE)) {
+  if (objectEquals(data, INITIAL_DISTRICT)) {
     return <Loading />;
   }
 
@@ -52,7 +59,11 @@ export const ProvinceDetail = (props: ProvinceDetailProps) => {
           {
             label: 'Tên',
             value: data.name,
-          }
+          },
+          {
+            label: 'Thuộc tỉnh',
+            value: provinceData.name,
+          },
         ]}
         cancelOnClick={cancelOnClick}
       />

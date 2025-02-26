@@ -1,22 +1,16 @@
+import { DistrictsList } from "@/components/main/address/district/DistrictsList";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Districts Of Province",
-  description: "List of districts of a province in Vietnam",
+  title: "Districts",
+  description: "List of districts in Vietnam page.",
 };
 
-export default async function DistrictsListOfProvincePage({ 
-  params, 
-}: { 
-  params: Promise<{
-    provinceId: string;
-  }> 
-}) {
-  const provinceId = (await params).provinceId;
+export default async function DistrictsListPage() {
 
   return (
     <>
-      Districts List Of Province {provinceId}
+      <DistrictsList />
     </>
   );
 }

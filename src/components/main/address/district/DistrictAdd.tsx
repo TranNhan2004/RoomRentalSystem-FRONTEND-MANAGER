@@ -2,18 +2,18 @@
 
 import React, { useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
-import { ProvinceMessage } from '@/messages/Address.message';
-import { ProvinceService } from '@/services/Address.service';
-import { ProvinceType } from '@/types/Address.type';
+import { DistrictMessage } from '@/messages/Address.message';
+import { DistrictService } from '@/services/Address.service';
+import { DistrictType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { ProvinceForm } from './ProvinceForm';
-import { INITIAL_PROVINCE } from '@/initials/Address.initial';
+import { DistrictForm } from './DistrictForm';
+import { INITIAL_DISTRICT } from '@/initials/Address.initial';
 import { PublicMessage } from '@/messages/Public.message';
 
-export const ProvinceAdd = () => {
+export const DistrictAdd = () => {
   const router = useRouter();
-  const [reqData, setReqData] = useState<ProvinceType>(INITIAL_PROVINCE);
+  const [reqData, setReqData] = useState<DistrictType>(INITIAL_DISTRICT);
 
   const handlePostError = async (error: unknown) => {
     if (!(error instanceof AxiosError)) {
@@ -22,20 +22,20 @@ export const ProvinceAdd = () => {
     }
 
     if (error.response?.status !== 400) {
-      await toastError(ProvinceMessage.POST_ERROR);
+      await toastError(DistrictMessage.POST_ERROR);
       return;
     }
 
-    if (error.response.data.name[0] === ProvinceMessage.BACKEND_NAME_UNIQUE_ERROR) {
-      await toastError(ProvinceMessage.NAME_UNIQUE_ERROR);
+    if (error.response.data.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR) {
+      await toastError(DistrictMessage.REQUIRED_PROVINCE_ERROR);
       return;
-    } 
+    }
   };
 
   const postData = async (actionAfter: () => void) => {
     try {
-      await (new ProvinceService()).post(reqData);
-      await toastSuccess(ProvinceMessage.POST_SUCCESS);
+      await (new DistrictService()).post(reqData);
+      await toastSuccess(DistrictMessage.POST_SUCCESS);
       actionAfter();
     } catch (error) {
       await handlePostError(error);
@@ -44,20 +44,20 @@ export const ProvinceAdd = () => {
 
   const saveOnClick = async () => {
     await postData(() => {
-      setReqData(INITIAL_PROVINCE);
+      setReqData(INITIAL_DISTRICT);
     });
   };
 
   const saveAndExitOnClick = async () => {
     await postData(() => {
-      router.push('/addresses/provinces');
+      router.push('/addresses/districts');
     });
   };
 
   return (
     <>
-      <ProvinceForm 
-        formLabel='Thêm tỉnh mới'
+      <DistrictForm 
+        formLabel='Thêm huyện mới'
         saveOnClick={saveOnClick}
         saveAndExitOnClick={saveAndExitOnClick}
         reqData={reqData}

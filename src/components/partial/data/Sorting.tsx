@@ -38,7 +38,7 @@ export const Sorting = <T extends object>(props: SortingProps<T>) => {
       >
         {
           props.options.map((option, index) => (
-            <option key={index} value={option.value} itemType=''>
+            <option key={index} value={option.value}>
               {option.label}
             </option>
           ))

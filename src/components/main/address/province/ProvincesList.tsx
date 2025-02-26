@@ -12,6 +12,8 @@ import { ActionButton } from '@/components/partial/button/ActionButton';
 import { Title } from '@/components/partial/data/Title';
 import { InputSearch } from '@/components/partial/data/InputSearch';
 import { Sorting } from '@/components/partial/data/Sorting';
+import { AxiosError } from 'axios';
+import { PublicMessage } from '@/messages/Public.message';
 
 export const ProvincesList = () => {
   const router = useRouter();
@@ -21,8 +23,8 @@ export const ProvincesList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await (new ProvinceService()).getMany();
-        originialDataRef.current = [...data];
+        const data = await (new ProvinceService()).getMany() ?? [];
+        originialDataRef.current = data;
         setData(data);
       } catch {
         await toastError(ProvinceMessage.GET_MANY_ERROR);
@@ -43,17 +45,34 @@ export const ProvincesList = () => {
     return dataForTable;
   };
 
+  const handleDeleteError = async (error: unknown) => {
+    if (!(error instanceof AxiosError)) {
+      await toastError(PublicMessage.UNKNOWN_ERROR);
+      return;
+    }
+
+    if (error.response?.status !== 500) {
+      await toastError(ProvinceMessage.DELETE_ERROR);
+      return;
+    }
+
+    if (error.response.data.includes(PublicMessage.BACKEND_PROTECT_ERROR_PREFIX)) {
+      await toastError(ProvinceMessage.DELETE_PROTECT_ERROR);
+      return;
+    }
+  };
+
   const deleteFunction = async (id: string) => {
-    try {
-      await handleDeleteAlert(async () => {
-        originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
-        setData([...originialDataRef.current]); 
+    await handleDeleteAlert(async () => {
+      try {
         await (new ProvinceService()).delete(id);
         await toastSuccess(ProvinceMessage.DELETE_SUCCESS);
-      });
-    } catch {
-      await toastError(ProvinceMessage.DELETE_ERROR);
-    }
+        originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
+        setData(originialDataRef.current); 
+      } catch (error) {
+        await handleDeleteError(error);
+      }
+    });
   };
 
   const detailFunction = (id: string) => {
@@ -98,12 +117,12 @@ export const ProvincesList = () => {
         </div>
       </div>
 
-    <Table 
-      data={generateDataForTable()}
-      deleteFunction={deleteFunction}
-      detailFunction={detailFunction}
-      editFunction={editFunction}
-    />
-  </div>
+      <Table 
+        data={generateDataForTable()}
+        deleteFunction={deleteFunction}
+        detailFunction={detailFunction}
+        editFunction={editFunction}
+      />
+    </div>
   );
 };

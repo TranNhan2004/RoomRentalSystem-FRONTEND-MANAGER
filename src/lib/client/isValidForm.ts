@@ -2,7 +2,6 @@ import { InputRefHandler } from "@/components/partial/form/Input";
 
 export const isValidatedForm = (inputRefs: React.RefObject<{[key: string]: InputRefHandler | null;}>) => {
   for (const key in inputRefs.current) {
-    console.log(key, inputRefs.current[key]);
     if (inputRefs.current[key] && !inputRefs.current[key].formValidate()) {
       return false;
     }

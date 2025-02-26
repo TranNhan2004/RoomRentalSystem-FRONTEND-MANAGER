@@ -1,12 +1,12 @@
-import { DistrictDetails } from "@/components/main/address/district/DistrictDetails";
+import { DistrictEdit } from "@/components/main/address/district/DistrictEdit";
 import { Metadata } from "next";
                                   
 export const metadata: Metadata = {
-  title: "Details of a district",
-  description: "Details of a district",
+  title: "Edit a district",
+  description: "Edit a district page.",
 };
                                   
-export default async function DistrictDetailsPage({
+export default async function DistrictEditPage({
   params,
 }: {
   params: Promise<{
@@ -17,7 +17,7 @@ export default async function DistrictDetailsPage({
 
   return (
     <>
-      <DistrictDetails id={districtId} />
+      <DistrictEdit id={districtId} />
     </>
   );
 };

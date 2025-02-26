@@ -3,25 +3,42 @@
 import { DataForm, DataFormProps } from '@/components/partial/data/DataForm';
 import { Input } from '@/components/partial/form/Input';
 import { Label } from '@/components/partial/form/Label';
+import { OptionType, Select } from '@/components/partial/form/Select';
 import { useInputRefs } from '@/hooks/useInputRefs';
 import { handleCancelAlert } from '@/lib/client/alert';
 import { handleInputChange } from '@/lib/client/handleInputChange';
-import { ProvinceType } from '@/types/Address.type';
+import { ProvinceService } from '@/services/Address.service';
+import { DistrictType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-type ProvinceFormProps = {
-  reqData: ProvinceType;
-  setReqData: React.Dispatch<React.SetStateAction<ProvinceType>>;
+type DistrictFormProps = {
+  reqData: DistrictType;
+  setReqData: React.Dispatch<React.SetStateAction<DistrictType>>;
 } & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'inputRefs'>;
 
-export const ProvinceForm = (props: ProvinceFormProps) => {
+export const DistrictForm = (props: DistrictFormProps) => {
   const router = useRouter();
   const { inputRefs, setRef } = useInputRefs(Object.keys(props.reqData));
+  const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
+
+  useEffect(() => {
+    const getProvinceOptions = async () => {
+      const provincesList = await (new ProvinceService()).getMany();
+      setProvinceOptions(provincesList.map(province => {
+        return {
+          value: province.id ?? '',
+          label: province.name ?? ''
+        };
+      }));
+    };
+
+    getProvinceOptions();
+  }, []);
 
   const cancelOnClick = async () => {
     await handleCancelAlert(() => {
-      router.push('/addresses/provinces');
+      router.push('/addresses/districts');
     });
   };
 
@@ -29,6 +46,7 @@ export const ProvinceForm = (props: ProvinceFormProps) => {
     return handleInputChange(e, props.setReqData);
   };
 
+  
   const validators = {
     name: () => null
   };
@@ -43,7 +61,7 @@ export const ProvinceForm = (props: ProvinceFormProps) => {
         inputRefs={inputRefs}
       >
         <div className='grid grid-cols-2 items-center'>
-          <Label htmlFor='name' required>Tên tỉnh: </Label>
+          <Label htmlFor='name' required>Tên huyện: </Label>
           <Input 
             id='name'
             name='name'
@@ -54,6 +72,18 @@ export const ProvinceForm = (props: ProvinceFormProps) => {
             onChange={handleOnChange}
             validate={validators.name}
             ref={setRef('name')}
+          />
+        </div>
+        <div className='grid grid-cols-2 items-center'>
+          <Label htmlFor='province' required>Thuộc tỉnh: </Label>
+          <Select 
+            id='province'
+            value={props.reqData.province}
+            className='w-[300px] ml-[-360px]'
+            options={provinceOptions}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { 
+              props.setReqData({ ...props.reqData, province: e.target.value });
+            }}
           />
         </div>
       </DataForm>

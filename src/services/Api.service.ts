@@ -28,7 +28,8 @@ export class ApiService<T extends object, Q extends object> {
   }
 
   public async delete(id: string) {
-    await axiosInstance.delete(`${this.endpoint}/${id}/`);
+    const response = await axiosInstance.delete<T>(`${this.endpoint}/${id}/`);
+    return response.data;
   }
 }
 

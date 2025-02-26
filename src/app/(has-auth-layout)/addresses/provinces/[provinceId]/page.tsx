@@ -1,4 +1,10 @@
-import { ProvinceDetail } from "@/components/main/address/province/ProvinceDetail";
+import { ProvinceDetails } from "@/components/main/address/province/ProvinceDetails";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Details of a province",
+  description: "Details of a province page.",
+};
 
 export default async function ProvinceDetailsPage({
   params,
@@ -12,7 +18,7 @@ export default async function ProvinceDetailsPage({
 
   return (
     <>
-      <ProvinceDetail id={provinceId} />
+      <ProvinceDetails id={provinceId} />
     </>
   );
 }

@@ -3,7 +3,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Provinces",
-  description: "List of provinces in Vietnam",
+  description: "List of provinces in Vietnam page.",
 };
 
 export default function ProvincesListPage() {
