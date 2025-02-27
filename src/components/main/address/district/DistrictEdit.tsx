@@ -28,15 +28,12 @@ export const DistrictEdit = (props: DistrictEditProps) => {
       return;
     }
 
-    if (error.response?.status !== 400) {
-      await toastError(DistrictMessage.PATCH_ERROR);
-      return;
-    }
-
-    if (error.response.data.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR) {
+    if (error.response?.data?.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR) {
       await toastError(DistrictMessage.REQUIRED_PROVINCE_ERROR);
       return;
     }
+
+    await toastError(DistrictMessage.PATCH_ERROR);
   };
 
   const patchData = async (actionAfter?: () => void) => {

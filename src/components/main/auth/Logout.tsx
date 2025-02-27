@@ -8,17 +8,18 @@ export const Logout = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const handleLogout = async () => {
+    setTimeout(async () => {
       await resetAuthTokens();
       router.refresh();
-    };
-
-    handleLogout();
+    }, 3000);
   }, [router]);
 
   return (
-    <div>
-      <h1>Đang đăng xuất...</h1>
+    <div className='flex items-center justify-center text-lg space-x-2'>
+      <h1>Đang đăng xuất</h1>
+      <span className="dot animate-bounce1">.</span>
+      <span className="dot animate-bounce2">.</span>
+      <span className="dot animate-bounce3">.</span>
     </div>
   );
 };

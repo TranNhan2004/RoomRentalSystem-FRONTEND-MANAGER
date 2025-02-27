@@ -51,15 +51,12 @@ export const DistrictsList = () => {
       return;
     }
 
-    if (error.response?.status !== 500) {
-      await toastError(DistrictMessage.DELETE_ERROR);
-      return;
-    }
-
-    if (error.response.data.includes(PublicMessage.BACKEND_PROTECT_ERROR_PREFIX)) {
+    if (error.response?.data?.includes(PublicMessage.BACKEND_PROTECT_ERROR_PREFIX)) {
       await toastError(DistrictMessage.DELETE_PROTECT_ERROR);
       return;
     }
+
+    await toastError(DistrictMessage.DELETE_ERROR);
   };
 
   const deleteFunction = async (id: string) => {

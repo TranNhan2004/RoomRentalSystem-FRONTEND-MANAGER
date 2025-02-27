@@ -21,15 +21,12 @@ export const DistrictAdd = () => {
       return;
     }
 
-    if (error.response?.status !== 400) {
-      await toastError(DistrictMessage.POST_ERROR);
-      return;
-    }
-
-    if (error.response.data.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR) {
+    if (error.response?.data?.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR) {
       await toastError(DistrictMessage.REQUIRED_PROVINCE_ERROR);
       return;
     }
+
+    await toastError(DistrictMessage.POST_ERROR);
   };
 
   const postData = async (actionAfter: () => void) => {

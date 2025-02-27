@@ -28,15 +28,12 @@ export const ProvinceEdit = (props: ProvinceEditProps) => {
       return;
     }
 
-    if (error.response?.status !== 400) {
-      await toastError(ProvinceMessage.PATCH_ERROR);
-      return;
-    }
-
-    if (error.response.data.name[0] === ProvinceMessage.BACKEND_NAME_UNIQUE_ERROR) {
+    if (error.response?.data?.name[0] === ProvinceMessage.BACKEND_NAME_UNIQUE_ERROR) {
       await toastError(ProvinceMessage.NAME_UNIQUE_ERROR);
       return;
-    } 
+    }
+    
+    await toastError(ProvinceMessage.PATCH_ERROR);
   };
 
   const patchData = async (actionAfter?: () => void) => {

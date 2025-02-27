@@ -2,12 +2,12 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { REFRESH_TOKEN_CKNAME, USER_INFO_CKNAME } from "../client/authToken";
+import { getRefreshTokenCookieName, getUserInfoCookieName } from "./getCookiesName";
 
 export const checkLoginStatusForAuthPage = async () => {
   const cookieStore = await cookies();
-  const refreshToken = cookieStore.get(REFRESH_TOKEN_CKNAME);
-  const userInfo = cookieStore.get(USER_INFO_CKNAME);
+  const refreshToken = cookieStore.get(await getRefreshTokenCookieName());
+  const userInfo = cookieStore.get(await getUserInfoCookieName());
 
   if (!refreshToken || !userInfo) {
     redirect('/auth/login');
@@ -16,8 +16,8 @@ export const checkLoginStatusForAuthPage = async () => {
 
 export const checkLoginStatusForNotAuthPage = async () => {
   const cookieStore = await cookies();
-  const refreshToken = cookieStore.get(REFRESH_TOKEN_CKNAME);
-  const userInfo = cookieStore.get(USER_INFO_CKNAME);
+  const refreshToken = cookieStore.get(await getRefreshTokenCookieName());
+  const userInfo = cookieStore.get(await getUserInfoCookieName());
 
   if (refreshToken && userInfo) {
     redirect('/');

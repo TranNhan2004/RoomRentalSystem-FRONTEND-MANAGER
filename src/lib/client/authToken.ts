@@ -1,6 +1,14 @@
 import { LoginResponseType, UserType } from "@/types/UserAccount.type";
 import { encryptValue, decryptValue } from "../server/aesCrypto";
 import { setCookie, getCookie, removeCookie } from "typescript-cookie";
+import { 
+  getAccessTokenCookieName, 
+  getAccessTokenExpires, 
+  getRefreshTokenCookieName, 
+  getRefreshTokenExpires, 
+  getUserInfoCookieName, 
+  getUserInfoExpires 
+} from "../server/getCookiesName";
 
 const setSecureCookie = async (name: string, value: string, expires: number) => {
   const encryptedValue = await encryptValue(value);
@@ -20,18 +28,21 @@ const removeSecureCookie = async (name: string) => {
 };
 
 
-export const REFRESH_TOKEN_CKNAME = 'session_manager_refresh_token';
-export const ACCESS_TOKEN_CKNAME = 'session_manager_access_token';
-export const USER_INFO_CKNAME = 'session_manager_user_info';
-
-export const REFRESH_COOKIE_EXPIRES = 3;
-export const ACCESS_COOKIE_EXPIRES = 1 / 24;
-export const USER_INFO_EXPIRES = 3;
-
 export const handleLogin = async (data: LoginResponseType) => {  
-  await setSecureCookie(REFRESH_TOKEN_CKNAME, data.refresh || '', REFRESH_COOKIE_EXPIRES);
-  await setSecureCookie(ACCESS_TOKEN_CKNAME, data.access || '', ACCESS_COOKIE_EXPIRES);
-  await setSecureCookie(USER_INFO_CKNAME, JSON.stringify(data.user) || '', USER_INFO_EXPIRES);
+  const [rtkCkName, rtkExpires, atkCkName, atkExpires, uinfoCkName, uinfoExpires] = await Promise.all([
+    getRefreshTokenCookieName(),
+    getRefreshTokenExpires(),
+    getAccessTokenCookieName(),
+    getAccessTokenExpires(),
+    getUserInfoCookieName(),
+    getUserInfoExpires(),
+  ]);
+
+  await Promise.all([
+    setSecureCookie(rtkCkName, data.refresh || '', rtkExpires),
+    setSecureCookie(atkCkName, data.access || '', atkExpires),
+    setSecureCookie(uinfoCkName, JSON.stringify(data.user) || '', uinfoExpires)
+  ]);
 };
 
 export const getRefreshedAccessToken = async () => {
@@ -40,7 +51,7 @@ export const getRefreshedAccessToken = async () => {
   if (!refreshToken) {
     await resetAuthTokens();
   } else {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/token/refresh/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/app.user-account/auth/token/refresh/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +63,7 @@ export const getRefreshedAccessToken = async () => {
     const data = await response.json();
   
     if (data.access) {
-      await setSecureCookie(ACCESS_TOKEN_CKNAME, data.access, ACCESS_COOKIE_EXPIRES);
+      await setSecureCookie(await getAccessTokenCookieName(), data.access, await getAccessTokenExpires());
       return data.access;
     } else {
       await resetAuthTokens();
@@ -61,19 +72,27 @@ export const getRefreshedAccessToken = async () => {
 };
 
 export const getRefreshToken = async () => {
-  return await getSecureCookie(REFRESH_TOKEN_CKNAME);
+  return await getSecureCookie(await getRefreshTokenCookieName());
 };
 
 export const getAccessToken = async () => {
-  return await getSecureCookie(ACCESS_TOKEN_CKNAME);
+  return await getSecureCookie(await getAccessTokenCookieName());
 };
 
 export const getUserInfo = async () => {
-  return JSON.parse(await getSecureCookie(USER_INFO_CKNAME) ?? '') as UserType;
+  return JSON.parse(await getSecureCookie(await getUserInfoCookieName()) ?? '') as UserType;
 };
 
 export const resetAuthTokens = async () => {
-  await removeSecureCookie(REFRESH_TOKEN_CKNAME);
-  await removeSecureCookie(ACCESS_TOKEN_CKNAME);
-  await removeSecureCookie(USER_INFO_CKNAME);
+  const [rtkCkName, atkCkName, uinfoCkName] = await Promise.all([
+    getRefreshTokenCookieName(),
+    getAccessTokenCookieName(),
+    getUserInfoCookieName(),
+  ]);
+
+  await Promise.all([
+    removeSecureCookie(rtkCkName),
+    removeSecureCookie(atkCkName),
+    removeSecureCookie(uinfoCkName)
+  ]);
 };
