@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { 
+  ArrowPathIcon,
   ArrowUpTrayIcon,
   CheckIcon,
   FunnelIcon, 
@@ -42,7 +43,7 @@ const buttonConfig = {
     icon: <FunnelIcon className='w-5 h-5' />,
     color: 'blue'
   },
-  detail: {
+  details: {
     icon: <InformationCircleIcon className='w-5 h-5' />,
     color: 'blue'
   },
@@ -54,6 +55,10 @@ const buttonConfig = {
     icon: <ArrowUpTrayIcon className='w-5 h-5' />,
     color: 'blue'
   },
+  refresh: {
+    icon: <ArrowPathIcon className='w-5 h-5' />,
+    color: 'yellow'
+  }
 } as const;
 
 export type ActionButtonProps = {

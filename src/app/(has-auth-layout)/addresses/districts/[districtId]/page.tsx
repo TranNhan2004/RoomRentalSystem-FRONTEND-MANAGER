@@ -2,8 +2,8 @@ import { DistrictDetails } from "@/components/main/address/district/DistrictDeta
 import { Metadata } from "next";
                                   
 export const metadata: Metadata = {
-  title: "Details of a district",
-  description: "Details of a district",
+  title: "Details of the district",
+  description: "Details of the district",
 };
                                   
 export default async function DistrictDetailsPage({

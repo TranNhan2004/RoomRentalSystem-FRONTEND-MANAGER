@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Form } from '../form/Form';
 import { ActionButton } from '../button/ActionButton';
@@ -15,41 +17,58 @@ export type DataFormProps = {
 
 export const DataForm = (props: DataFormProps) => {
   const [action, setAction] = useState<'save' | 'save-and-exit'>('save');
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSaving(true);
 
     if (!isValidatedForm(props.inputRefs)) {
+      setIsSaving(false);
       return;
     }
 
     if (action === 'save') {
-      props.saveOnClick();
+      await props.saveOnClick();
     } else {
-      props.saveAndExitOnClick();
+      await props.saveAndExitOnClick();
     }
+
+    setIsSaving(false);
   };
 
   return (
-    <>
-      <Form label={props.formLabel} onSubmit={handleSubmit}>
-        {props.children}
-        <div className='w-full h-[60px] rounded-lg bg-gray-200 mt-10'>
-          <div className='flex justify-end items-center h-full space-x-2 mr-4'>
-            <ActionButton mode='save' isSubmit onClick={() => setAction('save')}>
-              Lưu
-            </ActionButton>
-            
-            <ActionButton mode='save' isSubmit onClick={() => setAction('save-and-exit')}>
-              Lưu và thoát
-            </ActionButton>
-            
-            <ActionButton mode='cancel' onClick={props.cancelOnClick}>
-              Thoát
-            </ActionButton>  
-          </div>
+    <Form label={props.formLabel} onSubmit={handleSubmit}>
+      {props.children}
+      <div className='w-full h-[60px] rounded-lg bg-gray-200 mt-10'>
+        <div className='flex justify-end items-center h-full space-x-2 mr-4'>
+          <ActionButton
+            mode='save'
+            isSubmit
+            onClick={() => setAction('save')} 
+            disabled={isSaving} 
+          >
+            Lưu
+          </ActionButton>
+          
+          <ActionButton
+            mode='save'
+            isSubmit
+            onClick={() => setAction('save-and-exit')}
+            disabled={isSaving} 
+          >
+            Lưu và thoát
+          </ActionButton>
+          
+          <ActionButton
+            mode='cancel'
+            onClick={props.cancelOnClick}
+            disabled={isSaving} 
+          >
+            Thoát
+          </ActionButton>  
         </div>
-      </Form>
-    </>
+      </div>
+    </Form>
   );
 };

@@ -2,8 +2,8 @@ import { ProvinceDetails } from "@/components/main/address/province/ProvinceDeta
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Details of a province",
-  description: "Details of a province page.",
+  title: "Details of the province",
+  description: "Details of the province page.",
 };
 
 export default async function ProvinceDetailsPage({

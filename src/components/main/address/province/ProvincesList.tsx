@@ -5,7 +5,7 @@ import { ProvinceService } from '@/services/Address.service';
 import { useEffect, useState } from 'react';
 import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
 import { ProvinceType } from '@/types/Address.type';
-import { Table, DisplayDataType } from '@/components/partial/data/Table';
+import { Table, DisplayedDataType } from '@/components/partial/data/Table';
 import { useRouter } from 'next/navigation';
 import { ProvinceMessage } from '@/messages/Address.message';
 import { ActionButton } from '@/components/partial/button/ActionButton';
@@ -19,9 +19,12 @@ export const ProvincesList = () => {
   const router = useRouter();
   const originialDataRef = useRef<ProvinceType[]>([]);
   const [data, setData] = useState<ProvinceType[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+      
       try {
         const data = await (new ProvinceService()).getMany() ?? [];
         originialDataRef.current = data;
@@ -29,20 +32,18 @@ export const ProvincesList = () => {
       } catch {
         await toastError(ProvinceMessage.GET_MANY_ERROR);
       }
+
+      setLoading(false);
     };
 
     fetchData();
   }, []);
 
-  const generateDataForTable = () => {
-    const dataForTable: DisplayDataType[] = [];
-    for (const item of data) {
-      dataForTable.push({
-        id: `${item.id}`,
-        basicInfo: `${item.name}`
-      });
-    }
-    return dataForTable;
+  const generateDataForTable = (): DisplayedDataType[] => {
+    return data.map((item) => ({
+      id: `${item.id}`,
+      basicInfo: `${item.name}`,
+    }));
   };
 
   const handleDeleteError = async (error: unknown) => {
@@ -72,7 +73,7 @@ export const ProvincesList = () => {
     });
   };
 
-  const detailFunction = (id: string) => {
+  const detailsFunction = (id: string) => {
     router.push(`provinces/${id}`);
   };
 
@@ -104,6 +105,7 @@ export const ProvincesList = () => {
               { label: 'Tên tỉnh (A-Z)', value: 'asc-name' },
               { label: 'Tên tỉnh (Z-A)', value: 'desc-name' },
             ]}
+            originalData={originialDataRef.current}
             data={data}
             setData={setData}
           />
@@ -117,8 +119,9 @@ export const ProvincesList = () => {
       <Table 
         data={generateDataForTable()}
         deleteFunction={deleteFunction}
-        detailFunction={detailFunction}
+        detailsFunction={detailsFunction}
         editFunction={editFunction}
+        loading={loading}
       />
     </div>
   );

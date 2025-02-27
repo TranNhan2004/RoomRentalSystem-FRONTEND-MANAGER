@@ -2,8 +2,8 @@ import { ProvinceEdit } from "@/components/main/address/province/ProvinceEdit";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Edit a province",
-  description: "Edit a province page.",
+  title: "Edit the province",
+  description: "Edit the province page.",
 };
 
 export default async function ProvinceEditPage({
