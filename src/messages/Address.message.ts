@@ -25,6 +25,7 @@ export class DistrictMessage {
   public static readonly GET_BY_ID_ERROR = 'Đã có lỗi xảy ra khi lấy huyện theo ID!';
   public static readonly PATCH_ERROR = 'Đã có lỗi xảy ra khi chỉnh sửa thông tin huyện!';
   public static readonly DELETE_ERROR = 'Đã có lỗi xảy ra khi xóa thông tin huyện!';
+
   public static readonly DELETE_PROTECT_ERROR = 'Phải xóa các dữ liệu có tồn tại huyện này trước khi xóa huyện!';
 
   public static readonly REQUIRED_PROVINCE_ERROR = 'Tên tỉnh không được để trống!';
@@ -40,4 +41,8 @@ export class CommuneMessage {
   public static readonly GET_BY_ID_ERROR = 'Đã có lỗi xảy ra khi lấy xã theo ID!';
   public static readonly PATCH_ERROR = 'Đã có lỗi xảy ra khi chỉnh sửa thông tin xã!';
   public static readonly DELETE_ERROR = 'Đã có lỗi xảy ra khi xóa thông tin xã!';
+
+  public static readonly DELETE_PROTECT_ERROR = 'Phải xóa các dữ liệu có tồn tại huyện này trước khi xóa xã!';
+
+  public static readonly REQUIRED_DISTRICT_ERROR = 'Tên huyện không được để trống!';
 };

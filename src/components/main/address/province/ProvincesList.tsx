@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ProvinceService } from '@/services/Address.service';
-import { useEffect, useState } from 'react';
 import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
 import { ProvinceType } from '@/types/Address.type';
 import { Table, DisplayedDataType } from '@/components/partial/data/Table';
@@ -26,7 +25,7 @@ export const ProvincesList = () => {
       setLoading(true);
       
       try {
-        const data = await (new ProvinceService()).getMany() ?? [];
+        const data = await (new ProvinceService()).getMany();
         originialDataRef.current = data;
         setData(data);
       } catch {

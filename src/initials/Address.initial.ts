@@ -1,4 +1,10 @@
-import { CommuneType, DistrictQueryType, DistrictType, ProvinceType } from "@/types/Address.type";
+import { 
+  CommuneQueryType, 
+  CommuneType, 
+  DistrictQueryType, 
+  DistrictType, 
+  ProvinceType 
+} from "@/types/Address.type";
 
 export const INITIAL_PROVINCE: ProvinceType = {
   id: '',
@@ -18,5 +24,9 @@ export const INITIAL_DISTRICT_QUERY: DistrictQueryType = {
 export const INITIAL_COMMUNE: CommuneType = {
   id: '',
   name: '',
+  district: ''
+} as const;
+
+export const INITIAL_COMMUNE_QUERY: CommuneQueryType = {
   district: ''
 } as const;

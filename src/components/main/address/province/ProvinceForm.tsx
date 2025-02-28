@@ -25,7 +25,7 @@ export const ProvinceForm = (props: ProvinceFormProps) => {
     });
   };
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     return handleInputChange(e, props.setReqData);
   };
 
@@ -51,7 +51,7 @@ export const ProvinceForm = (props: ProvinceFormProps) => {
             className='w-[300px] ml-[-360px]'
             required
             value={props.reqData.name}
-            onChange={handleOnChange}
+            onChange={handleInputOnChange}
             validate={validators.name}
             ref={setRef('name')}
           />

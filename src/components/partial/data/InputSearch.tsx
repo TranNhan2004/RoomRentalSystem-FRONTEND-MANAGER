@@ -25,7 +25,7 @@ export const InputSearch = <T extends object>(props: InputSearchProps<T>) => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value.trim());
+    setSearchQuery(e.target.value);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

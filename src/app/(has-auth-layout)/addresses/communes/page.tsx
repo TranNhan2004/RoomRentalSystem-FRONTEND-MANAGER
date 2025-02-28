@@ -1,3 +1,4 @@
+import { CommunesList } from "@/components/main/address/commune/CommunesList";
 import { Metadata } from "next";
                                   
 export const metadata: Metadata = {
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 export default function CommunesListPage() {
   return (
     <>
-      Communes List Page
+      <CommunesList />
     </>
   );
 };

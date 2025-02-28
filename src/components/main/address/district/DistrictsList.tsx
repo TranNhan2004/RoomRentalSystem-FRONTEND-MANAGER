@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DistrictService, ProvinceService } from '@/services/Address.service';
-import { useEffect, useState } from 'react';
 import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
-import { DistrictQueryType, DistrictType, ProvinceType } from '@/types/Address.type';
+import { DistrictQueryType, DistrictType } from '@/types/Address.type';
 import { DisplayedDataType, Table } from '@/components/partial/data/Table';
 import { useRouter } from 'next/navigation';
 import { DistrictMessage, ProvinceMessage } from '@/messages/Address.message';
@@ -15,22 +14,23 @@ import { Sorting } from '@/components/partial/data/Sorting';
 import { AxiosError } from 'axios';
 import { PublicMessage } from '@/messages/Public.message';
 import { FilterModal } from '@/components/partial/data/FilterModal';
-import { Select } from '@/components/partial/form/Select';
+import { OptionType, Select } from '@/components/partial/form/Select';
 import { Label } from '@/components/partial/form/Label';
 import { INITIAL_DISTRICT_QUERY } from '@/initials/Address.initial';
+import { mapOptions } from '@/lib/client/handleOptions';
 
 export const DistrictsList = () => {
   const router = useRouter();
   const originialDataRef = useRef<DistrictType[]>([]);
   const [data, setData] = useState<DistrictType[]>([]);
-  const [provinceDataForFilter, setProvinceDataForFilter] = useState<ProvinceType[]>([]);
+  const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
   const [query, setQuery] = useState<DistrictQueryType>(INITIAL_DISTRICT_QUERY);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await (new DistrictService()).getMany() ?? [];
+        const data = await (new DistrictService()).getMany();
         originialDataRef.current = data;
         setData(data);
       } catch {
@@ -38,10 +38,10 @@ export const DistrictsList = () => {
       }
     };
 
-    const fetchDataForFilter = async () => {
+    const fetchProvince = async () => {
       try {
-        const data = await (new ProvinceService()).getMany() ?? [];
-        setProvinceDataForFilter(data);
+        const data = await (new ProvinceService()).getMany();
+        setProvinceOptions(mapOptions(data, 'name', 'id'));
       } catch {
         await toastError(ProvinceMessage.GET_MANY_ERROR);
       }
@@ -49,7 +49,7 @@ export const DistrictsList = () => {
 
     const fetchAllData = async () => {
       setLoading(true); 
-      await Promise.all([fetchData(), fetchDataForFilter()]); 
+      await Promise.all([fetchData(), fetchProvince()]); 
       setLoading(false); 
     };
   
@@ -106,7 +106,7 @@ export const DistrictsList = () => {
     setLoading(true);
 
     try {
-      const data = await (new DistrictService()).getMany(query) ?? [];
+      const data = await (new DistrictService()).getMany(query);
       originialDataRef.current = data;
       setData(data);
     } catch {
@@ -118,6 +118,10 @@ export const DistrictsList = () => {
 
   const refreshOnClick = () => {
     setQuery(INITIAL_DISTRICT_QUERY);
+  };
+
+  const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => { 
+    setQuery({ ...query, province: e.target.value });
   };
 
   return (
@@ -151,21 +155,14 @@ export const DistrictsList = () => {
             filterOnClick={filterOnClick}
             refreshOnClick={refreshOnClick}
           >
-            <div className='flex items-center mt-1 mb-1'>
+            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
               <Label htmlFor='province-query'>Tỉnh: </Label>
               <Select 
                 id='province-query'
                 value={query.province}
-                className='ml-2 w-[300px]'
-                options={provinceDataForFilter.map(province => {
-                  return { 
-                    label: province.name || '', 
-                    value: province.id || '' 
-                  };
-                })}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { 
-                  setQuery({ ...query, province: e.target.value });
-                }}
+                className='ml-[-250px] w-[300px]'
+                options={provinceOptions}
+                onChange={handleProvinceChange}
               />
             </div>      
           </FilterModal>
