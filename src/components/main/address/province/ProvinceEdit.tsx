@@ -22,6 +22,19 @@ export const ProvinceEdit = (props: ProvinceEditProps) => {
   const router = useRouter();
   const [reqData, setReqData] = useState<ProvinceType>(INITIAL_PROVINCE);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const province = await (new ProvinceService()).get(props.id);
+        setReqData(province);
+      } catch {
+        router.push(NOT_FOUND_URL);
+      }
+    };
+
+    fetchData();
+  }, [props.id, router]);
+
   const handlePatchError = async (error: unknown) => {
     if (!(error instanceof AxiosError)) {
       await toastError(PublicMessage.UNKNOWN_ERROR);
@@ -57,19 +70,6 @@ export const ProvinceEdit = (props: ProvinceEditProps) => {
       router.push('/addresses/provinces');
     });
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const province = await (new ProvinceService()).get(props.id);
-        setReqData(province);
-      } catch {
-        router.push(NOT_FOUND_URL);
-      }
-    };
-
-    fetchData();
-  }, [props.id, router]);
 
   if (objectEquals(reqData, INITIAL_PROVINCE)) {
     return <Loading />;

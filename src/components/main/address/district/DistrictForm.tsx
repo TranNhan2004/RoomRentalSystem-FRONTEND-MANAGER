@@ -27,8 +27,9 @@ export const DistrictForm = (props: DistrictFormProps) => {
   useEffect(() => {
     const fetchProvince = async () => {
       try {
-        const data = await (new ProvinceService()).getMany();
-        setProvinceOptions(mapOptions(data, 'name', 'id'));
+        const provinceData = await (new ProvinceService()).getMany();
+        setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
+      
       } catch {
         await toastError(ProvinceMessage.GET_MANY_ERROR);
       }
@@ -78,6 +79,7 @@ export const DistrictForm = (props: DistrictFormProps) => {
             ref={setRef('name')}
           />
         </div>
+
         <div className='grid grid-cols-2 items-center'>
           <Label htmlFor='province' required>Thuộc tỉnh: </Label>
           <Select 

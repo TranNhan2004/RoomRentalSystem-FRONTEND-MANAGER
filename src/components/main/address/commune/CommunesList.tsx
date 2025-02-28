@@ -6,7 +6,7 @@ import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert'
 import { CommuneQueryType, CommuneType, DistrictType } from '@/types/Address.type';
 import { DisplayedDataType, Table } from '@/components/partial/data/Table';
 import { useRouter } from 'next/navigation';
-import { CommuneMessage, DistrictMessage, ProvinceMessage } from '@/messages/Address.message';
+import { CommuneMessage } from '@/messages/Address.message';
 import { ActionButton } from '@/components/partial/button/ActionButton';
 import { Title } from '@/components/partial/data/Title';
 import { InputSearch } from '@/components/partial/data/InputSearch';
@@ -21,51 +21,43 @@ import { mapOptions } from '@/lib/client/handleOptions';
 
 export const CommunesList = () => {
   const router = useRouter();
-  const originialDataRef = useRef<CommuneType[]>([]);
+  
   const [data, setData] = useState<CommuneType[]>([]);
   const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
   const [districtOptions, setDistrictOptions] = useState<OptionType[]>([]);
-  const originalDistrictDataRef = useRef<DistrictType[]>([]);
   const [query, setQuery] = useState<CommuneQueryType>(INITIAL_COMMUNE_QUERY);
   const [loading, setLoading] = useState(true);
+  
+  const originialDataRef = useRef<CommuneType[]>([]);
+  const originalDistrictDataRef = useRef<DistrictType[]>([]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await (new CommuneService()).getMany();
-        originialDataRef.current = data;
+        setLoading(true);
+        const [data, provinceData, districtData] = await Promise.all([
+          (new CommuneService()).getMany(),
+          (new ProvinceService()).getMany(),
+          (new DistrictService()).getMany(),
+        ]);
+        
         setData(data);
+        setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
+        setDistrictOptions(mapOptions(districtData, 'name', 'id'));
+
+        originialDataRef.current = data;
+        originalDistrictDataRef.current = districtData;
+    
       } catch {
         await toastError(CommuneMessage.GET_MANY_ERROR);
+    
+      } finally {
+        setLoading(false);
       }
     };
 
-    const fetchProvince = async () => {
-      try {
-        const data = await (new ProvinceService()).getMany();
-        setProvinceOptions(mapOptions(data, 'name', 'id'));
-      } catch {
-        await toastError(ProvinceMessage.GET_MANY_ERROR);
-      }
-    };
-
-    const fetchDistrict = async () => {
-      try {
-        const data = await (new DistrictService()).getMany();
-        setDistrictOptions(mapOptions(data, 'name', 'id'));
-        originalDistrictDataRef.current = data;
-      } catch {
-        await toastError(DistrictMessage.GET_MANY_ERROR);
-      }
-    };
-
-    const fetchAllData = async () => {
-      setLoading(true); 
-      await Promise.all([fetchData(), fetchProvince(), fetchDistrict()]); 
-      setLoading(false); 
-    };
-  
-    fetchAllData();
+    fetchData();
   }, []);
 
   const generateDataForTable = (): DisplayedDataType[] => {
@@ -96,6 +88,7 @@ export const CommunesList = () => {
         await toastSuccess(CommuneMessage.DELETE_SUCCESS);
         originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
         setData(originialDataRef.current); 
+      
       } catch (error) {
         await handleDeleteError(error);
       }
@@ -103,7 +96,7 @@ export const CommunesList = () => {
   };
 
   const detailsFunction = (id: string) => {
-    router.push(`communes/${id}`);
+    router.push(`communes/${id}`, { scroll: true });
   };
 
   const editFunction = (id: string) => {
@@ -115,17 +108,18 @@ export const CommunesList = () => {
   };
 
   const filterOnClick = async () => {
-    setLoading(true);
-
     try {
+      setLoading(true);
       const data = await (new CommuneService()).getMany(query);
       originialDataRef.current = data;
       setData(data);
+    
     } catch {
       await toastError(CommuneMessage.GET_MANY_ERROR);
+    
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   const refreshOnClick = () => {
@@ -149,7 +143,7 @@ export const CommunesList = () => {
 
   return (
     <div>
-      <Title>Danh sách các huyện</Title>
+      <Title>Danh sách các xã</Title>
       <div className='flex items-center'>
         <div className='w-[40%]'>
           <InputSearch 

@@ -11,3 +11,12 @@ export class AuthMessage {
   public static readonly GET_RESET_PASSWORD_URL_ERROR = 'Đã xảy ra lỗi khi lấy liên kết để đặt lại mật khẩu!';
   public static readonly RESET_PASSWORD_ERROR = 'Đã có lỗi xảy ra khi đặt lại mật khẩu!';
 }
+
+export class UserMessage {
+  public static readonly PATCH_SUCCESS = 'Thông tin tài khoản đã được cập nhật thành công!';
+  public static readonly CHANGE_PASSWORD_SUCCESS = 'Đổi mật khẩu thành công! Vui lòng đăng nhập lại!';
+
+  public static readonly GET_BY_ID_ERROR = 'Tài khoản không tồn tại!';
+  public static readonly CHANGE_PASSWORD_ERROR = 'Đã có lỗi xảy ra khi đổi mật khẩu! Vui lòng thử lại sau!';
+
+}

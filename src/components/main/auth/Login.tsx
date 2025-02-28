@@ -23,7 +23,7 @@ export const Login = () => {
   const [reqData, setReqData] = useState<LoginRequestType>(INITIAL_LOGIN_REQUEST);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     return handleInputChange(e, setReqData);
   };
 
@@ -71,7 +71,7 @@ export const Login = () => {
           placeholder='Email'
           required
           value={reqData.email}
-          onChange={handleOnChange}
+          onChange={handleInputOnChange}
           validate={validators.email}
           ref={setRef('email')}
         />
@@ -85,7 +85,7 @@ export const Login = () => {
           placeholder='Mật khẩu'
           required
           value={reqData.password}
-          onChange={handleOnChange}
+          onChange={handleInputOnChange}
           validate={validators.password}
           ref={setRef('password')}
         />

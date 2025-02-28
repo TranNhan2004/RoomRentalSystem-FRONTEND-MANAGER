@@ -1,6 +1,5 @@
 'use client';
 
-
 import { DataDetail } from '@/components/partial/data/DataDetail';
 import { Loading } from '@/components/partial/data/Loading';
 import { INITIAL_DISTRICT, INITIAL_PROVINCE } from '@/initials/Address.initial';
@@ -28,13 +27,10 @@ export const DistrictDetails = (props: DistrictDetailsProps) => {
     const fetchData = async () => {
       try {
         const data = await (new DistrictService()).get(props.id);
+        const provinceData = await (new ProvinceService()).get(data.province ?? '');
         
-        if (data.province) {
-          const provinceData = await (new ProvinceService()).get(data.province);
-          setProvinceData(provinceData);
-        }
-
         setData(data);
+        setProvinceData(provinceData);
       } catch {
         router.push(NOT_FOUND_URL);
       }

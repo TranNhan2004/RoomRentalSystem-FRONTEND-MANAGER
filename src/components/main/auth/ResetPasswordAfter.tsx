@@ -26,7 +26,7 @@ export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
   const [reqData, setReqData] = useState<ResetPasswordRequestAfterType>(INITIAL_RESET_PASSWORD_REQUEST_AFTER);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     return handleInputChange(e, setReqData);
   };
 
@@ -77,7 +77,7 @@ export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
           placeholder='Mật khẩu mới'
           required
           value={reqData.new_password}
-          onChange={handleOnChange}
+          onChange={handleInputOnChange}
           validate={validators.new_password}
           ref={setRef('new_password')}
         />
@@ -91,7 +91,7 @@ export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
           placeholder='Nhập lại mật khẩu mới'
           required
           value={reqData.confirm_new_password}
-          onChange={handleOnChange}
+          onChange={handleInputOnChange}
           validate={validators.confirm_new_password}
           ref={setRef('confirm_new_password')}
         />

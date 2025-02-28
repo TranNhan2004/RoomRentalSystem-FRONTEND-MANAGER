@@ -1,6 +1,5 @@
 'use client';
 
-
 import { DataDetail } from '@/components/partial/data/DataDetail';
 import { Loading } from '@/components/partial/data/Loading';
 import { INITIAL_PROVINCE } from '@/initials/Address.initial';

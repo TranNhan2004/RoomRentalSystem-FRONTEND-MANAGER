@@ -6,7 +6,7 @@ import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert'
 import { DistrictQueryType, DistrictType } from '@/types/Address.type';
 import { DisplayedDataType, Table } from '@/components/partial/data/Table';
 import { useRouter } from 'next/navigation';
-import { DistrictMessage, ProvinceMessage } from '@/messages/Address.message';
+import { DistrictMessage } from '@/messages/Address.message';
 import { ActionButton } from '@/components/partial/button/ActionButton';
 import { Title } from '@/components/partial/data/Title';
 import { InputSearch } from '@/components/partial/data/InputSearch';
@@ -30,30 +30,25 @@ export const DistrictsList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await (new DistrictService()).getMany();
-        originialDataRef.current = data;
+        setLoading(true);
+        const [data, provinceData] = await Promise.all([
+          (new DistrictService()).getMany(),
+          (new ProvinceService()).getMany(),
+        ]);
+
         setData(data);
+        originialDataRef.current = data;
+        setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
+      
       } catch {
         await toastError(DistrictMessage.GET_MANY_ERROR);
+      
+      } finally {
+        setLoading(false);
       }
     };
-
-    const fetchProvince = async () => {
-      try {
-        const data = await (new ProvinceService()).getMany();
-        setProvinceOptions(mapOptions(data, 'name', 'id'));
-      } catch {
-        await toastError(ProvinceMessage.GET_MANY_ERROR);
-      }
-    };
-
-    const fetchAllData = async () => {
-      setLoading(true); 
-      await Promise.all([fetchData(), fetchProvince()]); 
-      setLoading(false); 
-    };
-  
-    fetchAllData();
+    
+    fetchData();
   }, []);
 
   const generateDataForTable = (): DisplayedDataType[] => {
@@ -84,6 +79,7 @@ export const DistrictsList = () => {
         await toastSuccess(DistrictMessage.DELETE_SUCCESS);
         originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
         setData(originialDataRef.current); 
+      
       } catch (error) {
         await handleDeleteError(error);
       }
@@ -103,17 +99,18 @@ export const DistrictsList = () => {
   };
 
   const filterOnClick = async () => {
-    setLoading(true);
-
     try {
+      setLoading(true);
       const data = await (new DistrictService()).getMany(query);
       originialDataRef.current = data;
       setData(data);
+    
     } catch {
       await toastError(DistrictMessage.GET_MANY_ERROR);
-    }
 
-    setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const refreshOnClick = () => {

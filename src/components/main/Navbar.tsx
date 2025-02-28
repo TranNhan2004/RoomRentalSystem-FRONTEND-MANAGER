@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { UserType } from '@/types/UserAccount.type';
-import { getUserInfo } from '@/lib/client/authToken';
+import { getMyInfo } from '@/lib/client/authToken';
 import { getImageSrc } from '@/lib/client/getImageSrc';
 import { AccountInfo } from '../partial/account/AccountInfo';
 import { NavLink } from '../partial/navbar/NavLink';
@@ -12,14 +12,14 @@ import { DropdownMenu } from '../partial/navbar/DropdownMenu';
 
 
 export const Navbar = () => {
-  const [userInfo, setUserInfo] = useState<UserType>({});
+  const [myInfo, setMyInfo] = useState<UserType>({});
 
   useEffect(() => {
-    const setUserInfoFromCookie = async () => {
-      setUserInfo(await getUserInfo());
+    const setMyInfoFromCookie = async () => {
+      setMyInfo(await getMyInfo());
     };
 
-    setUserInfoFromCookie();
+    setMyInfoFromCookie();
   }, []);
 
   return (
@@ -56,7 +56,7 @@ export const Navbar = () => {
         </ul>
       </div>
       
-      <AccountInfo {...userInfo} />
+      <AccountInfo {...myInfo} />
     </div>
   );
 };

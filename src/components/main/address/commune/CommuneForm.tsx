@@ -21,41 +21,46 @@ type CommuneFormProps = {
 
 export const CommuneForm = (props: CommuneFormProps) => {
   const router = useRouter();
-  const { inputRefs, setRef } = useInputRefs(Object.keys(props.reqData));
-  const originalDistrictDataRef = useRef<DistrictType[]>([]);
+
   const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
+  const [provinceValue, setProvinceValue] = useState('');
   const [districtOptions, setDistrictOptions] = useState<OptionType[]>([]);
 
+  const { inputRefs, setRef } = useInputRefs(Object.keys(props.reqData));
+  const originalDistrictDataRef = useRef<DistrictType[]>([]);
+  
   useEffect(() => {
-    const fetchProvince = async () => {
+    const fetchOptionData = async () => {
       try {
-        const data = await (new ProvinceService()).getMany();
-        setProvinceOptions(mapOptions(data, 'name', 'id'));
+        const [provinceData, districtData] = await Promise.all([
+          (new ProvinceService()).getMany(),
+          (new DistrictService()).getMany()
+        ]);
+
+        setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
+        setDistrictOptions(mapOptions(districtData, 'name', 'id'));
+      
       } catch {
         await toastError(ProvinceMessage.GET_MANY_ERROR);
       }
     };
 
-    const fetchDistrict = async () => {
-      try {
-        const data = await (new DistrictService()).getMany();
-        setDistrictOptions(mapOptions(data, 'name', 'id'));
-        originalDistrictDataRef.current = data;
-      } catch {
-        await toastError(ProvinceMessage.GET_MANY_ERROR);
-      }
-    };
-
-    const fetchAllData = async () => {
-      await Promise.all([fetchProvince(), fetchDistrict()]);
-    };
-
-    fetchAllData();
+    fetchOptionData();
   }, []);
+
+  useEffect(() => {
+    if (props.reqData.district === '') {
+      setProvinceValue('');
+    } else {
+      const district = originalDistrictDataRef.current.find(item => item.id === props.reqData.district);
+      setProvinceValue(district?.province ?? '');
+    }
+    
+  }, [props.reqData.district]);
 
   const cancelOnClick = async () => {
     await handleCancelAlert(() => {
-      router.push('/addresses/districts');
+      router.push('/addresses/communes');
     });
   };
 
@@ -65,6 +70,7 @@ export const CommuneForm = (props: CommuneFormProps) => {
   
 
   const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setProvinceValue(e.target.value);
       if (e.target.value == '') {
         setDistrictOptions(mapOptions(originalDistrictDataRef.current, 'name', 'id'));
       } else {
@@ -106,19 +112,23 @@ export const CommuneForm = (props: CommuneFormProps) => {
             ref={setRef('name')}
           />
         </div>
+
         <div className='grid grid-cols-2 items-center'>
           <Label htmlFor='province' required>Thuộc tỉnh: </Label>
           <Select 
             id='province'
+            value={provinceValue}
             className='w-[300px] ml-[-360px]'
             options={provinceOptions}
             onChange={handleProvinceChange}
           />
         </div>
+        
         <div className='grid grid-cols-2 items-center'>
           <Label htmlFor='district' required>Thuộc huyện: </Label>
           <Select 
             id='district'
+            value={props.reqData.district}
             className='w-[300px] ml-[-360px]'
             options={districtOptions}
             onChange={handleDistrictChange}

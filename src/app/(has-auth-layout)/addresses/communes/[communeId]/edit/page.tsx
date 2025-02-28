@@ -1,3 +1,4 @@
+import { CommuneEdit } from "@/components/main/address/commune/CommuneEdit";
 import { Metadata } from "next";
                                   
 export const metadata: Metadata = {
@@ -5,10 +6,19 @@ export const metadata: Metadata = {
   description: "Edit the commune page.",
 };
                                   
-export default function CommuneEditPage() {
+export default async function CommuneEditPage({
+  params,
+}: {
+  params: Promise<{
+    communeId: string;
+  }>
+}) {
+
+  const { communeId } = await params;
+
   return (
     <>
-      
+      <CommuneEdit id={communeId} />
     </>
   );
 };

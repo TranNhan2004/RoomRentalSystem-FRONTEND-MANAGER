@@ -22,6 +22,19 @@ export const DistrictEdit = (props: DistrictEditProps) => {
   const router = useRouter();
   const [reqData, setReqData] = useState<DistrictType>(INITIAL_DISTRICT);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await (new DistrictService()).get(props.id);
+        setReqData(data);
+      } catch {
+        router.push(NOT_FOUND_URL);
+      }
+    };
+
+    fetchData();
+  }, [router, props.id]);
+
   const handlePatchError = async (error: unknown) => {
     if (!(error instanceof AxiosError)) {
       await toastError(PublicMessage.UNKNOWN_ERROR);
@@ -40,7 +53,6 @@ export const DistrictEdit = (props: DistrictEditProps) => {
     try {
       const data = await (new DistrictService()).patch(props.id, reqData);
       setReqData(data);
-
       await toastSuccess(DistrictMessage.PATCH_SUCCESS);
       actionAfter?.();
     } catch (error) {
@@ -57,19 +69,6 @@ export const DistrictEdit = (props: DistrictEditProps) => {
       router.push('/addresses/districts');
     });
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await (new DistrictService()).get(props.id);
-        setReqData(data);
-      } catch {
-        router.push(NOT_FOUND_URL);
-      }
-    };
-
-    fetchData();
-  }, [router, props.id]);
 
   if (objectEquals(reqData, INITIAL_DISTRICT)) {
     return <Loading />;

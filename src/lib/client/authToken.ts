@@ -6,8 +6,8 @@ import {
   getAccessTokenExpires, 
   getRefreshTokenCookieName, 
   getRefreshTokenExpires, 
-  getUserInfoCookieName, 
-  getUserInfoExpires 
+  getMyInfoCookieName, 
+  getMyInfoExpires 
 } from "../server/getCookiesName";
 
 const setSecureCookie = async (name: string, value: string, expires: number) => {
@@ -29,19 +29,19 @@ const removeSecureCookie = async (name: string) => {
 
 
 export const handleLogin = async (data: LoginResponseType) => {  
-  const [rtkCkName, rtkExpires, atkCkName, atkExpires, uinfoCkName, uinfoExpires] = await Promise.all([
+  const [rtkCkName, rtkExpires, atkCkName, atkExpires, myInfoCkName, myInfoExpires] = await Promise.all([
     getRefreshTokenCookieName(),
     getRefreshTokenExpires(),
     getAccessTokenCookieName(),
     getAccessTokenExpires(),
-    getUserInfoCookieName(),
-    getUserInfoExpires(),
+    getMyInfoCookieName(),
+    getMyInfoExpires(),
   ]);
 
   await Promise.all([
     setSecureCookie(rtkCkName, data.refresh || '', rtkExpires),
     setSecureCookie(atkCkName, data.access || '', atkExpires),
-    setSecureCookie(uinfoCkName, JSON.stringify(data.user) || '', uinfoExpires)
+    setSecureCookie(myInfoCkName, JSON.stringify(data.user) || '', myInfoExpires)
   ]);
 };
 
@@ -79,20 +79,20 @@ export const getAccessToken = async () => {
   return await getSecureCookie(await getAccessTokenCookieName());
 };
 
-export const getUserInfo = async () => {
-  return JSON.parse(await getSecureCookie(await getUserInfoCookieName()) ?? '') as UserType;
+export const getMyInfo = async () => {
+  return JSON.parse(await getSecureCookie(await getMyInfoCookieName()) ?? '') as UserType;
 };
 
 export const resetAuthTokens = async () => {
-  const [rtkCkName, atkCkName, uinfoCkName] = await Promise.all([
+  const [rtkCkName, atkCkName, myInfoCkName] = await Promise.all([
     getRefreshTokenCookieName(),
     getAccessTokenCookieName(),
-    getUserInfoCookieName(),
+    getMyInfoCookieName(),
   ]);
 
   await Promise.all([
     removeSecureCookie(rtkCkName),
     removeSecureCookie(atkCkName),
-    removeSecureCookie(uinfoCkName)
+    removeSecureCookie(myInfoCkName)
   ]);
 };

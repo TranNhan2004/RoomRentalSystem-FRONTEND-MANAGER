@@ -13,6 +13,13 @@ export type ResetPasswordRequestAfterType = {
   confirm_new_password?: string;
 }
 
+export type ChangePasswordType = {
+  id?: string;
+  old_password?: string;
+  new_password?: string;
+  confirm_new_password?: string;
+}
+
 export type UserType = {
   id?: string;
   email?: string;

@@ -1,4 +1,5 @@
 import { 
+  ChangePasswordType,
   LoginRequestType, 
   LoginResponseType, 
   ResetPasswordRequestAfterType, 
@@ -12,6 +13,11 @@ import { UnknownQueryType } from "@/types/UnknownQuery.type";
 export class UserService extends ApiServiceWithFormData<UserType, UnknownQueryType> {
   constructor() {
     super('/app.user-account/users');
+  }
+
+  public async changePassword(data: ChangePasswordType) {
+    const response = await axiosInstance.post('/app.user-account/change-password/', data);
+    return response.data;
   }
 };
 

@@ -22,17 +22,18 @@ export const ProvincesList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      
       try {
+        setLoading(true);
         const data = await (new ProvinceService()).getMany();
         originialDataRef.current = data;
         setData(data);
+      
       } catch {
         await toastError(ProvinceMessage.GET_MANY_ERROR);
+      
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchData();
@@ -66,6 +67,7 @@ export const ProvincesList = () => {
         await toastSuccess(ProvinceMessage.DELETE_SUCCESS);
         originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
         setData(originialDataRef.current); 
+      
       } catch (error) {
         await handleDeleteError(error);
       }

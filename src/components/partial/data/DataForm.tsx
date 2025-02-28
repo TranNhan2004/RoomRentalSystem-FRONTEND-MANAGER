@@ -10,7 +10,7 @@ export type DataFormProps = {
   formLabel: string;
   inputRefs: React.RefObject<{[key: string]: InputRefHandler | null}>;
   saveOnClick: () => void;
-  saveAndExitOnClick: () => void;
+  saveAndExitOnClick?: () => void;
   cancelOnClick: () => void;
   children: React.ReactNode;
 }
@@ -31,7 +31,7 @@ export const DataForm = (props: DataFormProps) => {
     if (action === 'save') {
       await props.saveOnClick();
     } else {
-      await props.saveAndExitOnClick();
+      await props.saveAndExitOnClick?.();
     }
 
     setIsSaving(false);
@@ -51,14 +51,18 @@ export const DataForm = (props: DataFormProps) => {
             Lưu
           </ActionButton>
           
-          <ActionButton
-            mode='save'
-            isSubmit
-            onClick={() => setAction('save-and-exit')}
-            disabled={isSaving} 
-          >
-            Lưu và thoát
-          </ActionButton>
+          {
+            props.saveAndExitOnClick && (
+              <ActionButton
+                mode='save'
+                isSubmit
+                onClick={() => setAction('save-and-exit')}
+                disabled={isSaving} 
+              >
+                Lưu và thoát
+              </ActionButton>
+            )
+          }
           
           <ActionButton
             mode='cancel'
