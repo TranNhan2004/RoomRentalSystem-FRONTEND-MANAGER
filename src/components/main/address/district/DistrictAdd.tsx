@@ -9,7 +9,7 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { DistrictForm } from './DistrictForm';
 import { INITIAL_DISTRICT } from '@/initials/Address.initial';
-import { PublicMessage } from '@/messages/Public.message';
+import { GeneralMessage } from '@/messages/General.message';
 
 export const DistrictAdd = () => {
   const router = useRouter();
@@ -17,18 +17,10 @@ export const DistrictAdd = () => {
 
   const handlePostError = async (error: unknown) => {
     if (!(error instanceof AxiosError)) {
-      await toastError(PublicMessage.UNKNOWN_ERROR);
+      await toastError(GeneralMessage.UNKNOWN_ERROR);
       return;
     }
 
-    if (
-      error.response?.status === 400 &&
-      error.response.data?.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR
-    ) {
-      await toastError(DistrictMessage.REQUIRED_PROVINCE_ERROR);
-      return;
-    } 
-    
     await toastError(DistrictMessage.POST_ERROR);
   };
 

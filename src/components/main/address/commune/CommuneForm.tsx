@@ -5,45 +5,37 @@ import { DataForm, DataFormProps } from '@/components/partial/data/DataForm';
 import { Input } from '@/components/partial/form/Input';
 import { Label } from '@/components/partial/form/Label';
 import { OptionType, Select } from '@/components/partial/form/Select';
-import { useInputRefs } from '@/hooks/useInputRefs';
-import { handleCancelAlert, toastError } from '@/lib/client/alert';
+import { handleCancelAlert } from '@/lib/client/alert';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { mapOptions } from '@/lib/client/handleOptions';
 import { CommuneMessage } from '@/messages/Address.message';
 import { districtService, provinceService } from '@/services/Address.service';
 import { CommuneType, DistrictType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
+import { ValidatorsType } from '@/types/Validators.type';
 
 
 type CommuneFormProps = {
   reqData: CommuneType;
   setReqData: React.Dispatch<React.SetStateAction<CommuneType>>;
-} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'inputRefs'>;
+} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'validators'>;
 
 export const CommuneForm = (props: CommuneFormProps) => {
   const router = useRouter();
-
   const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
   const [districtOptions, setDistrictOptions] = useState<OptionType[]>([]);
-
-  const { inputRefs, setRef } = useInputRefs(Object.keys(props.reqData));
   const originalDistrictDataRef = useRef<DistrictType[]>([]);
   
   useEffect(() => {
     const fetchOptionData = async () => {
-      try {
-        const [provinceData, districtData] = await Promise.all([
-          provinceService.getMany(),
-          districtService.getMany()
-        ]);
+      const [provinceData, districtData] = await Promise.all([
+        provinceService.getMany(),
+        districtService.getMany()
+      ]);
 
-        setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
-        setDistrictOptions(mapOptions(districtData, 'name', 'id'));
-        originalDistrictDataRef.current = districtData;
-      
-      } catch {
-        await toastError(CommuneMessage.GET_BY_ID_ERROR);
-      }
+      setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
+      setDistrictOptions(mapOptions(districtData, 'name', 'id'));
+      originalDistrictDataRef.current = districtData;
     };
 
     fetchOptionData();
@@ -75,8 +67,19 @@ export const CommuneForm = (props: CommuneFormProps) => {
     props.setReqData({ ...props.reqData, district: e.target.value });
   };
   
-  const validators = {
-    name: () => null
+  const validators: ValidatorsType = {
+    name: () => {
+      if (!props.reqData.name) {
+        return CommuneMessage.NAME_REQUIRED;
+      } 
+      return null;
+    },
+    district: () => {
+      if (!props.reqData.district) {
+        return CommuneMessage.DISTRICT_REQUIRED;
+      }
+      return null;
+    }
   };
 
   return (
@@ -86,7 +89,7 @@ export const CommuneForm = (props: CommuneFormProps) => {
         saveOnClick={props.saveOnClick}
         saveAndExitOnClick={props.saveAndExitOnClick}
         cancelOnClick={cancelOnClick}
-        inputRefs={inputRefs}
+        validators={validators}
       >
         <div className='grid grid-cols-2 items-center'>
           <Label htmlFor='name' required>Tên xã: </Label>
@@ -95,11 +98,9 @@ export const CommuneForm = (props: CommuneFormProps) => {
             name='name'
             type='text'
             className='w-[300px] ml-[-360px]'
-            required
             value={props.reqData.name}
             onChange={handleInputOnChange}
             validate={validators.name}
-            ref={setRef('name')}
           />
         </div>
 
@@ -121,6 +122,7 @@ export const CommuneForm = (props: CommuneFormProps) => {
             className='w-[300px] ml-[-360px]'
             options={districtOptions}
             onChange={handleDistrictChange}
+            validate={validators.district}
           />
         </div>
       </DataForm>

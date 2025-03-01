@@ -3,12 +3,12 @@
 import React, { useState } from 'react';
 import { Form } from '../form/Form';
 import { ActionButton } from '../button/ActionButton';
-import { InputRefHandler } from '../form/Input';
-import { isValidatedForm } from '@/lib/client/isValidForm';
+import { isValidForm } from '@/lib/client/isValidForm';
+import { ValidatorsType } from '@/types/Validators.type';
 
 export type DataFormProps = {
   formLabel: string;
-  inputRefs: React.RefObject<{[key: string]: InputRefHandler | null}>;
+  validators: ValidatorsType;
   saveOnClick: () => void;
   saveAndExitOnClick?: () => void;
   cancelOnClick: () => void;
@@ -23,11 +23,12 @@ export const DataForm = (props: DataFormProps) => {
     e.preventDefault();
     setIsSaving(true);
 
-    if (!isValidatedForm(props.inputRefs)) {
+    const isValid = await isValidForm(props.validators);
+    if (!isValid) {
       setIsSaving(false);
       return;
     }
-
+  
     if (action === 'save') {
       await props.saveOnClick();
     } else {

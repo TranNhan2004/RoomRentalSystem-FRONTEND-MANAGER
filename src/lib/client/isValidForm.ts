@@ -1,6 +1,7 @@
+import { ValidatorsType } from "@/types/Validators.type";
 import { toastError } from "./alert";
 
-export const isValidForm = async (validators: {[key: string]: () => string | null}) => {
+export const isValidForm = async (validators: ValidatorsType) => {
   for (const key in validators) {
     const validateResult = validators[key]();
     if (validateResult) {

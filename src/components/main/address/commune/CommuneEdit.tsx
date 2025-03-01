@@ -9,7 +9,7 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { CommuneForm } from './CommuneForm';
 import { INITIAL_COMMUNE, INITIAL_DISTRICT } from '@/initials/Address.initial';
-import { PublicMessage } from '@/messages/Public.message';
+import { GeneralMessage } from '@/messages/General.message';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
 import { objectEquals } from '@/lib/client/objectEquals';
 import { Loading } from '@/components/partial/data/Loading';
@@ -38,15 +38,7 @@ export const CommuneEdit = (props: CommuneEditProps) => {
 
   const handlePatchError = async (error: unknown) => {
     if (!(error instanceof AxiosError)) {
-      await toastError(PublicMessage.UNKNOWN_ERROR);
-      return;
-    }
-
-    if (
-      error.response?.status === 400 &&
-      error.response.data?.district[0] === PublicMessage.BACKEND_REQUIRED_ERROR
-    ) {
-      await toastError(CommuneMessage.REQUIRED_DISTRICT_ERROR);
+      await toastError(GeneralMessage.UNKNOWN_ERROR);
       return;
     }
 

@@ -7,12 +7,12 @@ import { authService } from '@/services/UserAccount.service';
 import { useRouter } from 'next/navigation';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { INITIAL_RESET_PASSWORD_REQUEST_AFTER } from '@/initials/UserAccount.initial';
-import { isValidatedForm, PASSWORD_REG_EXP } from '@/lib/client/isValidForm';
+import { isValidForm, PASSWORD_REG_EXP } from '@/lib/client/isValidForm';
 import { AuthMessage } from '@/messages/UserAccount.message';
 import { Form } from '@/components/partial/form/Form';
 import { Input } from '@/components/partial/form/Input';
 import { Spin } from '@/components/partial/data/Spin';
-import { useInputRefs } from '@/hooks/useInputRefs';
+import { ValidatorsType } from '@/types/Validators.type';
 
 
 type ResetPasswordURLProps = {
@@ -22,7 +22,6 @@ type ResetPasswordURLProps = {
 
 export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
   const router = useRouter();
-  const { inputRefs, setRef } = useInputRefs(Object.keys(INITIAL_RESET_PASSWORD_REQUEST_AFTER));
   const [reqData, setReqData] = useState<ResetPasswordRequestAfterType>(INITIAL_RESET_PASSWORD_REQUEST_AFTER);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   
@@ -30,17 +29,23 @@ export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
     return handleInputChange(e, setReqData);
   };
 
-
-  const validators = {
+  const validators: ValidatorsType = {
     new_password: () => {
-      if (!PASSWORD_REG_EXP.test(reqData.new_password ?? '')) {
-        return AuthMessage.PASSWORD_INPUT_ERROR;
+      if (!reqData.new_password) {
+        return AuthMessage.NEW_PASSWORD_REQUIRED;
+      }
+      if (!PASSWORD_REG_EXP.test(reqData.new_password)) {
+        return AuthMessage.PASSWORD_FORMAT_ERROR;
       }
       return null;
     },
+
     confirm_new_password: () => {
+      if (!reqData.confirm_new_password) {
+        return AuthMessage.CONFIRM_PASSWORD_REQUIRED;
+      }
       if (reqData.confirm_new_password !== reqData.new_password) {
-        return AuthMessage.CONFIRM_PASSWORD_INPUT_NOT_MATCH;
+        return AuthMessage.CONFIRM_PASSWORD_MISMATCH;
       }
       return null;
     }
@@ -50,7 +55,8 @@ export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!isValidatedForm(inputRefs)) {
+    const isValid = await isValidForm(validators);
+    if (!isValid) {
       return;
     }
 
@@ -60,6 +66,7 @@ export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
       await authService.resetPassword(reqData, props.uidb64, props.token);
       await toastSuccess(AuthMessage.RESET_PASSWORD_SUCCESS);
       router.push('/auth/login');
+      
     } catch {
       await toastError(AuthMessage.RESET_PASSWORD_ERROR);
       setIsSubmitted(false);
@@ -75,11 +82,9 @@ export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
           name='new_password'
           type='password'
           placeholder='Mật khẩu mới'
-          required
           value={reqData.new_password}
           onChange={handleInputOnChange}
           validate={validators.new_password}
-          ref={setRef('new_password')}
         />
       </div>
 
@@ -89,11 +94,9 @@ export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
           name='confirm_new_password'
           type='password'
           placeholder='Nhập lại mật khẩu mới'
-          required
           value={reqData.confirm_new_password}
           onChange={handleInputOnChange}
           validate={validators.confirm_new_password}
-          ref={setRef('confirm_new_password')}
         />
       </div>
 

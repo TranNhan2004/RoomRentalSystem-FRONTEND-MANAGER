@@ -9,7 +9,7 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { CommuneForm } from './CommuneForm';
 import { INITIAL_COMMUNE } from '@/initials/Address.initial';
-import { PublicMessage } from '@/messages/Public.message';
+import { GeneralMessage } from '@/messages/General.message';
 
 export const CommuneAdd = () => {
   const router = useRouter();
@@ -17,15 +17,7 @@ export const CommuneAdd = () => {
 
   const handlePostError = async (error: unknown) => {
     if (!(error instanceof AxiosError)) {
-      await toastError(PublicMessage.UNKNOWN_ERROR);
-      return;
-    }
-
-    if (
-      error.response?.status === 400 &&
-      error.response.data?.district[0] === PublicMessage.BACKEND_REQUIRED_ERROR
-    ) {
-      await toastError(CommuneMessage.REQUIRED_DISTRICT_ERROR);
+      await toastError(GeneralMessage.UNKNOWN_ERROR);
       return;
     }
 
@@ -37,6 +29,7 @@ export const CommuneAdd = () => {
       await communeService.post(reqData);
       await toastSuccess(CommuneMessage.POST_SUCCESS);
       actionAfter();
+      
     } catch (error) {
       await handlePostError(error);
     }

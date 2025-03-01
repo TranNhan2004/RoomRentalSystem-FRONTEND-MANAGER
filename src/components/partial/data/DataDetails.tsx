@@ -4,20 +4,20 @@ import React from 'react';
 import { DataLine, DataLineProps } from './DataLine';
 import { ActionButton } from '../button/ActionButton';
 
-type DataDetailProps = {
+type DataDetailsProps = {
   title: string;
   data: DataLineProps[];
   cancelOnClick: () => void;
 }; 
 
-export const DataDetail = (props: DataDetailProps) => {
+export const DataDetails = (props: DataDetailsProps) => {
   return (
     <div className='p-8 mt-[-3%] ml-[-3%]'>
       <h2 className='text-left text-2xl mb-5 font-bold'>{props.title}</h2>
       <div className='ml-2 space-y-2'>
         {
-          props.data.map((dataLine, index) => (
-            <DataLine key={index} {...dataLine} />
+          props.data.map((line, index) => (
+            <DataLine key={index} {...line} />
           ))
         }
       </div>

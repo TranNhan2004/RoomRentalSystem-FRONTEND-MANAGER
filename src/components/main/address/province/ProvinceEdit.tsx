@@ -12,7 +12,7 @@ import { INITIAL_PROVINCE } from '@/initials/Address.initial';
 import { objectEquals } from '@/lib/client/objectEquals';
 import { Loading } from '@/components/partial/data/Loading';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
-import { PublicMessage } from '@/messages/Public.message';
+import { GeneralMessage } from '@/messages/General.message';
 
 type ProvinceEditProps = {
   id: string;
@@ -37,7 +37,7 @@ export const ProvinceEdit = (props: ProvinceEditProps) => {
 
   const handlePatchError = async (error: unknown) => {
     if (!(error instanceof AxiosError)) {
-      await toastError(PublicMessage.UNKNOWN_ERROR);
+      await toastError(GeneralMessage.UNKNOWN_ERROR);
       return;
     }
     

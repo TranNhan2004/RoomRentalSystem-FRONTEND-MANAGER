@@ -5,8 +5,7 @@ import { DataForm, DataFormProps } from '@/components/partial/data/DataForm';
 import { Input } from '@/components/partial/form/Input';
 import { Label } from '@/components/partial/form/Label';
 import { OptionType, Select } from '@/components/partial/form/Select';
-import { useInputRefs } from '@/hooks/useInputRefs';
-import { handleCancelAlert, toastError } from '@/lib/client/alert';
+import { handleCancelAlert } from '@/lib/client/alert';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { mapOptions } from '@/lib/client/handleOptions';
 import { DistrictMessage } from '@/messages/Address.message';
@@ -17,22 +16,16 @@ import { useRouter } from 'next/navigation';
 type DistrictFormProps = {
   reqData: DistrictType;
   setReqData: React.Dispatch<React.SetStateAction<DistrictType>>;
-} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'inputRefs'>;
+} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'validators'>;
 
 export const DistrictForm = (props: DistrictFormProps) => {
   const router = useRouter();
-  const { inputRefs, setRef } = useInputRefs(Object.keys(props.reqData));
   const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
 
   useEffect(() => {
     const fetchOptionData = async () => {
-      try {
-        const provinceData = await provinceService.getMany();
-        setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
-      
-      } catch {
-        await toastError(DistrictMessage.GET_BY_ID_ERROR);
-      }
+      const provinceData = await provinceService.getMany();
+      setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
     };
 
     fetchOptionData();
@@ -53,7 +46,18 @@ export const DistrictForm = (props: DistrictFormProps) => {
   };
   
   const validators = {
-    name: () => null
+    name: () => {
+      if (!props.reqData.name) {
+        return DistrictMessage.NAME_REQUIRED;
+      }
+      return null;
+    },
+    province: () => {
+      if (!props.reqData.province) {
+        return DistrictMessage.PROVINCE_REQUIRED;
+      }
+      return null;
+    }
   };
 
   return (
@@ -63,7 +67,7 @@ export const DistrictForm = (props: DistrictFormProps) => {
         saveOnClick={props.saveOnClick}
         saveAndExitOnClick={props.saveAndExitOnClick}
         cancelOnClick={cancelOnClick}
-        inputRefs={inputRefs}
+        validators={validators}
       >
         <div className='grid grid-cols-2 items-center'>
           <Label htmlFor='name' required>Tên huyện: </Label>
@@ -72,11 +76,9 @@ export const DistrictForm = (props: DistrictFormProps) => {
             name='name'
             type='text'
             className='w-[300px] ml-[-360px]'
-            required
             value={props.reqData.name}
             onChange={handleInputOnChange}
             validate={validators.name}
-            ref={setRef('name')}
           />
         </div>
 
@@ -88,7 +90,7 @@ export const DistrictForm = (props: DistrictFormProps) => {
             className='w-[300px] ml-[-360px]'
             options={provinceOptions}
             onChange={handleProvinceChange}
-            required
+            validate={validators.province}
           />
         </div>
       </DataForm>

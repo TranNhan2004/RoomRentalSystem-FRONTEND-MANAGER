@@ -4,20 +4,19 @@ import React from 'react';
 import { DataForm, DataFormProps } from '@/components/partial/data/DataForm';
 import { Input } from '@/components/partial/form/Input';
 import { Label } from '@/components/partial/form/Label';
-import { useInputRefs } from '@/hooks/useInputRefs';
 import { handleCancelAlert } from '@/lib/client/alert';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { ProvinceType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
+import { ProvinceMessage } from '@/messages/Address.message';
 
 type ProvinceFormProps = {
   reqData: ProvinceType;
   setReqData: React.Dispatch<React.SetStateAction<ProvinceType>>;
-} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'inputRefs'>;
+} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'validators'>;
 
 export const ProvinceForm = (props: ProvinceFormProps) => {
   const router = useRouter();
-  const { inputRefs, setRef } = useInputRefs(Object.keys(props.reqData));
 
   const cancelOnClick = async () => {
     await handleCancelAlert(() => {
@@ -30,7 +29,12 @@ export const ProvinceForm = (props: ProvinceFormProps) => {
   };
 
   const validators = {
-    name: () => null
+    name: () => {
+      if (!props.reqData) {
+        return ProvinceMessage.NAME_REQUIRED;
+      } 
+      return null;
+    }
   };
 
   return (
@@ -40,7 +44,7 @@ export const ProvinceForm = (props: ProvinceFormProps) => {
         saveOnClick={props.saveOnClick}
         saveAndExitOnClick={props.saveAndExitOnClick}
         cancelOnClick={cancelOnClick}
-        inputRefs={inputRefs}
+        validators={validators}
       >
         <div className='grid grid-cols-2 items-center'>
           <Label htmlFor='name' required>Tên tỉnh: </Label>
@@ -49,11 +53,9 @@ export const ProvinceForm = (props: ProvinceFormProps) => {
             name='name'
             type='text'
             className='w-[300px] ml-[-360px]'
-            required
             value={props.reqData.name}
             onChange={handleInputOnChange}
             validate={validators.name}
-            ref={setRef('name')}
           />
         </div>
       </DataForm>

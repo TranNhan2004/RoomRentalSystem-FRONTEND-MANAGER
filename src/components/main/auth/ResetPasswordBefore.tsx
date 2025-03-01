@@ -9,13 +9,12 @@ import { authService } from '@/services/UserAccount.service';
 import { toastError } from '@/lib/client/alert';
 import { INITIAL_RESET_PASSWORD_REQUEST_BEFORE } from '@/initials/UserAccount.initial';
 import { AuthMessage } from '@/messages/UserAccount.message';
-import { EMAIL_REG_EXP, isValidatedForm } from '@/lib/client/isValidForm';
-import { useInputRefs } from '@/hooks/useInputRefs';
+import { EMAIL_REG_EXP, isValidForm } from '@/lib/client/isValidForm';
+import { ValidatorsType } from '@/types/Validators.type';
 
 const INITIAL_COUNTDOWN = 60;
 
 export const ResetPasswordBefore = () => {
-  const { inputRefs, setRef } = useInputRefs(Object.keys(INITIAL_RESET_PASSWORD_REQUEST_BEFORE));  
   const [reqData, setReqData] = useState<ResetPasswordRequestBeforeType>(INITIAL_RESET_PASSWORD_REQUEST_BEFORE);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); 
   const [buttonText, setButtonText] = useState('Gửi'); 
@@ -45,10 +44,13 @@ export const ResetPasswordBefore = () => {
     return handleInputChange(e, setReqData);
   };
   
-  const validators = {
+  const validators: ValidatorsType = {
     email: () => {
+      if (!reqData.email) {
+        return AuthMessage.EMAIL_REQUIRED;
+      }
       if (!EMAIL_REG_EXP.test(reqData.email ?? '')) {
-        return AuthMessage.EMAIL_INPUT_ERROR;
+        return AuthMessage.EMAIL_FORMAT_ERROR;
       }
       return null;
     }
@@ -58,7 +60,8 @@ export const ResetPasswordBefore = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!isValidatedForm(inputRefs)) {
+    const isValid = await isValidForm(validators);
+    if (!isValid) {
       return;
     }
 
@@ -67,7 +70,7 @@ export const ResetPasswordBefore = () => {
     try {      
       await authService.getResetPasswordURL(reqData);
     } catch {
-      await toastError(AuthMessage.GET_RESET_PASSWORD_URL_ERROR);
+      await toastError(AuthMessage.RESET_PASSWORD_URL_ERROR);
     }
 
     setCountdown(INITIAL_COUNTDOWN);
@@ -82,11 +85,9 @@ export const ResetPasswordBefore = () => {
           name='email'
           type='text'
           placeholder='Email'
-          required
           value={reqData.email}
           onChange={handleOnChange}
           validate={validators.email}
-          ref={setRef('email')}
         />
       </div>
       <div>

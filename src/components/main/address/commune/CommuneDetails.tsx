@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { DataDetail } from '@/components/partial/data/DataDetail';
+import { DataDetails } from '@/components/partial/data/DataDetails';
 import { Loading } from '@/components/partial/data/Loading';
 import { INITIAL_COMMUNE, INITIAL_DISTRICT, INITIAL_PROVINCE } from '@/initials/Address.initial';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
@@ -48,7 +48,7 @@ export const CommuneDetails = (props: CommuneDetailsProps) => {
 
   return (
     <>
-      <DataDetail
+      <DataDetails
         title={`Thông tin chi tiết của ${data.name}`}
         data={[
           {

@@ -12,7 +12,7 @@ import { Title } from '@/components/partial/data/Title';
 import { InputSearch } from '@/components/partial/data/InputSearch';
 import { Sorting } from '@/components/partial/data/Sorting';
 import { AxiosError } from 'axios';
-import { PublicMessage } from '@/messages/Public.message';
+import { GeneralMessage } from '@/messages/General.message';
 
 export const ProvincesList = () => {
   const router = useRouter();
@@ -48,15 +48,15 @@ export const ProvincesList = () => {
 
   const handleDeleteError = async (error: unknown) => {
     if (!(error instanceof AxiosError)) {
-      await toastError(PublicMessage.UNKNOWN_ERROR);
+      await toastError(GeneralMessage.UNKNOWN_ERROR);
       return;
     }
 
     if (
       error.response?.status === 400 && 
-      error.response.data?.includes(PublicMessage.BACKEND_PROTECT_ERROR_PREFIX)
+      error.response.data?.includes(GeneralMessage.BACKEND_PROTECTED_ERROR_PREFIX)
     ) {
-      await toastError(ProvinceMessage.DELETE_PROTECT_ERROR);
+      await toastError(ProvinceMessage.DELETE_PROTECTED_ERROR);
       return;
     }
     

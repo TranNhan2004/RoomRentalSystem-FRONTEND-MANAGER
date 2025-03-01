@@ -9,7 +9,7 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { ProvinceForm } from './ProvinceForm';
 import { INITIAL_PROVINCE } from '@/initials/Address.initial';
-import { PublicMessage } from '@/messages/Public.message';
+import { GeneralMessage } from '@/messages/General.message';
 
 export const ProvinceAdd = () => {
   const router = useRouter();
@@ -17,7 +17,7 @@ export const ProvinceAdd = () => {
 
   const handlePostError = async (error: unknown) => {
     if (!(error instanceof AxiosError)) {
-      await toastError(PublicMessage.UNKNOWN_ERROR);
+      await toastError(GeneralMessage.UNKNOWN_ERROR);
       return;
     }
 
