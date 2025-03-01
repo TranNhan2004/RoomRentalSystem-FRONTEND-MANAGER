@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { DistrictService, ProvinceService } from '@/services/Address.service';
+import { districtService, provinceService } from '@/services/Address.service';
 import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
 import { DistrictQueryType, DistrictType } from '@/types/Address.type';
 import { DisplayedDataType, Table } from '@/components/partial/data/Table';
@@ -32,8 +32,8 @@ export const DistrictsList = () => {
       try {
         setLoading(true);
         const [data, provinceData] = await Promise.all([
-          (new DistrictService()).getMany(),
-          (new ProvinceService()).getMany(),
+          districtService.getMany(),
+          provinceService.getMany(),
         ]);
 
         setData(data);
@@ -64,7 +64,10 @@ export const DistrictsList = () => {
       return;
     }
 
-    if (error.response?.data?.includes(PublicMessage.BACKEND_PROTECT_ERROR_PREFIX)) {
+    if (
+      error.response?.status === 400 && 
+      error.response.data?.includes(PublicMessage.BACKEND_PROTECT_ERROR_PREFIX)
+    ) {
       await toastError(DistrictMessage.DELETE_PROTECT_ERROR);
       return;
     }
@@ -75,7 +78,7 @@ export const DistrictsList = () => {
   const deleteFunction = async (id: string) => {
     await handleDeleteAlert(async () => {
       try {
-        await (new DistrictService()).delete(id);
+        await districtService.delete(id);
         await toastSuccess(DistrictMessage.DELETE_SUCCESS);
         originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
         setData(originialDataRef.current); 
@@ -101,7 +104,7 @@ export const DistrictsList = () => {
   const filterOnClick = async () => {
     try {
       setLoading(true);
-      const data = await (new DistrictService()).getMany(query);
+      const data = await districtService.getMany(query);
       originialDataRef.current = data;
       setData(data);
     

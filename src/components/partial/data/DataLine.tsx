@@ -1,8 +1,8 @@
 'use client';
 
+import React from 'react';
 import { getImageSrc } from '@/lib/client/getImageSrc';
 import Image from 'next/image';
-import React from 'react';
 
 export type DataLineProps = {
   label?: string;

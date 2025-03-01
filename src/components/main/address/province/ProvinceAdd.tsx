@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { ProvinceMessage } from '@/messages/Address.message';
-import { ProvinceService } from '@/services/Address.service';
+import { provinceService } from '@/services/Address.service';
 import { ProvinceType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -21,7 +21,10 @@ export const ProvinceAdd = () => {
       return;
     }
 
-    if (error.response?.data?.name[0] === ProvinceMessage.BACKEND_NAME_UNIQUE_ERROR) {
+    if (
+      error.response?.status === 400 &&
+      error.response.data?.name[0] === ProvinceMessage.BACKEND_NAME_UNIQUE_ERROR
+    ) {
       await toastError(ProvinceMessage.NAME_UNIQUE_ERROR);
       return;
     }
@@ -31,7 +34,7 @@ export const ProvinceAdd = () => {
 
   const postData = async (actionAfter: () => void) => {
     try {
-      await (new ProvinceService()).post(reqData);
+      await provinceService.post(reqData);
       await toastSuccess(ProvinceMessage.POST_SUCCESS);
       actionAfter();
     } catch (error) {

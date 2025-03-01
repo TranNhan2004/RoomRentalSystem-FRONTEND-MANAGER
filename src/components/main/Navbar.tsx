@@ -1,8 +1,8 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image'; 
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
 import { UserType } from '@/types/UserAccount.type';
 import { getMyInfo } from '@/lib/client/authToken';
 import { getImageSrc } from '@/lib/client/getImageSrc';

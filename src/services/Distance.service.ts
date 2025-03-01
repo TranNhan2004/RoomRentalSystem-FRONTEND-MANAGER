@@ -7,3 +7,5 @@ export class DistanceService extends ApiService<DistanceType, UnknownQueryType> 
     super('/app.distance/distances');
   }
 }
+
+export const distanceService = new DistanceService();

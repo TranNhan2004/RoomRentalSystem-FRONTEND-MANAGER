@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { ProvinceService } from '@/services/Address.service';
+import { provinceService } from '@/services/Address.service';
 import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
 import { ProvinceType } from '@/types/Address.type';
 import { Table, DisplayedDataType } from '@/components/partial/data/Table';
@@ -24,7 +24,7 @@ export const ProvincesList = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await (new ProvinceService()).getMany();
+        const data = await provinceService.getMany();
         originialDataRef.current = data;
         setData(data);
       
@@ -52,7 +52,10 @@ export const ProvincesList = () => {
       return;
     }
 
-    if (error.response?.data?.includes(PublicMessage.BACKEND_PROTECT_ERROR_PREFIX)) {
+    if (
+      error.response?.status === 400 && 
+      error.response.data?.includes(PublicMessage.BACKEND_PROTECT_ERROR_PREFIX)
+    ) {
       await toastError(ProvinceMessage.DELETE_PROTECT_ERROR);
       return;
     }
@@ -63,7 +66,7 @@ export const ProvincesList = () => {
   const deleteFunction = async (id: string) => {
     await handleDeleteAlert(async () => {
       try {
-        await (new ProvinceService()).delete(id);
+        await provinceService.delete(id);
         await toastSuccess(ProvinceMessage.DELETE_SUCCESS);
         originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
         setData(originialDataRef.current); 

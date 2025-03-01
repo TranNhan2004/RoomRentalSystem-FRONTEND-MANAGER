@@ -1,4 +1,5 @@
-import React, { useState, useRef, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React from 'react';
+import { useValidate } from '@/hooks/useValidate';
 
 type InputProps = {
   id: string;
@@ -6,52 +7,17 @@ type InputProps = {
   name: string;
   value: string | number | undefined;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  validate: () => string | null;
+  validate?: () => string | null;
   placeholder?: string;
-  required?: boolean;
   className?: string;
 };
 
-export type InputRefHandler = {
-  formValidate: () => boolean;
-};
-
-export const Input = forwardRef<InputRefHandler, InputProps>((props, ref) => {
-  const [error, setError] = useState<string | null>(null); 
-  const errorRef = useRef<string | null>(null); 
-
-  const validate = () => {
-    if (props.required && !props.value) {
-      errorRef.current = 'Trường này không được bỏ trống!';
-      setError(errorRef.current); 
-      return;
-    }
-    errorRef.current = props.validate();
-    setError(errorRef.current); 
-  };
-
-  const handleOnBlur = () => {
-    validate();
-  };
-
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.onChange(e);
-    validate();
-  };
-
-  useImperativeHandle(ref, () => ({
-    formValidate: () => {
-      validate();
-      return errorRef.current ? false : true; 
-    }
-  }));
-
-  useEffect(() => {
-    if (props.value) {
-      errorRef.current = props.validate();
-      setError(errorRef.current);  
-    }
-  }, [props]);
+export const Input = (props: InputProps) => {
+  const { error, handleBlur, handleChange } = useValidate<HTMLInputElement>(
+    props.value, 
+    props.validate, 
+    props.onChange
+  );
 
   return (
     <div className={props.className}>
@@ -63,13 +29,11 @@ export const Input = forwardRef<InputRefHandler, InputProps>((props, ref) => {
         value={props.value}
         className='block h-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm 
                     focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full'
-        onChange={handleOnChange}
-        onBlur={handleOnBlur}
+        onBlur={handleBlur}
+        onChange={handleChange}
         onInvalid={(e) => e.preventDefault()}
       />
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>} 
     </div>
   );
-});
-
-Input.displayName = 'Input';
+};

@@ -6,3 +6,5 @@ export class SaveForLaterService extends ApiService<SaveForLaterType, SaveForLat
     super('/app.save-for-later/save-for-later');
   }
 };
+
+export const saveForLaterService = new SaveForLaterService();

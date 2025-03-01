@@ -1,14 +1,14 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import { DataDetail } from '@/components/partial/data/DataDetail';
 import { Loading } from '@/components/partial/data/Loading';
 import { INITIAL_COMMUNE, INITIAL_DISTRICT, INITIAL_PROVINCE } from '@/initials/Address.initial';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
 import { objectEquals } from '@/lib/client/objectEquals';
-import { CommuneService, DistrictService, ProvinceService } from '@/services/Address.service';
+import { communeService, districtService, provinceService } from '@/services/Address.service';
 import { CommuneType, DistrictType, ProvinceType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
 
 type CommuneDetailsProps = {
   id: string;
@@ -23,9 +23,9 @@ export const CommuneDetails = (props: CommuneDetailsProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await (new CommuneService()).get(props.id);
-        const districtData = await (new DistrictService()).get(data.district ?? '');
-        const provinceData = await (new ProvinceService()).get(districtData.province ?? '');
+        const data = await communeService.get(props.id);
+        const districtData = await districtService.get(data.district ?? '');
+        const provinceData = await provinceService.get(districtData.province ?? '');
         
         setData(data);
         setDistrictData(districtData);

@@ -6,7 +6,7 @@ import { handleInputChange } from '@/lib/client/handleInputChange';
 import { useRouter } from 'next/navigation';
 import { handleLogin } from '@/lib/client/authToken';
 import { LoginRequestType } from '@/types/UserAccount.type';
-import { AuthService } from '@/services/UserAccount.service';
+import { authService } from '@/services/UserAccount.service';
 import { toastError } from '@/lib/client/alert';
 import { AuthMessage } from '@/messages/UserAccount.message';
 import { INITIAL_LOGIN_REQUEST } from '@/initials/UserAccount.initial';
@@ -52,7 +52,7 @@ export const Login = () => {
     setIsSubmitted(true);
     
     try {
-      const data = await (new AuthService()).login(reqData);
+      const data = await authService.login(reqData);
       await handleLogin(data);
       router.replace('/');
     } catch {

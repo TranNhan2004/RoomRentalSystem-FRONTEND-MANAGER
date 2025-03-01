@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { DataForm, DataFormProps } from '@/components/partial/data/DataForm';
 import { Input } from '@/components/partial/form/Input';
 import { Label } from '@/components/partial/form/Label';
@@ -8,7 +9,6 @@ import { handleCancelAlert } from '@/lib/client/alert';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { ProvinceType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
-import React from 'react';
 
 type ProvinceFormProps = {
   reqData: ProvinceType;

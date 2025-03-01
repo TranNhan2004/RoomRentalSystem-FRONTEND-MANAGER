@@ -12,8 +12,8 @@ import { handleInputChange } from '@/lib/client/handleInputChange';
 import { PASSWORD_REG_EXP } from '@/lib/client/isValidForm';
 import { AuthMessage, UserMessage } from '@/messages/UserAccount.message';
 import { getMyInfo, resetAuthTokens } from '@/lib/client/authToken';
-import { toastError, toastSuccess } from '@/lib/client/alert';
-import { UserService } from '@/services/UserAccount.service';
+import { handleCancelAlert, toastError, toastSuccess } from '@/lib/client/alert';
+import { userService } from '@/services/UserAccount.service';
 
 
 const ChangePassword = () => {
@@ -28,7 +28,7 @@ const ChangePassword = () => {
   const handleSave = async () => {
     try {
       const { id } = await getMyInfo();
-      await (new UserService()).changePassword({ ...data, id: id });
+      await userService.changePassword(id ?? '', data);
       await toastSuccess(UserMessage.CHANGE_PASSWORD_SUCCESS);
       await resetAuthTokens();
       router.refresh();
@@ -38,8 +38,8 @@ const ChangePassword = () => {
     }
   };
 
-  const handleCancel = () => {
-    router.push('/profile');
+  const handleCancel = async () => {
+    await handleCancelAlert(() => router.push('/profile'));
   };
 
   const validators = {

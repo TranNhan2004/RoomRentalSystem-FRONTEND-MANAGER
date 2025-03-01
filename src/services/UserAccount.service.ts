@@ -10,25 +10,23 @@ import { ApiServiceWithFormData } from "./Api.service";
 import axiosInstance from "@/lib/client/axios";
 import { UnknownQueryType } from "@/types/UnknownQuery.type";
 
-export class UserService extends ApiServiceWithFormData<UserType, UnknownQueryType> {
+class UserService extends ApiServiceWithFormData<UserType, UnknownQueryType> {
   constructor() {
     super('/app.user-account/users');
   }
 
-  public async changePassword(data: ChangePasswordType) {
-    const response = await axiosInstance.post('/app.user-account/change-password/', data);
+  public async changePassword(id: string, data: ChangePasswordType) {
+    const response = await axiosInstance.patch(`/app.user-account/change-password/${id}/`, data);
     return response.data;
   }
 };
 
-export class AuthService {
+class AuthService {
   constructor() {}
 
   public async login(data: LoginRequestType) {
-    const response = await axiosInstance.post<LoginResponseType>(
-      '/app.user-account/auth/login/', 
-      { ...data, role: 'M' }
-    );
+    data.role = 'MANAGER';
+    const response = await axiosInstance.post<LoginResponseType>('/app.user-account/auth/login/', data);
     return response.data;
   }
 
@@ -45,3 +43,6 @@ export class AuthService {
     return response.data;
   }
 };
+
+export const userService = new UserService();
+export const authService = new AuthService();

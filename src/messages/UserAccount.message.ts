@@ -16,7 +16,10 @@ export class UserMessage {
   public static readonly PATCH_SUCCESS = 'Thông tin tài khoản đã được cập nhật thành công!';
   public static readonly CHANGE_PASSWORD_SUCCESS = 'Đổi mật khẩu thành công! Vui lòng đăng nhập lại!';
 
-  public static readonly GET_BY_ID_ERROR = 'Tài khoản không tồn tại!';
+  public static readonly GET_BY_ID_ERROR = 'Tài khoản không tồn tại!';;
   public static readonly CHANGE_PASSWORD_ERROR = 'Đã có lỗi xảy ra khi đổi mật khẩu! Vui lòng thử lại sau!';
+
+  public static readonly CHANGE_PASSWORD_DUPLICATED_ERROR = 'Mật khẩu mới và mật khẩu cũ không được trùng nhau!';
+  public static readonly BACKEND_CHANGE_PASSWORD_DUPLICATED_ERROR = 'Old password and new password cannot be the same';
 
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useEffect, useRef, useState } from 'react';
 import { DataForm, DataFormProps } from '@/components/partial/data/DataForm';
 import { Input } from '@/components/partial/form/Input';
 import { Label } from '@/components/partial/form/Label';
@@ -8,11 +9,11 @@ import { useInputRefs } from '@/hooks/useInputRefs';
 import { handleCancelAlert, toastError } from '@/lib/client/alert';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { mapOptions } from '@/lib/client/handleOptions';
-import { ProvinceMessage } from '@/messages/Address.message';
-import { DistrictService, ProvinceService } from '@/services/Address.service';
+import { CommuneMessage } from '@/messages/Address.message';
+import { districtService, provinceService } from '@/services/Address.service';
 import { CommuneType, DistrictType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react';
+
 
 type CommuneFormProps = {
   reqData: CommuneType;
@@ -23,7 +24,6 @@ export const CommuneForm = (props: CommuneFormProps) => {
   const router = useRouter();
 
   const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
-  const [provinceValue, setProvinceValue] = useState('');
   const [districtOptions, setDistrictOptions] = useState<OptionType[]>([]);
 
   const { inputRefs, setRef } = useInputRefs(Object.keys(props.reqData));
@@ -33,30 +33,21 @@ export const CommuneForm = (props: CommuneFormProps) => {
     const fetchOptionData = async () => {
       try {
         const [provinceData, districtData] = await Promise.all([
-          (new ProvinceService()).getMany(),
-          (new DistrictService()).getMany()
+          provinceService.getMany(),
+          districtService.getMany()
         ]);
 
         setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
         setDistrictOptions(mapOptions(districtData, 'name', 'id'));
+        originalDistrictDataRef.current = districtData;
       
       } catch {
-        await toastError(ProvinceMessage.GET_MANY_ERROR);
+        await toastError(CommuneMessage.GET_BY_ID_ERROR);
       }
     };
 
     fetchOptionData();
   }, []);
-
-  useEffect(() => {
-    if (props.reqData.district === '') {
-      setProvinceValue('');
-    } else {
-      const district = originalDistrictDataRef.current.find(item => item.id === props.reqData.district);
-      setProvinceValue(district?.province ?? '');
-    }
-    
-  }, [props.reqData.district]);
 
   const cancelOnClick = async () => {
     await handleCancelAlert(() => {
@@ -70,7 +61,6 @@ export const CommuneForm = (props: CommuneFormProps) => {
   
 
   const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setProvinceValue(e.target.value);
       if (e.target.value == '') {
         setDistrictOptions(mapOptions(originalDistrictDataRef.current, 'name', 'id'));
       } else {
@@ -114,10 +104,9 @@ export const CommuneForm = (props: CommuneFormProps) => {
         </div>
 
         <div className='grid grid-cols-2 items-center'>
-          <Label htmlFor='province' required>Thuộc tỉnh: </Label>
+          <Label htmlFor='province'>Thuộc tỉnh: </Label>
           <Select 
             id='province'
-            value={provinceValue}
             className='w-[300px] ml-[-360px]'
             options={provinceOptions}
             onChange={handleProvinceChange}

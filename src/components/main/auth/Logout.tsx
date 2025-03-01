@@ -1,8 +1,8 @@
 'use client';
 
+import React, { useEffect } from 'react';
 import { resetAuthTokens } from '@/lib/client/authToken';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
 
 export const Logout = () => {
   const router = useRouter();

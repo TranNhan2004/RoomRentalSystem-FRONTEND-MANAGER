@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import { DataForm, DataFormProps } from '@/components/partial/data/DataForm';
 import { Input } from '@/components/partial/form/Input';
 import { Label } from '@/components/partial/form/Label';
@@ -8,11 +9,10 @@ import { useInputRefs } from '@/hooks/useInputRefs';
 import { handleCancelAlert, toastError } from '@/lib/client/alert';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { mapOptions } from '@/lib/client/handleOptions';
-import { ProvinceMessage } from '@/messages/Address.message';
-import { ProvinceService } from '@/services/Address.service';
+import { DistrictMessage } from '@/messages/Address.message';
+import { provinceService } from '@/services/Address.service';
 import { DistrictType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
 
 type DistrictFormProps = {
   reqData: DistrictType;
@@ -25,17 +25,17 @@ export const DistrictForm = (props: DistrictFormProps) => {
   const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
 
   useEffect(() => {
-    const fetchProvince = async () => {
+    const fetchOptionData = async () => {
       try {
-        const provinceData = await (new ProvinceService()).getMany();
+        const provinceData = await provinceService.getMany();
         setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
       
       } catch {
-        await toastError(ProvinceMessage.GET_MANY_ERROR);
+        await toastError(DistrictMessage.GET_BY_ID_ERROR);
       }
     };
 
-    fetchProvince();
+    fetchOptionData();
   }, []);
 
   const cancelOnClick = async () => {
@@ -88,6 +88,7 @@ export const DistrictForm = (props: DistrictFormProps) => {
             className='w-[300px] ml-[-360px]'
             options={provinceOptions}
             onChange={handleProvinceChange}
+            required
           />
         </div>
       </DataForm>

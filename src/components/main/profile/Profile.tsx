@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import { ActionButton } from '@/components/partial/button/ActionButton';
 import { getMyInfo } from '@/lib/client/authToken';
 import { displayGender, displayRole } from '@/lib/client/display';
@@ -7,7 +8,6 @@ import formatDate from '@/lib/client/formatDate';
 import { UserType } from '@/types/UserAccount.type';
 import { useRouter } from 'next/navigation';
 import { DataLine } from '@/components/partial/data/DataLine';
-import React, { useEffect, useState } from 'react';
 import { PotraitAvatar } from '@/components/partial/account/PotraitAvatar';
 import { DefaultAvatar } from '@/components/partial/account/DefaultAvatar';
 

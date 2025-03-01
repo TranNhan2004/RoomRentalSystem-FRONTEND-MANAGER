@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { DistrictMessage } from '@/messages/Address.message';
-import { DistrictService } from '@/services/Address.service';
+import { districtService } from '@/services/Address.service';
 import { DistrictType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -25,7 +25,7 @@ export const DistrictEdit = (props: DistrictEditProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await (new DistrictService()).get(props.id);
+        const data = await districtService.get(props.id);
         setReqData(data);
       } catch {
         router.push(NOT_FOUND_URL);
@@ -41,7 +41,10 @@ export const DistrictEdit = (props: DistrictEditProps) => {
       return;
     }
 
-    if (error.response?.data?.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR) {
+    if (
+      error.response?.status === 400 &&
+      error.response.data?.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR
+    ) {
       await toastError(DistrictMessage.REQUIRED_PROVINCE_ERROR);
       return;
     }
@@ -51,7 +54,7 @@ export const DistrictEdit = (props: DistrictEditProps) => {
 
   const patchData = async (actionAfter?: () => void) => {
     try {
-      const data = await (new DistrictService()).patch(props.id, reqData);
+      const data = await districtService.patch(props.id, reqData);
       setReqData(data);
       await toastSuccess(DistrictMessage.PATCH_SUCCESS);
       actionAfter?.();

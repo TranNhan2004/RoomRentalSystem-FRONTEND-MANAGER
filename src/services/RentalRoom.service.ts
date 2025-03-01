@@ -62,3 +62,9 @@ ApiServiceWithFormData<
     super('/app.rental-room/rental-room-images');
   }
 };
+
+export const rentalRoomService = new RentalRoomService();
+export const roomChargesListService = new RoomChargesListService();
+export const electricityWaterChargesListService = new ElectricityWaterChargesListService();
+export const otherChargesListService = new OtherChargesListService();
+export const rentalRoomImageService = new RentalRoomImageService();

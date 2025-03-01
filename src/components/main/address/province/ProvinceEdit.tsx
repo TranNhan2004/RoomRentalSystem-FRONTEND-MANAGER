@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { ProvinceMessage } from '@/messages/Address.message';
-import { ProvinceService } from '@/services/Address.service';
+import { provinceService } from '@/services/Address.service';
 import { ProvinceType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -25,7 +25,7 @@ export const ProvinceEdit = (props: ProvinceEditProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const province = await (new ProvinceService()).get(props.id);
+        const province = await provinceService.get(props.id);
         setReqData(province);
       } catch {
         router.push(NOT_FOUND_URL);
@@ -40,8 +40,11 @@ export const ProvinceEdit = (props: ProvinceEditProps) => {
       await toastError(PublicMessage.UNKNOWN_ERROR);
       return;
     }
-
-    if (error.response?.data?.name[0] === ProvinceMessage.BACKEND_NAME_UNIQUE_ERROR) {
+    
+    if (
+      error.response?.status === 400 &&
+      error.response.data?.name[0] === ProvinceMessage.BACKEND_NAME_UNIQUE_ERROR
+    ) {
       await toastError(ProvinceMessage.NAME_UNIQUE_ERROR);
       return;
     }
@@ -51,7 +54,7 @@ export const ProvinceEdit = (props: ProvinceEditProps) => {
 
   const patchData = async (actionAfter?: () => void) => {
     try {
-      const data = await (new ProvinceService()).patch(props.id, reqData);
+      const data = await provinceService.patch(props.id, reqData);
       setReqData(data);
       
       await toastSuccess(ProvinceMessage.PATCH_SUCCESS);

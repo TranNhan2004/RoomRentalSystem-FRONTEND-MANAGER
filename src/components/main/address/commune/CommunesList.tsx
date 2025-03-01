@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { CommuneService, DistrictService, ProvinceService } from '@/services/Address.service';
+import { communeService, districtService, provinceService } from '@/services/Address.service';
 import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
-import { CommuneQueryType, CommuneType, DistrictType } from '@/types/Address.type';
+import { CommuneQueryType, CommuneType, DistrictQueryType, DistrictType } from '@/types/Address.type';
 import { DisplayedDataType, Table } from '@/components/partial/data/Table';
 import { useRouter } from 'next/navigation';
 import { CommuneMessage } from '@/messages/Address.message';
@@ -16,7 +16,7 @@ import { PublicMessage } from '@/messages/Public.message';
 import { FilterModal } from '@/components/partial/data/FilterModal';
 import { OptionType, Select } from '@/components/partial/form/Select';
 import { Label } from '@/components/partial/form/Label';
-import { INITIAL_COMMUNE_QUERY } from '@/initials/Address.initial';
+import { INITIAL_COMMUNE_QUERY, INITIAL_DISTRICT_QUERY } from '@/initials/Address.initial';
 import { mapOptions } from '@/lib/client/handleOptions';
 
 export const CommunesList = () => {
@@ -25,6 +25,7 @@ export const CommunesList = () => {
   const [data, setData] = useState<CommuneType[]>([]);
   const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
   const [districtOptions, setDistrictOptions] = useState<OptionType[]>([]);
+  const [districtQuery, setDistrictQuery] = useState<DistrictQueryType>(INITIAL_DISTRICT_QUERY);
   const [query, setQuery] = useState<CommuneQueryType>(INITIAL_COMMUNE_QUERY);
   const [loading, setLoading] = useState(true);
   
@@ -37,9 +38,9 @@ export const CommunesList = () => {
       try {
         setLoading(true);
         const [data, provinceData, districtData] = await Promise.all([
-          (new CommuneService()).getMany(),
-          (new ProvinceService()).getMany(),
-          (new DistrictService()).getMany(),
+          communeService.getMany(),
+          provinceService.getMany(),
+          districtService.getMany(),
         ]);
         
         setData(data);
@@ -73,7 +74,10 @@ export const CommunesList = () => {
       return;
     }
 
-    if (error.response?.data?.includes(PublicMessage.BACKEND_PROTECT_ERROR_PREFIX)) {
+    if (
+      error.response?.status === 400 &&
+      error.response.data?.includes(PublicMessage.BACKEND_PROTECT_ERROR_PREFIX)
+    ) {
       await toastError(CommuneMessage.DELETE_PROTECT_ERROR);
       return;
     }
@@ -84,7 +88,7 @@ export const CommunesList = () => {
   const deleteFunction = async (id: string) => {
     await handleDeleteAlert(async () => {
       try {
-        await (new CommuneService()).delete(id);
+        await communeService.delete(id);
         await toastSuccess(CommuneMessage.DELETE_SUCCESS);
         originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
         setData(originialDataRef.current); 
@@ -110,10 +114,19 @@ export const CommunesList = () => {
   const filterOnClick = async () => {
     try {
       setLoading(true);
-      const data = await (new CommuneService()).getMany(query);
-      originialDataRef.current = data;
-      setData(data);
-    
+      if (query.district === '' && districtQuery.province !== '') {
+        const districtData = await districtService.getMany(districtQuery);
+        const dataArray = await Promise.all(districtData.map(district => communeService.getMany({
+          district: district.id
+        })));
+        setData(dataArray.flat());
+      
+      } else {
+        const data = await communeService.getMany(query);
+        originialDataRef.current = data;
+        setData(data);
+      }
+  
     } catch {
       await toastError(CommuneMessage.GET_MANY_ERROR);
     
@@ -127,6 +140,8 @@ export const CommunesList = () => {
   };
 
   const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDistrictQuery({ ...query, province: e.target.value });
+
     if (e.target.value == '') {
       setDistrictOptions(mapOptions(originalDistrictDataRef.current, 'name', 'id'));
     } else {
@@ -177,6 +192,7 @@ export const CommunesList = () => {
               <Select 
                 id='province-query'
                 className='ml-[-200px] w-[300px]'
+                value={districtQuery.province}
                 options={provinceOptions}
                 onChange={handleProvinceChange}
               />
@@ -186,6 +202,7 @@ export const CommunesList = () => {
               <Label htmlFor='district-query'>Huyện: </Label>
               <Select 
                 id='district-query'
+                value={query.district}
                 className='ml-[-200px] w-[300px]'
                 options={districtOptions}
                 onChange={handleDistrictChange}

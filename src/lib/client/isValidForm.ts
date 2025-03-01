@@ -1,8 +1,10 @@
-import { InputRefHandler } from "@/components/partial/form/Input";
+import { toastError } from "./alert";
 
-export const isValidatedForm = (inputRefs: React.RefObject<{[key: string]: InputRefHandler | null;}>) => {
-  for (const key in inputRefs.current) {
-    if (inputRefs.current[key] && !inputRefs.current[key].formValidate()) {
+export const isValidForm = async (validators: {[key: string]: () => string | null}) => {
+  for (const key in validators) {
+    const validateResult = validators[key]();
+    if (validateResult) {
+      await toastError(validateResult);
       return false;
     }
   }

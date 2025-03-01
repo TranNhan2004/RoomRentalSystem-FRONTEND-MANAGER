@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { DistrictMessage } from '@/messages/Address.message';
-import { DistrictService } from '@/services/Address.service';
+import { districtService } from '@/services/Address.service';
 import { DistrictType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -21,19 +21,23 @@ export const DistrictAdd = () => {
       return;
     }
 
-    if (error.response?.data?.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR) {
+    if (
+      error.response?.status === 400 &&
+      error.response.data?.province[0] === PublicMessage.BACKEND_REQUIRED_ERROR
+    ) {
       await toastError(DistrictMessage.REQUIRED_PROVINCE_ERROR);
       return;
-    }
-
+    } 
+    
     await toastError(DistrictMessage.POST_ERROR);
   };
 
   const postData = async (actionAfter: () => void) => {
     try {
-      await (new DistrictService()).post(reqData);
+      await districtService.post(reqData);
       await toastSuccess(DistrictMessage.POST_SUCCESS);
       actionAfter();
+    
     } catch (error) {
       await handlePostError(error);
     }

@@ -83,6 +83,15 @@ export const getMyInfo = async () => {
   return JSON.parse(await getSecureCookie(await getMyInfoCookieName()) ?? '') as UserType;
 };
 
+export const setMyInfo = async (data: UserType) => {
+  await removeSecureCookie(await getMyInfoCookieName());
+  await setSecureCookie(
+    await getMyInfoCookieName(), 
+    JSON.stringify(data), 
+    await getMyInfoExpires()
+  );
+};
+
 export const resetAuthTokens = async () => {
   const [rtkCkName, atkCkName, myInfoCkName] = await Promise.all([
     getRefreshTokenCookieName(),

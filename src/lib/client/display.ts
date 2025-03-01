@@ -1,23 +1,25 @@
-export const displayRole = (role: 'M' | 'L' | 'R' | undefined) => {
+import { UserType } from "@/types/UserAccount.type";
+
+export const displayRole = (role: UserType['role']) => {
   switch(role) {
-    case 'M':
+    case 'MANAGER':
       return 'Quản lý';
-    case 'L':
+    case 'LESSOR':
       return 'Người cho thuê';
-    case 'R':
+    case 'RENTER':
       return 'Người thuê';
     default:
       return 'GIÁ TRỊ KHÔNG HỢP LỆ';
   } 
 };
 
-export const displayGender = (gender: 'M' | 'F' | 'U' | undefined) => {
+export const displayGender = (gender: UserType['gender']) => {
   switch(gender) {
-    case 'M':
+    case 'MALE':
       return 'Nam';
-    case 'F':
+    case 'FEMALE':
       return 'Nữ';
-    case 'U':
+    case 'UNKNOWN':
       return 'Không rõ';
     default:
       return 'GIÁ TRỊ KHÔNG HỢP LỆ';

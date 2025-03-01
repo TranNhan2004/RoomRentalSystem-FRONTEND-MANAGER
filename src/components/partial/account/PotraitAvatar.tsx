@@ -1,8 +1,8 @@
 'use client';
 
-import { UserType } from '@/types/UserAccount.type';
-import Image from 'next/image';
 import React from 'react';
+import Image from 'next/image';
+import { UserType } from '@/types/UserAccount.type';
 
 type PotraitAvatarProps = {
   width: number;

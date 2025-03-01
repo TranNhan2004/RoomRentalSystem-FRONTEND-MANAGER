@@ -1,7 +1,7 @@
 'use client';
 
-import { ChevronDoubleUpIcon } from '@heroicons/react/24/outline';
 import React from 'react';
+import { ChevronDoubleUpIcon } from '@heroicons/react/24/outline';
 
 export const Footer = () => {
   const scrollToTop = () => {

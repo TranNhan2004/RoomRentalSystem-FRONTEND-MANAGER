@@ -1,8 +1,8 @@
 'use client';
 
+import React from 'react';
 import { HomeIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
-import React from 'react';
 
 export const GoToHomeButton = () => {
   const router = useRouter();

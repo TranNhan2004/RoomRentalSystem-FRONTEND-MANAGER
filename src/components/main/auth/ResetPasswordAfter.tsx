@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { handleInputChange } from '@/lib/client/handleInputChange';
 import { ResetPasswordRequestAfterType } from '@/types/UserAccount.type';
-import { AuthService } from '@/services/UserAccount.service';
+import { authService } from '@/services/UserAccount.service';
 import { useRouter } from 'next/navigation';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { INITIAL_RESET_PASSWORD_REQUEST_AFTER } from '@/initials/UserAccount.initial';
@@ -57,7 +57,7 @@ export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
     setIsSubmitted(true);
 
     try {
-      await (new AuthService()).resetPassword(reqData, props.uidb64, props.token);
+      await authService.resetPassword(reqData, props.uidb64, props.token);
       await toastSuccess(AuthMessage.RESET_PASSWORD_SUCCESS);
       router.push('/auth/login');
     } catch {

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { CommuneMessage } from '@/messages/Address.message';
-import { CommuneService } from '@/services/Address.service';
+import { communeService } from '@/services/Address.service';
 import { CommuneType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -25,7 +25,7 @@ export const CommuneEdit = (props: CommuneEditProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await (new CommuneService()).get(props.id);
+        const data = await communeService.get(props.id);
         setReqData(data);
       
       } catch {
@@ -42,7 +42,10 @@ export const CommuneEdit = (props: CommuneEditProps) => {
       return;
     }
 
-    if (error.response?.data?.district[0] === PublicMessage.BACKEND_REQUIRED_ERROR) {
+    if (
+      error.response?.status === 400 &&
+      error.response.data?.district[0] === PublicMessage.BACKEND_REQUIRED_ERROR
+    ) {
       await toastError(CommuneMessage.REQUIRED_DISTRICT_ERROR);
       return;
     }
@@ -52,7 +55,7 @@ export const CommuneEdit = (props: CommuneEditProps) => {
 
   const patchData = async (actionAfter?: () => void) => {
     try {
-      const data = await (new CommuneService()).patch(props.id, reqData);
+      const data = await communeService.patch(props.id, reqData);
       setReqData(data);
       await toastSuccess(CommuneMessage.PATCH_SUCCESS);
       actionAfter?.();

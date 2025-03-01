@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { CommuneMessage } from '@/messages/Address.message';
-import { CommuneService } from '@/services/Address.service';
+import { communeService } from '@/services/Address.service';
 import { CommuneType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -21,7 +21,10 @@ export const CommuneAdd = () => {
       return;
     }
 
-    if (error.response?.data?.district[0] === PublicMessage.BACKEND_REQUIRED_ERROR) {
+    if (
+      error.response?.status === 400 &&
+      error.response.data?.district[0] === PublicMessage.BACKEND_REQUIRED_ERROR
+    ) {
       await toastError(CommuneMessage.REQUIRED_DISTRICT_ERROR);
       return;
     }
@@ -31,7 +34,7 @@ export const CommuneAdd = () => {
 
   const postData = async (actionAfter: () => void) => {
     try {
-      await (new CommuneService()).post(reqData);
+      await communeService.post(reqData);
       await toastSuccess(CommuneMessage.POST_SUCCESS);
       actionAfter();
     } catch (error) {

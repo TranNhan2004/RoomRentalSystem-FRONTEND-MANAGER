@@ -5,7 +5,7 @@ import { handleInputChange } from '@/lib/client/handleInputChange';
 import { ResetPasswordRequestBeforeType } from '@/types/UserAccount.type';
 import { Input } from '@/components/partial/form/Input';
 import { Form } from '@/components/partial/form/Form';
-import { AuthService } from '@/services/UserAccount.service';
+import { authService } from '@/services/UserAccount.service';
 import { toastError } from '@/lib/client/alert';
 import { INITIAL_RESET_PASSWORD_REQUEST_BEFORE } from '@/initials/UserAccount.initial';
 import { AuthMessage } from '@/messages/UserAccount.message';
@@ -65,7 +65,7 @@ export const ResetPasswordBefore = () => {
     setIsButtonDisabled(true);
 
     try {      
-      await (new AuthService()).getResetPasswordURL(reqData);
+      await authService.getResetPasswordURL(reqData);
     } catch {
       await toastError(AuthMessage.GET_RESET_PASSWORD_URL_ERROR);
     }

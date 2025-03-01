@@ -1,4 +1,4 @@
-export type LoginRequestType = Pick<UserType, 'email' | 'password'>;
+export type LoginRequestType = Pick<UserType, 'email' | 'password' | 'role'>;
 
 export type LoginResponseType = {
   refresh?: string;
@@ -14,7 +14,6 @@ export type ResetPasswordRequestAfterType = {
 }
 
 export type ChangePasswordType = {
-  id?: string;
   old_password?: string;
   new_password?: string;
   confirm_new_password?: string;
@@ -29,9 +28,9 @@ export type UserType = {
   phone_number?: string;
   citizen_number?: string;
   date_of_birth?: Date;
-  gender?: 'M' | 'F' | 'U';
+  gender?: 'MALE' | 'FEMALE' | 'UNKNOWN';
   avatar?: string | null;
-  role?: 'M' | 'L' | 'R';
+  role?: 'MANAGER' | 'LESSOR' | 'RENTER';
   workplace_commune?: string;
   workplace_additional_address?: string;
   is_active?: boolean;
