@@ -11,7 +11,6 @@ import { DistrictForm } from './DistrictForm';
 import { INITIAL_DISTRICT } from '@/initials/Address.initial';
 import { GeneralMessage } from '@/messages/General.message';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
-import { objectEquals } from '@/lib/client/objectEquals';
 import { Loading } from '@/components/partial/data/Loading';
 
 type DistrictEditProps = {
@@ -21,14 +20,20 @@ type DistrictEditProps = {
 export const DistrictEdit = (props: DistrictEditProps) => {
   const router = useRouter();
   const [reqData, setReqData] = useState<DistrictType>(INITIAL_DISTRICT);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const data = await districtService.get(props.id);
         setReqData(data);
+      
       } catch {
         router.push(NOT_FOUND_URL);
+      
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -65,7 +70,7 @@ export const DistrictEdit = (props: DistrictEditProps) => {
     });
   };
 
-  if (objectEquals(reqData, INITIAL_DISTRICT)) {
+  if (isLoading) {
     return <Loading />;
   }
 

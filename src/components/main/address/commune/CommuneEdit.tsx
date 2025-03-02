@@ -8,10 +8,9 @@ import { CommuneType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { CommuneForm } from './CommuneForm';
-import { INITIAL_COMMUNE, INITIAL_DISTRICT } from '@/initials/Address.initial';
+import { INITIAL_COMMUNE } from '@/initials/Address.initial';
 import { GeneralMessage } from '@/messages/General.message';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
-import { objectEquals } from '@/lib/client/objectEquals';
 import { Loading } from '@/components/partial/data/Loading';
 
 type CommuneEditProps = {
@@ -21,15 +20,20 @@ type CommuneEditProps = {
 export const CommuneEdit = (props: CommuneEditProps) => {
   const router = useRouter();
   const [reqData, setReqData] = useState<CommuneType>(INITIAL_COMMUNE);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const data = await communeService.get(props.id);
         setReqData(data);
       
       } catch {
         router.push(NOT_FOUND_URL);
+
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -67,7 +71,7 @@ export const CommuneEdit = (props: CommuneEditProps) => {
     });
   };
 
-  if (objectEquals(reqData, INITIAL_DISTRICT)) {
+  if (isLoading) {
     return <Loading />;
   }
 

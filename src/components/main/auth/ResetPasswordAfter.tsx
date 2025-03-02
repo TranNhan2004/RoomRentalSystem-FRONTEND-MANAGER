@@ -12,7 +12,7 @@ import { AuthMessage } from '@/messages/UserAccount.message';
 import { Form } from '@/components/partial/form/Form';
 import { Input } from '@/components/partial/form/Input';
 import { Spin } from '@/components/partial/data/Spin';
-import { ValidatorsType } from '@/types/Validators.type';
+import { Validators } from '@/types/Validators.type';
 
 
 type ResetPasswordURLProps = {
@@ -29,7 +29,7 @@ export const ResetPasswordAfter = (props: ResetPasswordURLProps) => {
     return handleInputChange(e, setReqData);
   };
 
-  const validators: ValidatorsType = {
+  const validators: Validators<ResetPasswordRequestAfterType> = {
     new_password: () => {
       if (!reqData.new_password) {
         return AuthMessage.NEW_PASSWORD_REQUIRED;

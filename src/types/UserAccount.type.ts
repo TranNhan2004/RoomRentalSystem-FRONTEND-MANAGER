@@ -28,9 +28,9 @@ export type UserType = {
   phone_number?: string;
   citizen_number?: string;
   date_of_birth?: Date;
-  gender?: 'MALE' | 'FEMALE' | 'UNKNOWN';
+  gender?: 'MALE' | 'FEMALE' | 'UNKNOWN' | '';
   avatar?: string | null;
-  role?: 'MANAGER' | 'LESSOR' | 'RENTER';
+  role?: 'MANAGER' | 'LESSOR' | 'RENTER' | '';
   workplace_commune?: string;
   workplace_additional_address?: string;
   is_active?: boolean;

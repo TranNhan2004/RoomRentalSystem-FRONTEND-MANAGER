@@ -4,18 +4,18 @@ import React, { useState } from 'react';
 import { Form } from '../form/Form';
 import { ActionButton } from '../button/ActionButton';
 import { isValidForm } from '@/lib/client/isValidForm';
-import { ValidatorsType } from '@/types/Validators.type';
+import { Validators } from '@/types/Validators.type';
 
-export type DataFormProps = {
+export type DataFormProps<T extends object> = {
   formLabel: string;
-  validators: ValidatorsType;
+  validators: Validators<T>;
   saveOnClick: () => void;
   saveAndExitOnClick?: () => void;
   cancelOnClick: () => void;
   children: React.ReactNode;
 }
 
-export const DataForm = (props: DataFormProps) => {
+export const DataForm = <T extends object>(props: DataFormProps<T>) => {
   const [action, setAction] = useState<'save' | 'save-and-exit'>('save');
   const [isSaving, setIsSaving] = useState(false);
 

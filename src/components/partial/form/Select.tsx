@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useValidate } from '@/hooks/useValidate';
+import { ValidateFunctionType } from '@/types/Validators.type';
 
 export type OptionType = {
   value: string;
@@ -13,15 +14,15 @@ type SelectProps = {
   value?: string;
   options: OptionType[],
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  validate?: () => string | null;
+  validate?: ValidateFunctionType;
   className?: string;
 }
                           
 export const Select = (props: SelectProps) => {
   const { error, handleBlur, handleChange } = useValidate<HTMLSelectElement>(
     props.value, 
-    props.validate, 
-    props.onChange
+    props.onChange,
+    props.validate
   );
   
   return (
@@ -42,7 +43,7 @@ export const Select = (props: SelectProps) => {
             </option>
           ))
         }
-        <option value='' label='---'></option>
+        <option value=''>---</option>
       </select>
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>

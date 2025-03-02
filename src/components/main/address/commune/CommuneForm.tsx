@@ -12,13 +12,13 @@ import { CommuneMessage } from '@/messages/Address.message';
 import { districtService, provinceService } from '@/services/Address.service';
 import { CommuneType, DistrictType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
-import { ValidatorsType } from '@/types/Validators.type';
+import { Validators } from '@/types/Validators.type';
 
 
 type CommuneFormProps = {
   reqData: CommuneType;
   setReqData: React.Dispatch<React.SetStateAction<CommuneType>>;
-} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'validators'>;
+} & Omit<DataFormProps<CommuneType>, 'children' | 'cancelOnClick' | 'validators'>;
 
 export const CommuneForm = (props: CommuneFormProps) => {
   const router = useRouter();
@@ -67,13 +67,14 @@ export const CommuneForm = (props: CommuneFormProps) => {
     props.setReqData({ ...props.reqData, district: e.target.value });
   };
   
-  const validators: ValidatorsType = {
+  const validators: Validators<CommuneType> = {
     name: () => {
       if (!props.reqData.name) {
         return CommuneMessage.NAME_REQUIRED;
       } 
       return null;
     },
+    
     district: () => {
       if (!props.reqData.district) {
         return CommuneMessage.DISTRICT_REQUIRED;

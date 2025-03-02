@@ -2,12 +2,13 @@
 
 import React from 'react';
 import { useValidate } from '@/hooks/useValidate';
+import { ValidateFunctionType } from '@/types/Validators.type';
 
 type TextAreaProps = {
   id: string;
   value: string | undefined;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  validate?: () => string | null;
+  validate?: ValidateFunctionType;
   rows?: number;
   className?: string;
 }
@@ -15,8 +16,8 @@ type TextAreaProps = {
 export const TextArea = (props: TextAreaProps) => {
   const { error, handleBlur, handleChange } = useValidate<HTMLTextAreaElement>(
     props.value, 
-    props.validate, 
-    props.onChange
+    props.onChange,
+    props.validate
   );
 
   return (

@@ -1,6 +1,6 @@
 'use client';
-                           
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { FunnelIcon } from '@heroicons/react/24/outline'; 
 import { ActionButton } from '../button/ActionButton';
 
@@ -9,9 +9,20 @@ type FilterModalProps = {
   refreshOnClick: () => void;
   children: React.ReactNode;
 }
-                           
+
 export const FilterModal = (props: FilterModalProps) => {
   const [isOpen, setIsOpen] = useState(false); 
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+    return () => {
+      document.body.classList.remove('overflow-hidden'); 
+    };
+  }, [isOpen]);
 
   const handleCancel = () => {
     setIsOpen(false);
@@ -34,11 +45,11 @@ export const FilterModal = (props: FilterModalProps) => {
 
       {
         isOpen && (
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg w-[60%] h-[80%] relative">
-              <h2 className="text-xl font-semibold mb-8">Lọc dữ liệu</h2>
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white p-6 rounded-lg w-[60%] h-[80%] relative flex flex-col">
+              <h2 className="text-xl font-semibold mb-4">Lọc dữ liệu</h2>
 
-              <div className="space-y-6 max-h-[70%] overflow-y-auto pb-20">
+              <div className="flex-1 overflow-y-auto max-h-[72%] pb-20 space-y-4">
                 {props.children}
               </div>
 

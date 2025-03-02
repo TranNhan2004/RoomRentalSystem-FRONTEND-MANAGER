@@ -10,9 +10,9 @@ import { toastError } from '@/lib/client/alert';
 import { INITIAL_RESET_PASSWORD_REQUEST_BEFORE } from '@/initials/UserAccount.initial';
 import { AuthMessage } from '@/messages/UserAccount.message';
 import { EMAIL_REG_EXP, isValidForm } from '@/lib/client/isValidForm';
-import { ValidatorsType } from '@/types/Validators.type';
+import { Validators } from '@/types/Validators.type';
 
-const INITIAL_COUNTDOWN = 60;
+const INITIAL_COUNTDOWN = 5;
 
 export const ResetPasswordBefore = () => {
   const [reqData, setReqData] = useState<ResetPasswordRequestBeforeType>(INITIAL_RESET_PASSWORD_REQUEST_BEFORE);
@@ -44,7 +44,7 @@ export const ResetPasswordBefore = () => {
     return handleInputChange(e, setReqData);
   };
   
-  const validators: ValidatorsType = {
+  const validators: Validators<ResetPasswordRequestBeforeType> = {
     email: () => {
       if (!reqData.email) {
         return AuthMessage.EMAIL_REQUIRED;
@@ -101,7 +101,7 @@ export const ResetPasswordBefore = () => {
           type='submit' 
           className={`font-semibold p-2 w-[50%] mt-4 text-white rounded-lg ${
             isButtonDisabled 
-            ? 'bg-gray-300' 
+            ? 'bg-gray-300 cursor-not-allowed disabled' 
             : 'bg-mygreen hover:bg-mydarkgreen transition duration-300 ease-in-out' 
           }`}
           disabled={isButtonDisabled} 

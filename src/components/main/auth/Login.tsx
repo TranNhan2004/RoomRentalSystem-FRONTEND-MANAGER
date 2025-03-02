@@ -14,7 +14,7 @@ import { EMAIL_REG_EXP, PASSWORD_REG_EXP, isValidForm } from '@/lib/client/isVal
 import { Form } from '@/components/partial/form/Form';
 import { Input } from '@/components/partial/form/Input';
 import { Spin } from '@/components/partial/data/Spin';
-import { ValidatorsType } from '@/types/Validators.type';
+import { Validators } from '@/types/Validators.type';
 
 export const Login = () => {
   const router = useRouter();
@@ -25,7 +25,7 @@ export const Login = () => {
     return handleInputChange(e, setReqData);
   };
 
-  const validators: ValidatorsType = {
+  const validators: Validators<LoginRequestType> = {
     email: () => {
       if (!reqData.email) {
         return AuthMessage.EMAIL_REQUIRED;
@@ -35,7 +35,7 @@ export const Login = () => {
       }
       return null;
     },
-
+    
     password: () => {
       if (!reqData.password) {
         return AuthMessage.PASSWORD_REQUIRED;

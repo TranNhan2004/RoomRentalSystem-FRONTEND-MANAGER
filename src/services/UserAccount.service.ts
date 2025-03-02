@@ -9,10 +9,35 @@ import {
 import { ApiServiceWithFormData } from "./Api.service";
 import axiosInstance from "@/lib/client/axios";
 import { UnknownQueryType } from "@/types/UnknownQuery.type";
+import formatDate from "@/lib/client/formatDate";
 
 class UserService extends ApiServiceWithFormData<UserType, UnknownQueryType> {
   constructor() {
     super('/app.user-account/users');
+  }
+
+  private async smoothData(data: UserType) {
+    const dataToSend: Record<string, unknown> = { ...data };
+    if (data.date_of_birth) {
+      dataToSend.date_of_birth = formatDate(data.date_of_birth, 'ymd');
+    }
+    return dataToSend;
+  }
+
+  public async post(data: UserType) {
+    return await super.post(await this.smoothData(data));
+  }
+
+  public async patch(id: string, data: UserType) {
+    return await super.patch(id, await this.smoothData(data));
+  }
+
+  public async postFormData(data: UserType) {
+    return await super.postFormData(await this.smoothData(data));
+  }
+
+  public async patchFormData(id: string, data: UserType) {
+    return await super.patchFormData(id, await this.smoothData(data));
   }
 
   public async changePassword(id: string, data: ChangePasswordType) {

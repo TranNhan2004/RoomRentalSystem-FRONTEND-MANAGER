@@ -9,7 +9,6 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { ProvinceForm } from './ProvinceForm';
 import { INITIAL_PROVINCE } from '@/initials/Address.initial';
-import { objectEquals } from '@/lib/client/objectEquals';
 import { Loading } from '@/components/partial/data/Loading';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
 import { GeneralMessage } from '@/messages/General.message';
@@ -21,14 +20,20 @@ type ProvinceEditProps = {
 export const ProvinceEdit = (props: ProvinceEditProps) => {
   const router = useRouter();
   const [reqData, setReqData] = useState<ProvinceType>(INITIAL_PROVINCE);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const province = await provinceService.get(props.id);
         setReqData(province);
+      
       } catch {
         router.push(NOT_FOUND_URL);
+      
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -74,7 +79,7 @@ export const ProvinceEdit = (props: ProvinceEditProps) => {
     });
   };
 
-  if (objectEquals(reqData, INITIAL_PROVINCE)) {
+  if (isLoading) {
     return <Loading />;
   }
 

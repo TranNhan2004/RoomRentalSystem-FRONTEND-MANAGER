@@ -9,11 +9,12 @@ import { handleInputChange } from '@/lib/client/handleInputChange';
 import { ProvinceType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
 import { ProvinceMessage } from '@/messages/Address.message';
+import { Validators } from '@/types/Validators.type';
 
 type ProvinceFormProps = {
   reqData: ProvinceType;
   setReqData: React.Dispatch<React.SetStateAction<ProvinceType>>;
-} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'validators'>;
+} & Omit<DataFormProps<ProvinceType>, 'children' | 'cancelOnClick' | 'validators'>;
 
 export const ProvinceForm = (props: ProvinceFormProps) => {
   const router = useRouter();
@@ -28,9 +29,9 @@ export const ProvinceForm = (props: ProvinceFormProps) => {
     return handleInputChange(e, props.setReqData);
   };
 
-  const validators = {
+  const validators: Validators<ProvinceType> = {
     name: () => {
-      if (!props.reqData) {
+      if (!props.reqData.name) {
         return ProvinceMessage.NAME_REQUIRED;
       } 
       return null;

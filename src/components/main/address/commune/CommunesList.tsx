@@ -199,6 +199,74 @@ export const CommunesList = () => {
             </div>    
 
             <div className='grid grid-cols-2 items-center mt-1 mb-1'>
+              <Label htmlFor='province-query'>Tỉnh: </Label>
+              <Select 
+                id='province-query'
+                className='ml-[-200px] w-[300px]'
+                value={districtQuery.province}
+                options={provinceOptions}
+                onChange={handleProvinceChange}
+              />
+            </div>  
+
+            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
+              <Label htmlFor='province-query'>Tỉnh: </Label>
+              <Select 
+                id='province-query'
+                className='ml-[-200px] w-[300px]'
+                value={districtQuery.province}
+                options={provinceOptions}
+                onChange={handleProvinceChange}
+              />
+            </div>  
+
+            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
+              <Label htmlFor='province-query'>Tỉnh: </Label>
+              <Select 
+                id='province-query'
+                className='ml-[-200px] w-[300px]'
+                value={districtQuery.province}
+                options={provinceOptions}
+                onChange={handleProvinceChange}
+              />
+            </div>  
+
+
+            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
+              <Label htmlFor='province-query'>Tỉnh: </Label>
+              <Select 
+                id='province-query'
+                className='ml-[-200px] w-[300px]'
+                value={districtQuery.province}
+                options={provinceOptions}
+                onChange={handleProvinceChange}
+              />
+            </div>  
+
+
+            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
+              <Label htmlFor='province-query'>Tỉnh: </Label>
+              <Select 
+                id='province-query'
+                className='ml-[-200px] w-[300px]'
+                value={districtQuery.province}
+                options={provinceOptions}
+                onChange={handleProvinceChange}
+              />
+            </div>  
+
+            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
+              <Label htmlFor='province-query'>Tỉnh: </Label>
+              <Select 
+                id='province-query'
+                className='ml-[-200px] w-[300px]'
+                value={districtQuery.province}
+                options={provinceOptions}
+                onChange={handleProvinceChange}
+              />
+            </div>  
+
+            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
               <Label htmlFor='district-query'>Huyện: </Label>
               <Select 
                 id='district-query'

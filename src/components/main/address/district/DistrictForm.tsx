@@ -12,11 +12,12 @@ import { DistrictMessage } from '@/messages/Address.message';
 import { provinceService } from '@/services/Address.service';
 import { DistrictType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
+import { Validators } from '@/types/Validators.type';
 
 type DistrictFormProps = {
   reqData: DistrictType;
   setReqData: React.Dispatch<React.SetStateAction<DistrictType>>;
-} & Omit<DataFormProps, 'children' | 'cancelOnClick' | 'validators'>;
+} & Omit<DataFormProps<DistrictType>, 'children' | 'cancelOnClick' | 'validators'>;
 
 export const DistrictForm = (props: DistrictFormProps) => {
   const router = useRouter();
@@ -45,7 +46,7 @@ export const DistrictForm = (props: DistrictFormProps) => {
     props.setReqData({ ...props.reqData, province: e.target.value });
   };
   
-  const validators = {
+  const validators: Validators<DistrictType> = {
     name: () => {
       if (!props.reqData.name) {
         return DistrictMessage.NAME_REQUIRED;
