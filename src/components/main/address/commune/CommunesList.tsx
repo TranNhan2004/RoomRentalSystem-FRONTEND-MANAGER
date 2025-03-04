@@ -75,7 +75,7 @@ export const CommunesList = () => {
     }
 
     if (
-      error.response?.status === 400 &&
+      error.response?.status === 500 &&
       error.response.data?.includes(GeneralMessage.BACKEND_PROTECTED_ERROR_PREFIX)
     ) {
       await toastError(CommuneMessage.DELETE_PROTECTED_ERROR);

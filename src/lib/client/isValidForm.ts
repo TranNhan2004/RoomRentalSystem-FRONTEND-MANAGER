@@ -1,7 +1,7 @@
-import { ValidatorsType } from "@/types/Validators.type";
+import { Validators } from "@/types/Validators.type";
 import { toastError } from "./alert";
 
-export const isValidForm = async (validators: ValidatorsType) => {
+export const isValidForm = async <T extends object>(validators: Validators<T>) => {
   for (const key in validators) {
     const validateResult = validators[key]();
     if (validateResult) {

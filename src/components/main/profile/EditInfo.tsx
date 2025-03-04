@@ -14,7 +14,7 @@ import { DataForm } from '@/components/partial/data/DataForm';
 import { Label } from '@/components/partial/form/Label';
 import { Input } from '@/components/partial/form/Input';
 import { EMAIL_REG_EXP } from '@/lib/client/isValidForm';
-import formatDate from '@/lib/client/formatDate';
+import { formatDate } from '@/lib/client/formatDate';
 import { Select } from '@/components/partial/form/Select';
 import { dateStrOfMaxAge, dateStrOfMinAge } from '@/lib/client/dateLimit';
 

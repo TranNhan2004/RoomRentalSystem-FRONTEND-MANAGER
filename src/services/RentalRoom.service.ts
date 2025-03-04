@@ -9,7 +9,7 @@ import {
   RoomChargesListQueryType, 
   RoomChargesListType 
 } from "@/types/RentalRoom.type";
-import { ApiService, ApiServiceWithFormData } from "./Api.service";
+import { ApiService } from "./Api.service";
 import { UnknownQueryType } from "@/types/UnknownQuery.type";
 
 
@@ -53,13 +53,21 @@ ApiService<
 };
 
 export class RentalRoomImageService extends 
-ApiServiceWithFormData<
+ApiService<
   RentalRoomImageType, 
   RentalRoomImageQueryType
 > {
 
   constructor() {
     super('/app.rental-room/rental-room-images');
+  }
+
+  public async post(data: RentalRoomImageType) {
+    return await super.post(data, true);
+  }
+
+  public async patch(id: string, data: RentalRoomImageType) {
+    return await super.patch(id, data, true);
   }
 };
 

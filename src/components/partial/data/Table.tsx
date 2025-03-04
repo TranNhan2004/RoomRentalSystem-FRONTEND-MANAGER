@@ -7,7 +7,7 @@ import { Loading } from './Loading';
 
 export type DisplayedDataType = {
   id: string;
-  basicInfo: string | number;
+  basicInfo: React.ReactNode;
 }
 
 export type TableProps = {
@@ -20,6 +20,7 @@ export type TableProps = {
     rowName: string;
     function: (id: string) => void;
     buttonConfig: Omit<ActionButtonProps, 'onClick'>;
+    disabledFunction?: (id: string) => boolean | undefined;
   }[];
 }
 
@@ -50,7 +51,11 @@ export const Table = (props: TableProps) => {
     return props.otherFunctions && props.otherFunctions.map((other, index) => (
       <td key={index} className='p-2 border text-center'>
         <div className='flex justify-center'>
-          <ActionButton {...other.buttonConfig } onClick={() => other.function(item.id)} />
+          <ActionButton 
+            { ...other.buttonConfig } 
+            onClick={() => other.function(item.id)} 
+            disabled={other.disabledFunction?.(item.id)}
+          />
         </div>
       </td>
     ));
@@ -132,7 +137,7 @@ export const Table = (props: TableProps) => {
               {props.detailsFunction && <th className='p-2 border w-[8%]'>Chi tiết</th>}
               {generateOtherRowNames()}
               {props.editFunction && <th className='p-2 border w-[8%]'>Sửa</th>}
-              {props.detailsFunction && <th className='p-2 border w-[8%]'>Xóa</th>}
+              {props.deleteFunction && <th className='p-2 border w-[8%]'>Xóa</th>}
             </tr>
           </thead>
           <tbody>

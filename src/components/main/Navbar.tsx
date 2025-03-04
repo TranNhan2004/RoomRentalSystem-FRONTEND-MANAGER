@@ -41,7 +41,17 @@ export const Navbar = () => {
         <ul className='space-y-4 ml-[3%]'>
           <li><NavLink href='/'>Trang chủ</NavLink></li>
           <li><NavLink href='/users'>QL người dùng</NavLink></li>
-          <li><NavLink href='/rental-rooms'>QL phòng trọ</NavLink></li>
+          <li>
+            <DropdownMenu
+              label='QL trọ'
+              links={[
+                { label: 'Phòng trọ', href: '/rental-rooms/rooms' },
+                { label: 'Giá phòng', href: '/rental-rooms/room-charges-lists'  },
+                { label: 'Giá điện, nước', href: '/rental-rooms/electricity-water-charges-lists'  },
+                { label: 'Các loại giá khác', href: '/rental-rooms/other-charges-lists'  }
+              ]}
+            />
+          </li>
           <li>
             <DropdownMenu
               label='QL địa chỉ'  

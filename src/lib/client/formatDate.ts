@@ -1,4 +1,4 @@
-const formatDate = (date: Date | null | undefined, format: 'ymd' | 'dmy' | 'mdy'): string => {
+export const formatDate = (date: Date | null | undefined, format: 'ymd' | 'dmy' | 'mdy'): string => {
   if (!date) {
     date = new Date();
   }
@@ -16,5 +16,3 @@ const formatDate = (date: Date | null | undefined, format: 'ymd' | 'dmy' | 'mdy'
       return formattedDate;
   }
 };
-
-export default formatDate;

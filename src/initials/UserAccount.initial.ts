@@ -1,4 +1,4 @@
-import { ChangePasswordType, LoginRequestType, ResetPasswordRequestAfterType, ResetPasswordRequestBeforeType, UserType } from "@/types/UserAccount.type";
+import { ChangePasswordType, LoginRequestType, ResetPasswordRequestAfterType, ResetPasswordRequestBeforeType, UserQueryType, UserType } from "@/types/UserAccount.type";
 
 export const INITIAL_LOGIN_REQUEST: LoginRequestType = {
   email: '',
@@ -39,3 +39,8 @@ export const INITIAL_USER: UserType = {
   created_at: new Date(),
   updated_at: new Date()
 };
+
+export const INITIAL_USER_QUERY: UserQueryType = {
+  role_include: [''],
+  is_active: true
+} as const;

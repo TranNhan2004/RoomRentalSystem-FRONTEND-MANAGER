@@ -1,4 +1,4 @@
-import axiosInstance from "@/lib/client/axios";
+import { axiosInstance } from "@/lib/client/axios";
 
 export class ApiService<T extends object, Q extends object> {
   protected endpoint: string;
@@ -7,13 +7,44 @@ export class ApiService<T extends object, Q extends object> {
     this.endpoint = endpoint;
   }
 
-  public async post(data: T) {
-    const response = await axiosInstance.post<T>(`${this.endpoint}/`, data);
+  protected async _toFormData(data: T) {
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key] as string);
+    }
+    console.log(formData);
+    return formData;
+  }
+
+  protected async smoothParams(params: Q = {} as Q) {
+    let fullParams = '?';
+    for (const key in params) {
+      if (params[key] instanceof Array) {
+        params[key].forEach(item => {
+          fullParams += `${key}=${item}&`;
+        });
+
+      } else {
+        fullParams += `${key}=${params[key]}&`;
+      }
+    }
+
+    return `${this.endpoint}/${fullParams !== '?' ? fullParams.slice(0, -1) : ''}`;
+  }
+
+  public async post(data: T, useFormData?: boolean) {
+    const response = useFormData ?
+                      await axiosInstance.post<T>(this.endpoint, this._toFormData(data), {
+                        headers: {
+                          'Content-Type': 'multipart/form-data',
+                        },
+                      }) :
+                      await axiosInstance.post<T>(`${this.endpoint}/`, data); 
     return response.data;
   }
 
-  public async getMany(params: Q = <Q>{}) {
-    const response = await axiosInstance.get<T[]>(`${this.endpoint}/`, { params: params });
+  public async getMany(params: Q = {} as Q) {
+    const response = await axiosInstance.get<T[]>(await this.smoothParams(params));
     return response.data;
   }
 
@@ -22,51 +53,19 @@ export class ApiService<T extends object, Q extends object> {
     return response.data;
   }
 
-  public async patch(id: string, data: T) {
-    const response = await axiosInstance.patch<T>(`${this.endpoint}/${id}/`, data);
+  public async patch(id: string, data: T, useFormData?: boolean) {
+    const response = useFormData ?
+                      await axiosInstance.patch<T>(`${this.endpoint}/${id}`, this._toFormData(data), {
+                        headers: {
+                          'Content-Type': 'multipart/form-data',
+                        },
+                      }) :
+                      await axiosInstance.patch<T>(`${this.endpoint}/${id}/`, data);
     return response.data;
   }
 
   public async delete(id: string) {
     const response = await axiosInstance.delete<T>(`${this.endpoint}/${id}/`);
     return response.data;
-  }
-}
-
-
-export class ApiServiceWithFormData<T extends object, Q extends object> extends ApiService<T, Q> {
-  constructor(endpoint: string) {
-    super(endpoint);
-  }
-
-  private async _toFormData(data: T) {
-    const formData = new FormData();
-    for (const key in data) {
-      if (Object.hasOwn(data, key)) {
-        formData.append(key, data[key] as string);
-      }
-    }
-    console.log(formData);
-    return formData;
-  }
-
-  public async postFormData(data: T) {
-    const response = await axiosInstance.post<T>(this.endpoint, this._toFormData(data), {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  
-    return response.data; 
-  }
-
-  public async patchFormData(id: string, data: T) {
-    const response = await axiosInstance.patch<T>(`${this.endpoint}/${id}`, this._toFormData(data), {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  
-    return response.data; 
   }
 }

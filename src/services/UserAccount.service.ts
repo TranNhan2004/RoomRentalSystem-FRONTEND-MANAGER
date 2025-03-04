@@ -4,14 +4,14 @@ import {
   LoginResponseType, 
   ResetPasswordRequestAfterType, 
   ResetPasswordRequestBeforeType, 
+  UserQueryType, 
   UserType 
 } from "@/types/UserAccount.type";
-import { ApiServiceWithFormData } from "./Api.service";
-import axiosInstance from "@/lib/client/axios";
-import { UnknownQueryType } from "@/types/UnknownQuery.type";
-import formatDate from "@/lib/client/formatDate";
+import { ApiService } from "./Api.service";
+import { axiosInstance } from "@/lib/client/axios";
+import { formatDate } from "@/lib/client/formatDate";
 
-class UserService extends ApiServiceWithFormData<UserType, UnknownQueryType> {
+class UserService extends ApiService<UserType, UserQueryType> {
   constructor() {
     super('/app.user-account/users');
   }
@@ -30,14 +30,6 @@ class UserService extends ApiServiceWithFormData<UserType, UnknownQueryType> {
 
   public async patch(id: string, data: UserType) {
     return await super.patch(id, await this.smoothData(data));
-  }
-
-  public async postFormData(data: UserType) {
-    return await super.postFormData(await this.smoothData(data));
-  }
-
-  public async patchFormData(id: string, data: UserType) {
-    return await super.patchFormData(id, await this.smoothData(data));
   }
 
   public async changePassword(id: string, data: ChangePasswordType) {
@@ -69,5 +61,7 @@ class AuthService {
   }
 };
 
+
 export const userService = new UserService();
+
 export const authService = new AuthService();

@@ -43,6 +43,7 @@ export class UserMessage {
   public static readonly PHONE_NUMBER_UNIQUE_ERROR = 'Số điện thoại đã tồn tại!';
   public static readonly CITIZEN_NUMBER_UNIQUE_ERROR = 'Số CCCD đã tồn tại!';
 
+  public static readonly GET_MANY_ERROR = 'Đã xảy ra lỗi khi lấy danh sách người dùng!';
   public static readonly GET_ERROR = 'Đã xảy ra lỗi khi lấy thông tin người dùng theo ID!';
   public static readonly PATCH_ERROR = 'Đã xảy ra lỗi khi chỉnh sửa thông tin người dùng!';
   

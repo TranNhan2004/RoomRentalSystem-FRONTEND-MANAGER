@@ -29,7 +29,6 @@ export type UserType = {
   citizen_number?: string;
   date_of_birth?: Date;
   gender?: 'MALE' | 'FEMALE' | 'UNKNOWN' | '';
-  avatar?: string | null;
   role?: 'MANAGER' | 'LESSOR' | 'RENTER' | '';
   workplace_commune?: string;
   workplace_additional_address?: string;
@@ -37,4 +36,9 @@ export type UserType = {
   last_login?: Date;
   created_at?: Date;
   updated_at?: Date;
+}
+
+export type UserQueryType = {
+  role_include?: string[];
+  is_active?: boolean;
 }

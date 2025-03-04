@@ -4,13 +4,15 @@ import React from 'react';
 import { 
   ArrowPathIcon,
   ArrowUpTrayIcon,
+  CheckCircleIcon,
   CheckIcon,
   FunnelIcon, 
   InformationCircleIcon, 
   PencilSquareIcon, 
   PlusIcon, 
   TrashIcon, 
-  XMarkIcon 
+  XMarkIcon,
+  XCircleIcon 
 } from '@heroicons/react/24/outline';
 
 const colorVariants = {
@@ -58,6 +60,14 @@ const buttonConfig = {
   refresh: {
     icon: <ArrowPathIcon className='w-5 h-5' />,
     color: 'yellow'
+  },
+  active: {
+    icon: <CheckCircleIcon className='w-5 h-5' />,
+    color: 'green'
+  },
+  inactive: {
+    icon: <XCircleIcon className='w-5 h-5' />,
+    color: 'red'
   }
 } as const;
 

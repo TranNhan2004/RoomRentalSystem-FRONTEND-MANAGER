@@ -53,7 +53,7 @@ export const ProvincesList = () => {
     }
 
     if (
-      error.response?.status === 400 && 
+      error.response?.status === 500 && 
       error.response.data?.includes(GeneralMessage.BACKEND_PROTECTED_ERROR_PREFIX)
     ) {
       await toastError(ProvinceMessage.DELETE_PROTECTED_ERROR);

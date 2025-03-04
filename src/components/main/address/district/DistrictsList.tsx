@@ -65,7 +65,7 @@ export const DistrictsList = () => {
     }
 
     if (
-      error.response?.status === 400 && 
+      error.response?.status === 500 && 
       error.response.data?.includes(GeneralMessage.BACKEND_PROTECTED_ERROR_PREFIX)
     ) {
       await toastError(DistrictMessage.DELETE_PROTECTED_ERROR);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getAccessToken, getRefreshedAccessToken, resetAuthTokens } from '@/lib/client/authToken';
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     'Accept': 'application/json',
@@ -51,5 +51,3 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-export default axiosInstance;
