@@ -30,8 +30,8 @@ export const INITIAL_USER: UserType = {
   citizen_number: '',
   date_of_birth: new Date(),
   gender: 'UNKNOWN',
-  avatar: null,
   role: 'MANAGER',
+  account_balance: 0,
   workplace_commune: '',
   workplace_additional_address: '',
   is_active: false,
@@ -41,6 +41,7 @@ export const INITIAL_USER: UserType = {
 };
 
 export const INITIAL_USER_QUERY: UserQueryType = {
+  id_not: '',
   role_include: [''],
   is_active: true
 } as const;

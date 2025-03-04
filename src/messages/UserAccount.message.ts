@@ -46,6 +46,10 @@ export class UserMessage {
   public static readonly GET_MANY_ERROR = 'Đã xảy ra lỗi khi lấy danh sách người dùng!';
   public static readonly GET_ERROR = 'Đã xảy ra lỗi khi lấy thông tin người dùng theo ID!';
   public static readonly PATCH_ERROR = 'Đã xảy ra lỗi khi chỉnh sửa thông tin người dùng!';
+  public static readonly ACTIVE_ERROR = 'Đã xảy ra lỗi khi kích hoạt tài khoản!';
+  public static readonly DEACTIVE_ERROR = 'Đã xảy ra lỗi khi vô hiệu hóa tài khoản!';
   
   public static readonly PATCH_SUCCESS = 'Chỉnh sửa thông tin người dùng thành công!';
+  public static readonly ACTIVE_SUCCESS = 'Kích hoạt tài khoản thành công!';
+  public static readonly DEACTIVE_SUCCESS = 'Vô hiệu hóa tài khoản thành công!';
 }

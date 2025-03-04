@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/lib/client/axios";
+import { isValidQueryValue } from "@/lib/client/isInvalidQueryValue";
 
 export class ApiService<T extends object, Q extends object> {
   protected endpoint: string;
@@ -16,13 +17,21 @@ export class ApiService<T extends object, Q extends object> {
     return formData;
   }
 
-  protected async smoothParams(params: Q = {} as Q) {
+  protected async getFullURLWithParams(params: Q = {} as Q) {
     let fullParams = '?';
     for (const key in params) {
+      if (!isValidQueryValue(params[key])) {
+        continue;
+      }
+
       if (params[key] instanceof Array) {
-        params[key].forEach(item => {
-          fullParams += `${key}=${item}&`;
-        });
+        for (const subKey in params[key]) {
+          if (!isValidQueryValue(params[key][subKey])) {
+            continue;
+          }
+
+          fullParams += `${key}=${params[key][subKey]}&`;
+        }
 
       } else {
         fullParams += `${key}=${params[key]}&`;
@@ -44,7 +53,7 @@ export class ApiService<T extends object, Q extends object> {
   }
 
   public async getMany(params: Q = {} as Q) {
-    const response = await axiosInstance.get<T[]>(await this.smoothParams(params));
+    const response = await axiosInstance.get<T[]>(await this.getFullURLWithParams(params));
     return response.data;
   }
 

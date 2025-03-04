@@ -30,6 +30,7 @@ export type UserType = {
   date_of_birth?: Date;
   gender?: 'MALE' | 'FEMALE' | 'UNKNOWN' | '';
   role?: 'MANAGER' | 'LESSOR' | 'RENTER' | '';
+  account_balance?: number,
   workplace_commune?: string;
   workplace_additional_address?: string;
   is_active?: boolean;
@@ -39,6 +40,7 @@ export type UserType = {
 }
 
 export type UserQueryType = {
+  id_not?: string;
   role_include?: string[];
   is_active?: boolean;
 }

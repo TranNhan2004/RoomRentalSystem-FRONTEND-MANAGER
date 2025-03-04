@@ -1,14 +1,14 @@
 import { Metadata } from "next";
                                   
 export const metadata: Metadata = {
-  title: "Rental room details",
-  description: "Details of the rental room page.",
+  title: "Charge lists",
+  description: "List of charges lists page.",
 };
                                   
-export default function RentalRoomDetailsPage() {
+export default function ChargesListsListPage() {
   return (
     <>
-      Rental Room Details Page
+      Charges Lists List Page
     </>
   );
 };

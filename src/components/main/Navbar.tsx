@@ -46,9 +46,8 @@ export const Navbar = () => {
               label='QL trọ'
               links={[
                 { label: 'Phòng trọ', href: '/rental-rooms/rooms' },
-                { label: 'Giá phòng', href: '/rental-rooms/room-charges-lists'  },
-                { label: 'Giá điện, nước', href: '/rental-rooms/electricity-water-charges-lists'  },
-                { label: 'Các loại giá khác', href: '/rental-rooms/other-charges-lists'  }
+                { label: 'Các loại phí', href: '/rental-rooms/charges-lists'  },
+                { label: 'Ảnh phòng trọ', href: '/rental-rooms/images'  },
               ]}
             />
           </li>

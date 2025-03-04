@@ -8,17 +8,19 @@ export type DataLineProps = {
   label?: string;
   value?: string;
   isImage?: boolean;
+  width?: number;
+  height?: number;
 }
 
 export const DataLine = (props: DataLineProps) => {  
   return props.isImage ? (
-    <div className='flex items-center'>
+    <div className='space-y-2'>
       <span className='text-gray-800 mr-1 font-bold'>{props.label}:</span>
       <Image
         src={getImageSrc(props.value ?? '')}
         alt='Logo'
-        width={40}
-        height={40}
+        width={props.width && 40}
+        height={props.height && 40} 
       />
     </div>
   ) : (

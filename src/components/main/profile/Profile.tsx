@@ -2,13 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { ActionButton } from '@/components/partial/button/ActionButton';
-import { getMyInfo, setMyInfo } from '@/lib/client/authToken';
+import { getMyInfo } from '@/lib/client/authToken';
 import { displayGender, displayRole } from '@/lib/client/display';
 import { formatDate } from '@/lib/client/formatDate';
 import { UserType } from '@/types/UserAccount.type';
 import { useRouter } from 'next/navigation';
 import { DataLine } from '@/components/partial/data/DataLine';
-import { PotraitAvatar } from '@/components/partial/account/PotraitAvatar';
 import { DefaultAvatar } from '@/components/partial/account/DefaultAvatar';
 
 
@@ -24,43 +23,14 @@ export const Profile = () => {
     setMyInfoDataFromCookie();
   }, []);
 
-  const handleUploadAvatar = async () => {
-    await setMyInfo(myInfoData);
-    router.refresh();
-  };
-
-  const handleRemoveAvatar = async () => {
-    router.refresh();
-  };
-
   return (
     <div className='p-6 w-full ml-[5%]'>
       <div className='grid grid-cols-3'>
         <div className='flex flex-col items-center space-y-4'>
           <div className='relative'>
-            {
-              myInfoData.avatar ?
-              <PotraitAvatar data={myInfoData} width={250} height={230} shape='square' /> :
-              <DefaultAvatar data={myInfoData} width={250} height={230} fontSize={100} shape='square' />
-            } 
+            <DefaultAvatar data={myInfoData} width={250} height={230} fontSize={100} shape='square' />
           </div>
-          <div className='flex items-center space-x-4'>
-            <ActionButton
-              mode='upload' 
-              onClick={handleUploadAvatar}
-            >
-              Tải ảnh lên
-            </ActionButton>
 
-            <ActionButton
-              mode='delete'
-              onClick={handleRemoveAvatar}
-              disabled={!myInfoData.avatar}
-            >
-              Gỡ ảnh
-            </ActionButton>
-
-          </div>
           <div className='text-lef italic space-y-2'>
             <DataLine label='Ngày tạo tài khoản' value={formatDate(myInfoData.created_at, 'dmy')} />
             <DataLine label='Lần cập nhật gần nhất' value={formatDate(myInfoData.updated_at, 'dmy')} />

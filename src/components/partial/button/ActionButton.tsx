@@ -65,7 +65,7 @@ const buttonConfig = {
     icon: <CheckCircleIcon className='w-5 h-5' />,
     color: 'green'
   },
-  inactive: {
+  deactive: {
     icon: <XCircleIcon className='w-5 h-5' />,
     color: 'red'
   }
