@@ -9,7 +9,7 @@ export const getAccessTokenCookieName = async () => {
 };
 
 export const getMyInfoCookieName = async () => {
-  return process.env.SESSION_MANAGER_USER_INFO_CKNAME ?? '';
+  return process.env.SESSION_MANAGER_MY_INFO_CKNAME ?? '';
 };
 
 export const getRefreshTokenExpires = async () => {
@@ -21,5 +21,5 @@ export const getAccessTokenExpires = async () => {
 };
 
 export const getMyInfoExpires = async () => {
-  return (Number(process.env.SESSION_MANAGER_USER_INFO_EXPIRES) ?? 0) / (24 * 3600);
+  return (Number(process.env.SESSION_MANAGER_MY_INFO_EXPIRES) ?? 0) / (24 * 3600);
 };
