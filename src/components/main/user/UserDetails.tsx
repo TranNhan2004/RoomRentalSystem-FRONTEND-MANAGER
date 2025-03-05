@@ -3,11 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import { DataDetails } from '@/components/partial/data/DataDetails';
 import { Loading } from '@/components/partial/data/Loading';
-import { INITIAL_PROVINCE } from '@/initials/Address.initial';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
-import { provinceService } from '@/services/Address.service';
-import { ProvinceType } from '@/types/Address.type';
 import { useRouter } from 'next/navigation';
+import { UserType } from '@/types/UserAccount.type';
+import { userService } from '@/services/UserAccount.service';
+import { formatDate } from '@/lib/client/formatDate';
+import { displayGender, displayRole } from '@/lib/client/display';
+import { INITIAL_USER } from '@/initials/UserAccount.initial';
 
 type UserDetailsProps = {
   id: string;
@@ -15,14 +17,14 @@ type UserDetailsProps = {
 
 export const UserDetails = (props: UserDetailsProps) => {
   const router = useRouter();
-  const [data, setData] = useState<ProvinceType>(INITIAL_PROVINCE);
+  const [data, setData] = useState<UserType>(INITIAL_USER);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const data = await provinceService.get(props.id);
+        const data = await userService.get(props.id);
         setData(data);
 
       } catch {
@@ -37,7 +39,7 @@ export const UserDetails = (props: UserDetailsProps) => {
   }, [props.id, router]);
 
   const cancelOnClick = () => {
-    router.push('/addresses/provinces');
+    router.push('/users');
   };
 
   if (isLoading) {
@@ -47,16 +49,48 @@ export const UserDetails = (props: UserDetailsProps) => {
   return (
     <>
       <DataDetails
-        title={`Thông tin chi tiết của ${data.name}`}
+        title={`Thông tin chi tiết của người dùng ${data.first_name + ' ' + data.last_name}`}
         data={[
           {
             label: 'ID',
             value: data.id,
           },
           {
+            label: 'Họ',
+            value: data.last_name,
+          },
+          {
             label: 'Tên',
-            value: data.name,
-          }
+            value: data.first_name,
+          },
+          {
+            label: 'Email',
+            value: data.email,
+          },
+          {
+            label: 'Số điện thoại',
+            value: data.phone_number,
+          },
+          {
+            label: 'Số CCCD',
+            value: data.citizen_number,
+          },
+          {
+            label: 'Giới tính',
+            value: displayGender(data.gender),
+          },
+          {
+            label: 'Ngày sinh',
+            value: formatDate(data.date_of_birth, 'dmy'),
+          },
+          {
+            label: 'Trạng thái tài khoản',
+            value: data.is_active ? 'Đang kích hoạt' : 'Bị vô hiệu',
+          },
+          {
+            label: 'Vai trò',
+            value: displayRole(data.role),
+          },
         ]}
         cancelOnClick={cancelOnClick}
       />

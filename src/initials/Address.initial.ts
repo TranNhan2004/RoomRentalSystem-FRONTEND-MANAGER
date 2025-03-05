@@ -28,5 +28,6 @@ export const INITIAL_COMMUNE: CommuneType = {
 } as const;
 
 export const INITIAL_COMMUNE_QUERY: CommuneQueryType = {
-  district: ''
+  district: '',
+  _province: ''
 } as const;

@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Details of the rental room page.",
 };
                                   
-export default function RentalRoomDetailsPage() {
+export default function RoomDetailsPage() {
   return (
     <>
       Rental Room Details Page

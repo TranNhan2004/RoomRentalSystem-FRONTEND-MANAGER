@@ -26,7 +26,7 @@ export const DistrictForm = (props: DistrictFormProps) => {
   useEffect(() => {
     const fetchOptionData = async () => {
       const provinceData = await provinceService.getMany();
-      setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
+      setProvinceOptions(mapOptions(provinceData, ['name'], 'id'));
     };
 
     fetchOptionData();

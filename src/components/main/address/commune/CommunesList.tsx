@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { communeService, districtService, provinceService } from '@/services/Address.service';
 import { handleDeleteAlert, toastError, toastSuccess } from '@/lib/client/alert';
-import { CommuneQueryType, CommuneType, DistrictQueryType, DistrictType } from '@/types/Address.type';
+import { CommuneQueryType, CommuneType, DistrictType } from '@/types/Address.type';
 import { DisplayedDataType, Table } from '@/components/partial/data/Table';
 import { useRouter } from 'next/navigation';
 import { CommuneMessage } from '@/messages/Address.message';
@@ -16,7 +16,7 @@ import { GeneralMessage } from '@/messages/General.message';
 import { FilterModal } from '@/components/partial/data/FilterModal';
 import { OptionType, Select } from '@/components/partial/form/Select';
 import { Label } from '@/components/partial/form/Label';
-import { INITIAL_COMMUNE_QUERY, INITIAL_DISTRICT_QUERY } from '@/initials/Address.initial';
+import { INITIAL_COMMUNE_QUERY } from '@/initials/Address.initial';
 import { mapOptions } from '@/lib/client/handleOptions';
 
 export const CommunesList = () => {
@@ -25,7 +25,6 @@ export const CommunesList = () => {
   const [data, setData] = useState<CommuneType[]>([]);
   const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
   const [districtOptions, setDistrictOptions] = useState<OptionType[]>([]);
-  const [districtQuery, setDistrictQuery] = useState<DistrictQueryType>(INITIAL_DISTRICT_QUERY);
   const [query, setQuery] = useState<CommuneQueryType>(INITIAL_COMMUNE_QUERY);
   const [loading, setLoading] = useState(true);
   
@@ -44,8 +43,8 @@ export const CommunesList = () => {
         ]);
         
         setData(data);
-        setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
-        setDistrictOptions(mapOptions(districtData, 'name', 'id'));
+        setProvinceOptions(mapOptions(provinceData, ['name'], 'id'));
+        setDistrictOptions(mapOptions(districtData, ['name'], 'id'));
 
         originialDataRef.current = data;
         originalDistrictDataRef.current = districtData;
@@ -114,11 +113,11 @@ export const CommunesList = () => {
   const filterOnClick = async () => {
     try {
       setLoading(true);
-      if (query.district === '' && districtQuery.province !== '') {
-        const districtData = await districtService.getMany(districtQuery);
-        const dataArray = await Promise.all(districtData.map(district => communeService.getMany({
-          district: district.id
-        })));
+      if (query.district === '' && query._province !== '') {
+        const districtData = await districtService.getMany({ province: query._province });
+        const dataArray = await Promise.all(districtData.map(
+          district => communeService.getMany({ district: district.id })
+        ));
         setData(dataArray.flat());
       
       } else {
@@ -140,15 +139,13 @@ export const CommunesList = () => {
   };
 
   const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setDistrictQuery({ ...query, province: e.target.value });
+    setQuery({ ...query, _province: e.target.value });
 
     if (e.target.value == '') {
-      setDistrictOptions(mapOptions(originalDistrictDataRef.current, 'name', 'id'));
+      setDistrictOptions(mapOptions(originalDistrictDataRef.current, ['name'], 'id'));
     } else {
-      const districts = originalDistrictDataRef.current.filter(
-        district => district.province === e.target.value
-      );
-      setDistrictOptions(mapOptions(districts, 'name', 'id'));
+      const districts = originalDistrictDataRef.current.filter(district => district.province === e.target.value);
+      setDistrictOptions(mapOptions(districts, ['name'], 'id'));
     }
   };
 
@@ -191,76 +188,8 @@ export const CommunesList = () => {
               <Label htmlFor='province-query'>Tỉnh: </Label>
               <Select 
                 id='province-query'
+                value={query._province}
                 className='ml-[-200px] w-[300px]'
-                value={districtQuery.province}
-                options={provinceOptions}
-                onChange={handleProvinceChange}
-              />
-            </div>    
-
-            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
-              <Label htmlFor='province-query'>Tỉnh: </Label>
-              <Select 
-                id='province-query'
-                className='ml-[-200px] w-[300px]'
-                value={districtQuery.province}
-                options={provinceOptions}
-                onChange={handleProvinceChange}
-              />
-            </div>  
-
-            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
-              <Label htmlFor='province-query'>Tỉnh: </Label>
-              <Select 
-                id='province-query'
-                className='ml-[-200px] w-[300px]'
-                value={districtQuery.province}
-                options={provinceOptions}
-                onChange={handleProvinceChange}
-              />
-            </div>  
-
-            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
-              <Label htmlFor='province-query'>Tỉnh: </Label>
-              <Select 
-                id='province-query'
-                className='ml-[-200px] w-[300px]'
-                value={districtQuery.province}
-                options={provinceOptions}
-                onChange={handleProvinceChange}
-              />
-            </div>  
-
-
-            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
-              <Label htmlFor='province-query'>Tỉnh: </Label>
-              <Select 
-                id='province-query'
-                className='ml-[-200px] w-[300px]'
-                value={districtQuery.province}
-                options={provinceOptions}
-                onChange={handleProvinceChange}
-              />
-            </div>  
-
-
-            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
-              <Label htmlFor='province-query'>Tỉnh: </Label>
-              <Select 
-                id='province-query'
-                className='ml-[-200px] w-[300px]'
-                value={districtQuery.province}
-                options={provinceOptions}
-                onChange={handleProvinceChange}
-              />
-            </div>  
-
-            <div className='grid grid-cols-2 items-center mt-1 mb-1'>
-              <Label htmlFor='province-query'>Tỉnh: </Label>
-              <Select 
-                id='province-query'
-                className='ml-[-200px] w-[300px]'
-                value={districtQuery.province}
                 options={provinceOptions}
                 onChange={handleProvinceChange}
               />

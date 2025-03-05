@@ -25,12 +25,12 @@ export class ApiService<T extends object, Q extends object> {
       }
 
       if (params[key] instanceof Array) {
-        for (const subKey in params[key]) {
-          if (!isValidQueryValue(params[key][subKey])) {
+        for (const param of params[key]) {
+          if (!isValidQueryValue(param)) {
             continue;
           }
 
-          fullParams += `${key}=${params[key][subKey]}&`;
+          fullParams += `${key}=${param}&`;
         }
 
       } else {

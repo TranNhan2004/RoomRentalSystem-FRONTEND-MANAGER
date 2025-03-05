@@ -38,7 +38,7 @@ export const DistrictsList = () => {
 
         setData(data);
         originialDataRef.current = data;
-        setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
+        setProvinceOptions(mapOptions(provinceData, ['name'], 'id'));
       
       } catch {
         await toastError(DistrictMessage.GET_MANY_ERROR);

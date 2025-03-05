@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { Table, DisplayedDataType } from '@/components/partial/data/Table';
 import { useRouter } from 'next/navigation';
-import { ActionButton } from '@/components/partial/button/ActionButton';
 import { Title } from '@/components/partial/data/Title';
 import { InputSearch } from '@/components/partial/data/InputSearch';
 import { Sorting } from '@/components/partial/data/Sorting';
@@ -20,7 +19,7 @@ import { getMyInfo } from '@/lib/client/authToken';
 import { displayRole } from '@/lib/client/display';
 
 
-const ROLE_INCLUDE = ['ADMIN', 'MANAGER'];
+const ROLE_INCLUDE = ['MANAGER', 'ADMIN'];
 
 export const UsersList = () => {
   const router = useRouter();
@@ -138,10 +137,6 @@ export const UsersList = () => {
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setQuery({...query, is_active: e.target.value === 'true' });
   };
-  
-  const addOnClick = () => {
-    router.push('users/add');
-  };
 
   return (
     <div>
@@ -178,7 +173,6 @@ export const UsersList = () => {
               <Label htmlFor='role-query'>Vai trò: </Label>
               <Select
                 id='role-query'
-                value={query.role_include ? query.role_include[0] : ''}
                 className='ml-[-250px] w-[300px]'
                 options={[
                   { label: 'Người thuê', value: 'RENTER' },
@@ -192,7 +186,6 @@ export const UsersList = () => {
               <Label htmlFor='status-query'>Trạng thái: </Label>
               <Select
                 id='status-query'
-                value={query.is_active ? 'true' : 'false'}
                 className='ml-[-250px] w-[300px]'
                 options={[
                   { label: 'Đang kích hoạt', value: 'true' },
@@ -202,10 +195,6 @@ export const UsersList = () => {
               />
             </div>  
           </FilterModal>
-        </div>
-
-        <div className='ml-auto'>
-          <ActionButton mode='add' onClick={addOnClick}>Thêm mới</ActionButton>
         </div>
       </div>
 

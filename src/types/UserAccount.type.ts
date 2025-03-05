@@ -1,4 +1,8 @@
-export type LoginRequestType = Pick<UserType, 'email' | 'password' | 'role'>;
+export type LoginRequestType = {
+  email?: UserType['email'];
+  password?: UserType['password'];
+  role?: UserType['role'];
+}
 
 export type LoginResponseType = {
   refresh?: string;
@@ -6,17 +10,19 @@ export type LoginResponseType = {
   user?: UserType;
 }
 
-export type ResetPasswordRequestBeforeType = Pick<UserType, 'email'>;
+export type ResetPasswordRequestBeforeType = {
+  email?: UserType['email'];
+}
 
 export type ResetPasswordRequestAfterType = {
-  new_password?: string;
-  confirm_new_password?: string;
+  new_password?: UserType['password'];
+  confirm_new_password?: UserType['password'];
 }
 
 export type ChangePasswordType = {
-  old_password?: string;
-  new_password?: string;
-  confirm_new_password?: string;
+  old_password?: UserType['password'];
+  new_password?: UserType['password'];
+  confirm_new_password?: UserType['password'];
 }
 
 export type UserType = {
@@ -30,7 +36,6 @@ export type UserType = {
   date_of_birth?: Date;
   gender?: 'MALE' | 'FEMALE' | 'UNKNOWN' | '';
   role?: 'MANAGER' | 'LESSOR' | 'RENTER' | '';
-  account_balance?: number,
   workplace_commune?: string;
   workplace_additional_address?: string;
   is_active?: boolean;
@@ -40,7 +45,7 @@ export type UserType = {
 }
 
 export type UserQueryType = {
-  id_not?: string;
-  role_include?: string[];
-  is_active?: boolean;
+  id_not?: UserType['id'];
+  role_include?: UserType['role'][];
+  is_active?: UserType['is_active'];
 }

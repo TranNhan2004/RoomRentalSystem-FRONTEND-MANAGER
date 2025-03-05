@@ -1,7 +1,6 @@
 export class AuthMessage {
-  public static readonly BACKEND_EMAIL_UNIQUE_ERROR = '';
-  public static readonly BACKEND_CHANGE_PASSWORD_DUPLICATED = '';
-
+  public static readonly BACKEND_EMAIL_UNIQUE_ERROR = 'user with this email already exists.';
+  
   public static readonly EMAIL_REQUIRED = 'Email không được để trống!'; 
   public static readonly PASSWORD_REQUIRED = 'Mật khẩu không được để trống!'; 
   public static readonly OLD_PASSWORD_REQUIRED = 'Mật khẩu cũ không được để trống!';
@@ -28,8 +27,8 @@ export class AuthMessage {
 }
 
 export class UserMessage {
-  public static readonly BACKEND_PHONE_NUMBER_UNIQUE_ERROR = '';
-  public static readonly BACKEND_CITIZEN_NUMBER_UNIQUE_ERROR = '';
+  public static readonly BACKEND_PHONE_NUMBER_UNIQUE_ERROR = 'user with this phone number already exists.';
+  public static readonly BACKEND_CITIZEN_NUMBER_UNIQUE_ERROR = 'user with this citizen number already exists.';
 
   public static readonly FIRST_NAME_REQUIRED = 'Tên người dùng không được để trống!';
   public static readonly LAST_NAME_REQUIRED = 'Họ người dùng không được để trống!';

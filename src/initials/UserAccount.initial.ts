@@ -31,7 +31,6 @@ export const INITIAL_USER: UserType = {
   date_of_birth: new Date(),
   gender: 'UNKNOWN',
   role: 'MANAGER',
-  account_balance: 0,
   workplace_commune: '',
   workplace_additional_address: '',
   is_active: false,

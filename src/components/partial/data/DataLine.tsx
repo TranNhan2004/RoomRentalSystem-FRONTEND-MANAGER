@@ -13,6 +13,10 @@ export type DataLineProps = {
 }
 
 export const DataLine = (props: DataLineProps) => {  
+  if (!props.value) {
+    return null;
+  }
+
   return props.isImage ? (
     <div className='space-y-2'>
       <span className='text-gray-800 mr-1 font-bold'>{props.label}:</span>

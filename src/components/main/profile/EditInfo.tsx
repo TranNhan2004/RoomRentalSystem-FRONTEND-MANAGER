@@ -17,6 +17,8 @@ import { EMAIL_REG_EXP } from '@/lib/client/isValidForm';
 import { formatDate } from '@/lib/client/formatDate';
 import { Select } from '@/components/partial/form/Select';
 import { dateStrOfMaxAge, dateStrOfMinAge } from '@/lib/client/dateLimit';
+import { AxiosError } from 'axios';
+import { GeneralMessage } from '@/messages/General.message';
 
 const EditInfo = () => {
   const router = useRouter();
@@ -40,6 +42,47 @@ const EditInfo = () => {
     fetchData();
   }, []);
 
+  const handlePatchError = async (error: unknown) => {
+    if (!(error instanceof AxiosError)) {
+      await toastError(GeneralMessage.UNKNOWN_ERROR);
+      return;
+    }
+    
+    if (error.response?.status !== 400) {
+      await toastError(UserMessage.PATCH_ERROR);
+      return;
+    }
+    
+    if (error.response?.status === 400 && error.response.data) {
+      const data = error.response.data;
+      if (
+        Object.hasOwn(data, 'email') && 
+        data.email[0] === AuthMessage.BACKEND_EMAIL_UNIQUE_ERROR
+      ) {
+        await toastError(AuthMessage.EMAIL_UNIQUE_ERROR);
+        return;
+      }
+
+      if (
+        Object.hasOwn(data, 'phone_number') && 
+        data.phone_number[0] === UserMessage.BACKEND_PHONE_NUMBER_UNIQUE_ERROR
+      ) {
+        await toastError(UserMessage.PHONE_NUMBER_UNIQUE_ERROR);
+        return;
+      }
+
+      if (
+        Object.hasOwn(data, 'citizen_number') && 
+        data.citizen_number[0] === UserMessage.BACKEND_CITIZEN_NUMBER_UNIQUE_ERROR
+      ) {
+        await toastError(UserMessage.CITIZEN_NUMBER_UNIQUE_ERROR);
+        return;
+      }
+    }
+
+    await toastError(UserMessage.PATCH_ERROR);
+  };
+
 
   const patchData = async (actionAfter?: () => void) => {
     try {
@@ -48,8 +91,8 @@ const EditInfo = () => {
       await toastSuccess(UserMessage.PATCH_SUCCESS);
       actionAfter?.();
     
-    } catch {
-      await toastError(UserMessage.PATCH_ERROR);
+    } catch (error){
+      await handlePatchError(error);
     }
   };
 

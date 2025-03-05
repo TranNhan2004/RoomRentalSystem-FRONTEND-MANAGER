@@ -24,7 +24,7 @@ export const Navbar = () => {
 
   return (
     <div>
-      <div className='fixed top-0 left-0 h-full w-[16%] bg-mygreen p-2 overflow-y-auto'>
+      <div className='fixed top-0 left-0 h-full w-[16%] bg-mygreen p-2'>
         <div className='mt-2 mb-8'>
           <Link href={'/'}>
             <Image 

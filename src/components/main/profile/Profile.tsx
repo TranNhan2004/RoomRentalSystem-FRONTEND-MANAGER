@@ -40,7 +40,7 @@ export const Profile = () => {
 
         <div className='border-l-4 border-gray-200 rounded-sm ml-[15%] h-[105%]'></div>
         
-        <div className='flex flex-col justify-center space-y-4 ml-[-65%] mt-[-15%]'>
+        <div className='flex flex-col justify-center space-y-4 ml-[-65%] mt-[-10%]'>
           <h2 className='text-3xl font-semibold text-gray-800'>{myInfoData.first_name + ' ' + myInfoData.last_name}</h2>
           <DataLine label='Email' value={myInfoData.email} />
           <DataLine label='Số điện thoại' value={myInfoData.phone_number} />

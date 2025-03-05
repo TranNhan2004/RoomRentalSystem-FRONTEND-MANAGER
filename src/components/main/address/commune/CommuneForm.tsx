@@ -33,8 +33,8 @@ export const CommuneForm = (props: CommuneFormProps) => {
         districtService.getMany()
       ]);
 
-      setProvinceOptions(mapOptions(provinceData, 'name', 'id'));
-      setDistrictOptions(mapOptions(districtData, 'name', 'id'));
+      setProvinceOptions(mapOptions(provinceData, ['name'], 'id'));
+      setDistrictOptions(mapOptions(districtData, ['name'], 'id'));
       originalDistrictDataRef.current = districtData;
     };
 
@@ -54,12 +54,12 @@ export const CommuneForm = (props: CommuneFormProps) => {
 
   const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       if (e.target.value == '') {
-        setDistrictOptions(mapOptions(originalDistrictDataRef.current, 'name', 'id'));
+        setDistrictOptions(mapOptions(originalDistrictDataRef.current, ['name'], 'id'));
       } else {
         const districts = originalDistrictDataRef.current.filter(
           district => district.province === e.target.value
         );
-        setDistrictOptions(mapOptions(districts, 'name', 'id'));
+        setDistrictOptions(mapOptions(districts, ['name'], 'id'));
       }
     };
   

@@ -1,13 +1,9 @@
 import { 
-  ElectricityWaterChargesListQueryType,
-  ElectricityWaterChargesListType, 
-  OtherChargesListQueryType, 
-  OtherChargesListType, 
+  ChargesListQueryType,
+  ChargesListType,
   RentalRoomImageQueryType, 
   RentalRoomImageType, 
   RentalRoomType, 
-  RoomChargesListQueryType, 
-  RoomChargesListType 
 } from "@/types/RentalRoom.type";
 import { ApiService } from "./Api.service";
 import { UnknownQueryType } from "@/types/UnknownQuery.type";
@@ -19,36 +15,14 @@ export class RentalRoomService extends ApiService<RentalRoomType, UnknownQueryTy
   }
 };
 
-export class RoomChargesListService extends 
+export class ChargesListService extends 
 ApiService<
-  RoomChargesListType, 
-  RoomChargesListQueryType
+  ChargesListType, 
+  ChargesListQueryType
 > {
 
   constructor() {
     super('/app.rental-room/room-charges-lists');
-  }
-};
-
-export class ElectricityWaterChargesListService extends 
-ApiService<
-  ElectricityWaterChargesListType, 
-  ElectricityWaterChargesListQueryType
-> {
-
-  constructor() {
-    super('/app.rental-room/electricity-water-charges-lists');
-  }
-};
-
-export class OtherChargesListService extends 
-ApiService<
-  OtherChargesListType, 
-  OtherChargesListQueryType
-> {
-
-  constructor() {
-    super('/app.rental-room/other-charges-lists');
   }
 };
 
@@ -72,7 +46,5 @@ ApiService<
 };
 
 export const rentalRoomService = new RentalRoomService();
-export const roomChargesListService = new RoomChargesListService();
-export const electricityWaterChargesListService = new ElectricityWaterChargesListService();
-export const otherChargesListService = new OtherChargesListService();
+export const chargesListService = new ChargesListService();
 export const rentalRoomImageService = new RentalRoomImageService();

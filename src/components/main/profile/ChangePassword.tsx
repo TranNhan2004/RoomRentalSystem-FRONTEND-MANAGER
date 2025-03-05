@@ -53,6 +53,9 @@ const ChangePassword = () => {
       if (!PASSWORD_REG_EXP.test(data.new_password ?? '')) {
         return AuthMessage.NEW_PASSWORD_REQUIRED;
       }
+      if (data.new_password === data.old_password) {
+        return AuthMessage.CHANGE_PASSWORD_DUPLICATED;
+      }
       return null;
     },
 

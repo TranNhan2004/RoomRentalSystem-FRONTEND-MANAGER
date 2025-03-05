@@ -1,3 +1,5 @@
+import { DistrictType, ProvinceType } from "./Address.type";
+
 export type RentalRoomType = {
   id?: string;
   name?: string;
@@ -11,44 +13,37 @@ export type RentalRoomType = {
   average_rating?: number;
   lessor?: string;
   manager?: string;
+  is_active?: boolean;
   created_at?: Date;
   updated_at?: Date;
 }
 
-export type RoomChargesListType = {
+export type RentalRoomQueryType = {
+  commune?: RentalRoomType['commune'];
+  lessor?: RentalRoomType['lessor'];
+  manager?: RentalRoomType['manager'];
+  manager_is_null?: boolean;
+  is_active?: RentalRoomType['is_active'];
+  _province?: ProvinceType['id'];
+  _district?: DistrictType['id'];
+};
+
+export type ChargesListType = {
   id?: string;
   rental_room?: string;
   room_charges?: number;
   deposit?: number;
-  start_date?: Date;
-  end_date?: Date;
-}
-
-export type RoomChargesListQueryType = Pick<RoomChargesListType, 'rental_room'>;
-
-export type ElectricityWaterChargesListType = {
-  id?: string;
-  rental_room?: string;
-  electricity_charges_type?: 'unit' | 'person';
   electricity_charges?: number;
-  water_charges_type?: 'unit' | 'person';
   water_charges?: number;
-  start_date?: Date;
-  end_date?: Date;
-}
-
-export type ElectricityWaterChargesListQueryType = Pick<ElectricityWaterChargesListType, 'rental_room'>;
-
-export type OtherChargesListType = {
-  id?: string;
-  rental_room?: string;
   wifi_charges?: number;
   rubbish_charges?: number;
   start_date?: Date;
   end_date?: Date;
 }
 
-export type OtherChargesListQueryType = Pick<OtherChargesListType, 'rental_room'>;
+export type ChargesListQueryType = {
+  rental_room?: ChargesListType['rental_room'];
+}
 
 export type RentalRoomImageType = {
   id?: string;
@@ -56,4 +51,6 @@ export type RentalRoomImageType = {
   image?: string;
 }
 
-export type RentalRoomImageQueryType = Pick<RentalRoomImageType, 'rental_room'>;
+export type RentalRoomImageQueryType = {
+  rental_room?: RentalRoomImageType['rental_room'];
+}
