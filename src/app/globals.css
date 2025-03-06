@@ -15,6 +15,11 @@
   }
 }
 
+@font-face {
+  font-family: Aleo, sans-serif;
+  src: url('/app.manager/fonts/Aleo-Regular.ttf');
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

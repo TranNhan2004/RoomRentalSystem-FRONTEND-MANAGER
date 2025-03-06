@@ -224,7 +224,7 @@ export const RoomsList = () => {
 
   return (
     <div>
-      <Title>Danh sách người dùng</Title>
+      <Title>Danh sách phòng trọ</Title>
       <div className='flex items-center'>
         <div className='w-[40%]'>
           <InputSearch 

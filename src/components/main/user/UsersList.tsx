@@ -19,7 +19,8 @@ import { getMyInfo } from '@/lib/client/authToken';
 import { displayRole } from '@/lib/client/display';
 
 
-const ROLE_INCLUDE = ['MANAGER', 'ADMIN'];
+type RoleIncludeType = UserQueryType['role_include']
+const ROLE_INCLUDE: RoleIncludeType = ['RENTER', 'LESSOR'];
 
 export const UsersList = () => {
   const router = useRouter();
@@ -33,7 +34,7 @@ export const UsersList = () => {
       try {
         setLoading(true);
         const { id } = await getMyInfo();
-        const data = await userService.getMany({ id_not: id, role_include: ROLE_INCLUDE });
+        const data = await userService.getMany({ id_not: id, role_include: ['RENTER', 'LESSOR'] });
         originialDataRef.current = data;
         setData(data);
       
@@ -131,7 +132,7 @@ export const UsersList = () => {
   };
 
   const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => { 
-    setQuery({ ...query, role_include: [e.target.value] });
+    setQuery({ ...query, role_include: [e.target.value] as RoleIncludeType });
   };
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
