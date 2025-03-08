@@ -97,7 +97,7 @@ export const RoomsList = () => {
 
   const approveFunction = async (id: string) => {
     try {
-      await rentalRoomService.patch(id, { manager: myIdRef.current, is_active: true });
+      await rentalRoomService.patch(id, { manager: myIdRef.current });
       await toastSuccess(RentalRoomMessage.APPROVE_SUCCESS);
       const data = originialDataRef.current.find(data => data.id === id);
       if (data && !data.manager) {  
@@ -110,30 +110,10 @@ export const RoomsList = () => {
     }
   };
 
-  const lockFunction = async (id: string) => {
-    try {
-      await rentalRoomService.patch(id, { is_active: false });
-      await toastSuccess(RentalRoomMessage.LOCK_SUCCESS);
-      const data = originialDataRef.current.find(data => data.id === id);
-      if (data && !data.manager) {  
-        data.manager = undefined;
-        setData([...originialDataRef.current]);  
-      }
-
-    } catch {
-      await toastError(RentalRoomMessage.LOCK_ERROR);
-    }
-  };
-
   const disabledFunctionForApprove = (id: string) => {
     return !!data.find(data => data.id === id)?.manager?.trim();
   };
-
-  const disabledFunctionForLock = (id: string) => {
-    return !data.find(data => data.id === id)?.is_active;
-  };
   
-
   const filterOnClick = async () => {
     try {
       setLoading(true);
@@ -209,16 +189,13 @@ export const RoomsList = () => {
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     if (value === 'pending') {
-      setQuery({ ...query, manager_is_null: true, is_active: false });
+      setQuery({ ...query, manager_is_null: true });
     
     } else if (value === 'approved') {
-      setQuery({ ...query, manager_is_null: false, is_active: true });
-    
-    } else if (value === 'locked') {
-      setQuery({ ...query, manager_is_null: false, is_active: false });
+      setQuery({ ...query, manager_is_null: false });
     
     } else {
-      setQuery({...query, manager_is_null: undefined, is_active: undefined });
+      setQuery({...query, manager_is_null: undefined });
     }
   };
 
@@ -317,8 +294,7 @@ export const RoomsList = () => {
                 className='ml-[-200px] w-[300px]'
                 options={[
                   { label: 'Đã được duyệt', value: 'approved' },
-                  { label: 'Đang chờ duyệt', value: 'pending' },
-                  { label: 'Bị khóa', value: 'locked' },
+                  { label: 'Đang chờ duyệt', value: 'pending' }
                 ]}
                 onChange={handleStatusChange}
               />
@@ -336,12 +312,6 @@ export const RoomsList = () => {
             function: approveFunction,
             disabledFunction: disabledFunctionForApprove,
             buttonConfig: { mode: 'active' }
-          },
-          { 
-            rowName: 'Khóa',
-            function: lockFunction,
-            disabledFunction: disabledFunctionForLock,
-            buttonConfig: { mode: 'lock' }
           },
         ]}
         loading={loading}

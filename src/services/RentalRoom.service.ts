@@ -3,13 +3,16 @@ import {
   ChargesListType,
   RentalRoomImageQueryType, 
   RentalRoomImageType, 
+  RentalRoomQueryType, 
   RentalRoomType, 
 } from "@/types/RentalRoom.type";
 import { ApiService } from "./Api.service";
-import { UnknownQueryType } from "@/types/UnknownQuery.type";
 
-
-export class RentalRoomService extends ApiService<RentalRoomType, UnknownQueryType> {
+export class RentalRoomService extends 
+ApiService<
+  RentalRoomType, 
+  RentalRoomQueryType
+> {
   constructor() {
     super('/app.rental-room/rental-rooms');
   }

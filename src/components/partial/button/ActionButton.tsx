@@ -12,8 +12,7 @@ import {
   PlusIcon, 
   TrashIcon, 
   XMarkIcon,
-  XCircleIcon, 
-  LockClosedIcon
+  XCircleIcon
 } from '@heroicons/react/24/outline';
 
 const colorVariants = {
@@ -68,10 +67,6 @@ const buttonConfig = {
   },
   deactive: {
     icon: <XCircleIcon className='w-5 h-5' />,
-    color: 'red'
-  },
-  lock: {
-    icon: <LockClosedIcon className='w-5 h-5' />,
     color: 'red'
   }
 } as const;

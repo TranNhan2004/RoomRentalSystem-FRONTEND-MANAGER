@@ -5,7 +5,7 @@ export const displayRole = (role: UserType['role']) => {
     case 'MANAGER':
       return 'Quản lý';
     case 'LESSOR':
-      return 'Người cho thuê';
+      return 'Chủ trọ';
     case 'RENTER':
       return 'Người thuê';
     default:

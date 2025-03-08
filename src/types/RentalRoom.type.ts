@@ -13,7 +13,6 @@ export type RentalRoomType = {
   average_rating?: number;
   lessor?: string;
   manager?: string;
-  is_active?: boolean;
   created_at?: Date;
   updated_at?: Date;
 }
@@ -23,7 +22,6 @@ export type RentalRoomQueryType = {
   lessor?: RentalRoomType['lessor'];
   manager?: RentalRoomType['manager'];
   manager_is_null?: boolean;
-  is_active?: RentalRoomType['is_active'];
   _province?: ProvinceType['id'];
   _district?: DistrictType['id'];
 };
