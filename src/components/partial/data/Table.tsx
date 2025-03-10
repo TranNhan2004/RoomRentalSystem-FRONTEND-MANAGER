@@ -12,11 +12,8 @@ export type DisplayedDataType = {
 
 export type TableProps = {
   data: DisplayedDataType[];
-  detailsFunction?: (id: string) => void;
-  editFunction?: (id: string) => void;
-  deleteFunction?: (id: string) => void;
   loading: boolean;
-  otherFunctions?: {
+  actions: {
     rowName: string;
     function: (id: string) => void;
     buttonConfig: Omit<ActionButtonProps, 'onClick'>;
@@ -41,20 +38,20 @@ export const Table = (props: TableProps) => {
     console.log(`Page ${currentPage}`);
   };
 
-  const generateOtherRowNames = () => {
-    return props.otherFunctions && props.otherFunctions.map((other, index) => (
-      <th key={index} className='p-2 border w-[8%]'>{other.rowName}</th>
+  const generateActionRowNames = () => {
+    return props.actions.map((action, index) => (
+      <th key={index} className='p-2 border w-[8%]'>{action.rowName}</th>
     ));
   };
 
-  const generateOtherFunctions = (item: DisplayedDataType) => {
-    return props.otherFunctions && props.otherFunctions.map((other, index) => (
+  const generateActionButtons = (item: DisplayedDataType) => {
+    return props.actions.map((action, index) => (
       <td key={index} className='p-2 border text-center'>
         <div className='flex justify-center'>
           <ActionButton 
-            { ...other.buttonConfig } 
-            onClick={() => other.function(item.id)} 
-            disabled={other.disabledFunction?.(item.id)}
+            { ...action.buttonConfig } 
+            onClick={() => action.function(item.id)} 
+            disabled={action.disabledFunction?.(item.id)}
           />
         </div>
       </td>
@@ -62,12 +59,8 @@ export const Table = (props: TableProps) => {
   };
 
   const generateBody = () => {
-    let colSpan = 2;
-    if (props.detailsFunction) colSpan += 1;
-    if (props.editFunction) colSpan += 1;
-    if (props.deleteFunction) colSpan += 1;
-    if (props.otherFunctions) colSpan += props.otherFunctions.length;
-
+    const colSpan = props.actions.length + 2;
+    
     if (loading) {
       return (
         <tr className='italic'>
@@ -94,34 +87,7 @@ export const Table = (props: TableProps) => {
       <tr key={item.id} className='border'>
         <td className='p-2 border'>{(currentPage - 1) * rowsPerPage + index + 1}</td>
         <td className='p-2 border'>{item.basicInfo}</td>
-        {
-          props.detailsFunction && (
-            <td className='p-2 border text-center'>
-              <div className='flex justify-center'>
-                <ActionButton mode='details' onClick={() => props.detailsFunction?.(item.id)} />
-              </div>
-            </td>
-          )
-        }
-        {generateOtherFunctions(item)}
-        {
-          props.editFunction && (
-            <td className='p-2 border text-center'>
-              <div className='flex justify-center'>
-                <ActionButton mode='edit' onClick={() => props.editFunction?.(item.id)} />
-              </div>
-            </td>
-          )
-        }
-        {
-          props.deleteFunction && (
-            <td className='p-2 border text-center'>
-              <div className='flex justify-center'>
-                <ActionButton mode='delete' onClick={() => props.deleteFunction?.(item.id)} />
-              </div>
-            </td>
-          )
-        }
+        {generateActionButtons(item)}
       </tr>
     ));
   };
@@ -134,10 +100,7 @@ export const Table = (props: TableProps) => {
             <tr className='bg-gray-100 text-center'>
               <th className='p-2 border w-[6%]'>STT</th>
               <th className='p-2 border'>Thông tin cơ bản</th>
-              {props.detailsFunction && <th className='p-2 border w-[8%]'>Chi tiết</th>}
-              {generateOtherRowNames()}
-              {props.editFunction && <th className='p-2 border w-[8%]'>Sửa</th>}
-              {props.deleteFunction && <th className='p-2 border w-[8%]'>Xóa</th>}
+              {generateActionRowNames()}
             </tr>
           </thead>
           <tbody>

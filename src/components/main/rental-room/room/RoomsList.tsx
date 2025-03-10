@@ -126,14 +126,14 @@ export const RoomsList = () => {
         const communes = communesArray.flat();
         
         const dataArray = await Promise.all(communes.map(
-          commune => rentalRoomService.getMany({ commune: commune.id })
+          commune => rentalRoomService.getMany({ commune: commune.id, ...query })
         ));
         setData(dataArray.flat());
 
       } else if (query._district !== '' && query.commune === '') {
         const communes = await communeService.getMany({ district: query._district });
         const dataArray = await Promise.all(communes.map(
-          commune => rentalRoomService.getMany({ commune: commune.id })
+          commune => rentalRoomService.getMany({ commune: commune.id, ...query })
         ));
         setData(dataArray.flat());
 
@@ -305,16 +305,20 @@ export const RoomsList = () => {
 
       <Table 
         data={generateDataForTable()}
-        detailsFunction={detailsFunction}
-        otherFunctions={[
-          { 
+        loading={loading}
+        actions={[
+          {
+            rowName: 'Chi tiết',
+            function: detailsFunction,
+            buttonConfig: { mode: 'details' }
+          },
+          {
             rowName: 'Duyệt',
             function: approveFunction,
-            disabledFunction: disabledFunctionForApprove,
-            buttonConfig: { mode: 'active' }
-          },
+            buttonConfig: { mode: 'active' },
+            disabledFunction: disabledFunctionForApprove
+          }
         ]}
-        loading={loading}
       />
     </div>
   );

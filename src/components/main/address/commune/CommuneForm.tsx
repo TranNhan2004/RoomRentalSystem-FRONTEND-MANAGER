@@ -53,15 +53,15 @@ export const CommuneForm = (props: CommuneFormProps) => {
   
 
   const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      if (e.target.value == '') {
-        setDistrictOptions(mapOptions(originalDistrictDataRef.current, ['name'], 'id'));
-      } else {
-        const districts = originalDistrictDataRef.current.filter(
-          district => district.province === e.target.value
-        );
-        setDistrictOptions(mapOptions(districts, ['name'], 'id'));
-      }
-    };
+    if (e.target.value == '') {
+      setDistrictOptions(mapOptions(originalDistrictDataRef.current, ['name'], 'id'));
+    } else {
+      const districts = originalDistrictDataRef.current.filter(
+        district => district.province === e.target.value
+      );
+      setDistrictOptions(mapOptions(districts, ['name'], 'id'));
+    }
+  };
   
   const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     props.setReqData({ ...props.reqData, district: e.target.value });

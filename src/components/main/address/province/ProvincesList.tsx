@@ -122,10 +122,24 @@ export const ProvincesList = () => {
 
       <Table 
         data={generateDataForTable()}
-        deleteFunction={deleteFunction}
-        detailsFunction={detailsFunction}
-        editFunction={editFunction}
         loading={loading}
+        actions={[
+          {
+            rowName: 'Chi tiết',
+            function: detailsFunction,
+            buttonConfig: { mode: 'details' }
+          },
+          {
+            rowName: 'Sửa',
+            function: editFunction,
+            buttonConfig: { mode: 'edit' }
+          },
+          {
+            rowName: 'Xóa',
+            function: deleteFunction,
+            buttonConfig: { mode: 'delete' }
+          }
+        ]}
       />
     </div>
   );
