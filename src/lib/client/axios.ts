@@ -1,14 +1,18 @@
 import axios from 'axios';
-import { getAccessToken, getRefreshedAccessToken, resetAuthTokens } from '@/lib/client/authToken';
+import { getAccessToken, resetAuthTokens } from '@/lib/client/authToken';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
-  },
-  withCredentials: true,  
-  timeout: 10000,
+  }, 
+  withCredentials: true,
+  timeout: 60000,
+});
+
+const refreshTokenAxiosIntance = axios.create({
+  ...axiosInstance.defaults
 });
 
 axiosInstance.interceptors.request.use(
@@ -24,7 +28,6 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-
 axiosInstance.interceptors.response.use(
   (response) => {
     return new Promise((resolve) => {
@@ -38,13 +41,16 @@ axiosInstance.interceptors.response.use(
     console.log(JSON.stringify(error.response));
 
     if (error.response && error.response.status === 401) {
-      if (originalRequest._retry) {
-        await resetAuthTokens();
-      }
-
       originalRequest._retry = true;
-      const accessToken = await getRefreshedAccessToken();
-      originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+
+      try {
+        const response = await refreshTokenAxiosIntance.post('/app.user-account/auth/token/refresh/');
+        originalRequest.headers['Authorization'] = `Bearer ${response.data.access}`;
+      } catch (error) {
+        await resetAuthTokens();
+        return Promise.reject(error);
+      }
+      
       return axios(originalRequest);
     }
 

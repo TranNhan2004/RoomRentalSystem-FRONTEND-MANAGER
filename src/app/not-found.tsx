@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { checkLoginStatusForAuthPage } from '@/lib/server/checkLoginStatus';
 import { GoToHomeButton } from '@/components/partial/button/GoToHomeButton';
 import { getImageSrc } from '@/lib/client/getImageSrc';
+import { checkLoginStatusForAuthPage } from '@/lib/server/checkLoginStatus';
 
 export const metadata: Metadata = {
   title: "404 Error",

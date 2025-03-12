@@ -1,5 +1,6 @@
 import { ResetPasswordAfter } from "@/components/main/auth/ResetPasswordAfter";
 import { checkLoginStatusForNotAuthPage } from "@/lib/server/checkLoginStatus";
+
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
