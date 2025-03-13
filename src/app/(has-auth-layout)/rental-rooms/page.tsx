@@ -1,4 +1,4 @@
-import { RoomsList } from "@/components/main/rental-room/room/RoomsList";
+import { RoomsList } from "@/components/main/rental-room/RoomsList";
 import { Metadata } from "next";
                                   
 export const metadata: Metadata = {

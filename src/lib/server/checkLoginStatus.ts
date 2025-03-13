@@ -10,9 +10,6 @@ export const checkLoginStatusForAuthPage = async () => {
   const refreshToken = cookieStore.get(await getRefreshTokenCookieName())?.value;
   const userInfo = cookieStore.get(await getMyInfoCookieName())?.value;
 
-  console.log(refreshToken);
-  console.log(userInfo);
-
   if (!refreshToken || !userInfo) {
     redirect('/auth/login');
   }
