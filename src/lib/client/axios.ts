@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAccessToken, resetAuthTokens } from '@/lib/client/authToken';
+import { getAccessToken, resetAuthTokens, setAccessToken } from '@/lib/client/authToken';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -39,19 +39,24 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     console.log(JSON.stringify(error.response));
-
+  
     if (error.response && error.response.status === 401) {
       originalRequest._retry = true;
-
+      
       try {
-        const response = await refreshTokenAxiosIntance.post('/app.user-account/auth/token/refresh/');
+        const response = await refreshTokenAxiosIntance.post(
+          '/app.user-account/auth/token/refresh/', 
+          { role: 'MANAGER' }
+        );
+        await setAccessToken(response.data.access);
         originalRequest.headers['Authorization'] = `Bearer ${response.data.access}`;
-      } catch (error) {
+        
+      } catch {
         await resetAuthTokens();
-        return Promise.reject(error);
+        window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH}/auth/login`;
       }
       
-      return axios(originalRequest);
+      return axiosInstance(originalRequest);
     }
 
     return Promise.reject(error);

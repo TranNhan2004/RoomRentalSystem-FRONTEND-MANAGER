@@ -201,8 +201,12 @@ export const UsersList = () => {
 
       <Table 
         data={generateDataForTable()}
-        detailsFunction={detailsFunction}
-        otherFunctions={[
+        actions={[
+          {
+            rowName: 'Chi tiết',
+            function: detailsFunction,
+            buttonConfig: { mode: 'details' }
+          },
           { 
             rowName: 'Vô hiệu',
             function: deactiveFunction,
