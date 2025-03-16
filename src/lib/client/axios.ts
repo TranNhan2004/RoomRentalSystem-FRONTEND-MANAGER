@@ -45,7 +45,7 @@ axiosInstance.interceptors.response.use(
       
       try {
         const response = await refreshTokenAxiosIntance.post(
-          '/app.user-account/auth/token/refresh/', 
+          '/app.user-account/auth/token/refresh/',
           { role: 'MANAGER' }
         );
         await setAccessToken(response.data.access);
