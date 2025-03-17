@@ -19,11 +19,7 @@ type SelectProps = {
 }
                           
 export const Select = (props: SelectProps) => {
-  const { error, handleBlur, handleChange } = useValidate<HTMLSelectElement>(
-    props.value, 
-    props.onChange,
-    props.validate
-  );
+  const { error, handleBlur } = useValidate(props.value, props.validate);
   
   return (
     <div className={props.className}>
@@ -33,7 +29,7 @@ export const Select = (props: SelectProps) => {
         className='block px-4 py-[9px] border border-gray-300 rounded-md shadow-sm 
                       focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full'
         onBlur={handleBlur}
-        onChange={handleChange} 
+        onChange={props.onChange} 
         onInvalid={(e) => {e.preventDefault();}}
       >
         {

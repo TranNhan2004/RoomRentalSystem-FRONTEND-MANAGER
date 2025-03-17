@@ -25,8 +25,8 @@ export class ApiService<T extends object, Q extends object> {
     return formData;
   }
 
-  protected async getFullURLWithParams(params: Q = {} as Q, mode: 'first' | 'many' = 'many') {
-    let fullParams = `?mode=${mode}&`;
+  protected async getFullURLWithParams(params: Q = {} as Q) {
+    let fullParams = '?';
     for (const key in params) {
       if (!isValidQueryValue(params[key])) {
         continue;
@@ -60,8 +60,8 @@ export class ApiService<T extends object, Q extends object> {
     return response.data;
   }
 
-  public async getMany(params: Q = {} as Q, mode: 'first' | 'many' = 'many') {
-    const response = await axiosInstance.get<T[]>(await this.getFullURLWithParams(params, mode));
+  public async getMany(params: Q = {} as Q) {
+    const response = await axiosInstance.get<T[]>(await this.getFullURLWithParams(params));
     return response.data;
   }
 

@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ValidateFunctionType } from '@/types/Validators.type';
 
-export const useValidate = <T extends HTMLElement>(
+export const useValidate = (
   value: string | number | undefined,
-  onChange: (e: React.ChangeEvent<T>) => void,
   validate?: ValidateFunctionType,
 ) => {
   const [error, setError] = useState<string | null>(null);
@@ -20,11 +19,6 @@ export const useValidate = <T extends HTMLElement>(
     validateInput(); 
   };
 
-  const handleChange = (e: React.ChangeEvent<T>) => {
-    onChange(e);
-    validateInput();  
-  };
-
   useEffect(() => {
     if (value) {
       validateInput();
@@ -33,7 +27,6 @@ export const useValidate = <T extends HTMLElement>(
 
   return {
     error,
-    handleBlur,
-    handleChange
+    handleBlur
   };
 };

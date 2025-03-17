@@ -14,11 +14,7 @@ type TextAreaProps = {
 }
 
 export const TextArea = (props: TextAreaProps) => {
-  const { error, handleBlur, handleChange } = useValidate<HTMLTextAreaElement>(
-    props.value, 
-    props.onChange,
-    props.validate
-  );
+  const { error, handleBlur } = useValidate(props.value, props.validate);
 
   return (
     <div className={props.className}>
@@ -29,7 +25,7 @@ export const TextArea = (props: TextAreaProps) => {
                       focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full'
         rows={props.rows ?? 3}
         onBlur={handleBlur}
-        onChange={handleChange}
+        onChange={props.onChange}
       >
       </textarea>
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}

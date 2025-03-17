@@ -9,7 +9,7 @@ import {
 } from "@/types/UserAccount.type";
 import { ApiService } from "./Api.service";
 import { axiosInstance } from "@/lib/client/axios";
-import { formatDate } from "@/lib/client/formatDate";
+import { formatDate } from "@/lib/client/format";
 
 class UserService extends ApiService<UserType, UserQueryType> {
   constructor() {
