@@ -1,8 +1,6 @@
 import { 
-  ChargesListQueryType,
-  ChargesListType,
-  RentalRoomImageQueryType,
-  RentalRoomImageType,
+  ChargesType,
+  RoomImageType,
   RentalRoomQueryType, 
   RentalRoomType,
 } from "@/types/RentalRoom.type";
@@ -19,13 +17,13 @@ export const INITIAL_RENTAL_ROOM: RentalRoomType = {
   further_description: '',
 } as const;
 
-export const INITIAL_RENTAL_ROOM_IMAGE: RentalRoomImageType = {
+export const INITIAL_ROOM_IMAGE: RoomImageType = {
   id: '',
   image: '',
   rental_room: '',
 } as const;
 
-export const INITIAL_CHARGES_LIST: ChargesListType = {
+export const INITIAL_CHARGES: ChargesType = {
   id: '',
   rental_room: '',
   room_charge: 1000000,
@@ -42,14 +40,4 @@ export const INITIAL_RENTAL_ROOM_QUERY: RentalRoomQueryType = {
   lessor: '',
   _province: '',
   _district: '',
-} as const;
-
-export const INITIAL_CHARGES_LIST_QUERY: ChargesListQueryType = {
-  rental_room: '',
-  from_date: new Date(),
-  to_date: new Date(),
-} as const;
-
-export const INITIAL_RENTAL_ROOM_IMAGE_QUERY: RentalRoomImageQueryType = {
-  rental_room: '',
 } as const;

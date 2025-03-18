@@ -24,7 +24,7 @@ export type RentalRoomQueryType = {
   _district?: DistrictType['id'];
 };
 
-export type ChargesListType = {
+export type ChargesType = {
   id?: string;
   rental_room?: string;
   room_charge?: number;
@@ -37,19 +37,19 @@ export type ChargesListType = {
   end_date?: Date;
 }
 
-export type RentalRoomImageType = {
+export type RoomImageType = {
   id?: string;
   rental_room?: string;
   image?: File | string;
 }
 
-export type RentalRoomImageQueryType = {
-  rental_room?: RentalRoomImageType['rental_room'];
+export type RoomImageQueryType = {
+  rental_room?: RoomImageType['rental_room'];
   mode?: 'first' | 'many';
 }
 
-export type ChargesListQueryType = {
-  rental_room?: ChargesListType['rental_room'];
+export type ChargesQueryType = {
+  rental_room?: ChargesType['rental_room'];
   from_date?: Date | string;
   to_date?: Date | string;
   mode?: 'first' | 'many';

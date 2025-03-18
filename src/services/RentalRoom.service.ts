@@ -1,8 +1,8 @@
 import { 
-  ChargesListQueryType,
-  ChargesListType,
-  RentalRoomImageQueryType, 
-  RentalRoomImageType, 
+  ChargesQueryType,
+  ChargesType,
+  RoomImageQueryType, 
+  RoomImageType, 
   RentalRoomQueryType, 
   RentalRoomType, 
 } from "@/types/RentalRoom.type";
@@ -18,36 +18,36 @@ ApiService<
   }
 };
 
-export class ChargesListService extends 
+export class ChargesService extends 
 ApiService<
-  ChargesListType, 
-  ChargesListQueryType
+  ChargesType, 
+  ChargesQueryType
 > {
 
   constructor() {
-    super('/app.rental-room/charges-lists');
+    super('/app.rental-room/charges');
   }
 };
 
-export class RentalRoomImageService extends 
+export class RoomImageService extends 
 ApiService<
-  RentalRoomImageType, 
-  RentalRoomImageQueryType
+  RoomImageType, 
+  RoomImageQueryType
 > {
 
   constructor() {
-    super('/app.rental-room/rental-room-images');
+    super('/app.rental-room/room-images');
   }
 
-  public async post(data: RentalRoomImageType) {
+  public async post(data: RoomImageType) {
     return await super.post(data, true);
   }
 
-  public async patch(id: string, data: RentalRoomImageType) {
+  public async patch(id: string, data: RoomImageType) {
     return await super.patch(id, data, true);
   }
 };
 
 export const rentalRoomService = new RentalRoomService();
-export const chargesListService = new ChargesListService();
-export const rentalRoomImageService = new RentalRoomImageService();
+export const chargesService = new ChargesService();
+export const roomImageService = new RoomImageService();

@@ -1,11 +1,11 @@
 'use client';
                           
 import React, { useEffect, useState } from 'react';
-import { ChargesListType, RentalRoomImageType, RentalRoomType } from '@/types/RentalRoom.type';
-import { INITIAL_CHARGES_LIST, INITIAL_RENTAL_ROOM } from '@/initials/RentalRoom.initial';
+import { ChargesType, RoomImageType, RentalRoomType } from '@/types/RentalRoom.type';
+import { INITIAL_CHARGES, INITIAL_RENTAL_ROOM } from '@/initials/RentalRoom.initial';
 import { CommuneType, DistrictType, ProvinceType } from '@/types/Address.type';
 import { INITIAL_COMMUNE, INITIAL_DISTRICT, INITIAL_PROVINCE } from '@/initials/Address.initial';
-import { chargesListService, rentalRoomImageService, rentalRoomService } from '@/services/RentalRoom.service';
+import { chargesService, roomImageService, rentalRoomService } from '@/services/RentalRoom.service';
 import { communeService, districtService, provinceService } from '@/services/Address.service';
 import { useRouter } from 'next/navigation';
 import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
@@ -30,8 +30,8 @@ export const RentalRoomDetails = (props: RentalRoomDetailsProps) => {
   const [communeData, setCommuneData] = useState<CommuneType>(INITIAL_COMMUNE);
   const [lessorData, setLessorData] = useState<UserType>(INITIAL_USER);
   const [managerData, setManagerData] = useState<UserType>(INITIAL_USER);
-  const [imageData, setImageData] = useState<RentalRoomImageType[]>([]);
-  const [chargesListData, setChargesListData] = useState<ChargesListType>(INITIAL_CHARGES_LIST);
+  const [imageData, setImageData] = useState<RoomImageType[]>([]);
+  const [chargesData, setChargesData] = useState<ChargesType>(INITIAL_CHARGES);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,11 +43,11 @@ export const RentalRoomDetails = (props: RentalRoomDetailsProps) => {
         const districtData = await districtService.get(communeData.district ?? '');
         const provinceData = await provinceService.get(districtData.province?? '');
 
-        const [lessorData, managerData, imageData, chargesListData] = await Promise.all([
+        const [lessorData, managerData, imageData, chargesData] = await Promise.all([
           userService.get(data.lessor ?? ''),
           data.manager ? userService.get(data.manager) : INITIAL_USER,
-          rentalRoomImageService.getMany({ rental_room: props.id }),
-          chargesListService.getMany({ rental_room: props.id, mode: 'first' }),
+          roomImageService.getMany({ rental_room: props.id }),
+          chargesService.getMany({ rental_room: props.id, mode: 'first' }),
         ]);
       
         setData(data);
@@ -57,7 +57,7 @@ export const RentalRoomDetails = (props: RentalRoomDetailsProps) => {
         setLessorData(lessorData);
         setManagerData(managerData);
         setImageData(imageData);
-        setChargesListData(chargesListData[0]);
+        setChargesData(chargesData[0]);
   
       } catch {
         router.push(NOT_FOUND_URL);
@@ -155,40 +155,40 @@ export const RentalRoomDetails = (props: RentalRoomDetailsProps) => {
       <div className='mt-10'>
         <DataDetails
           title={`Thông tin chi tiết các mức giá `}
-          data={chargesListData ? [
+          data={chargesData ? [
             {
               label: 'Giá phòng',
-              value: formatCurrency(chargesListData.room_charge)
+              value: formatCurrency(chargesData.room_charge)
             },
             {
               label: 'Giá đặt cọc',
-              value: formatCurrency(chargesListData.deposit)
+              value: formatCurrency(chargesData.deposit)
             },
             {
               label: 'Giá điện',
-              value: formatCurrency(chargesListData.electricity_charge)
+              value: formatCurrency(chargesData.electricity_charge)
             },
             {
               label: 'Giá nước',
-              value: formatCurrency(chargesListData.water_charge)
+              value: formatCurrency(chargesData.water_charge)
             },
             {
               label: 'Giá wifi',
-              value: chargesListData.wifi_charge === -1 ? 
+              value: chargesData.wifi_charge === -1 ? 
                       'Không cung cấp wifi' : 
-                      formatCurrency(chargesListData.wifi_charge)
+                      formatCurrency(chargesData.wifi_charge)
             },
             {
               label: 'Giá thu dọn rác',
-              value: formatCurrency(chargesListData.rubbish_charge)
+              value: formatCurrency(chargesData.rubbish_charge)
             },
             {
               label: 'Ngày bắt đầu áp dụng',
-              value: formatDate(chargesListData.start_date, 'dmy')
+              value: formatDate(chargesData.start_date, 'dmy')
             },
             {
               label: 'Ngày kết thúc áp dụng',
-              value: chargesListData.end_date ? formatDate(chargesListData.end_date, 'dmy') : 'Chưa xác định'
+              value: chargesData.end_date ? formatDate(chargesData.end_date, 'dmy') : 'Chưa xác định'
             }
           ]: [
             { value: 'Không có dữ liệu' }
