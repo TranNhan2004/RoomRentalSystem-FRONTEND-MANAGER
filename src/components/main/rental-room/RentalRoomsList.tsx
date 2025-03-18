@@ -23,7 +23,7 @@ import { CommuneType, DistrictType } from '@/types/Address.type';
 import { formatDate } from '@/lib/client/format'; 
 
 
-export const RoomsList = () => {
+export const RentalRoomsList = () => {
   const router = useRouter();
   const originialDataRef = useRef<RentalRoomType[]>([]);
   const myIdRef = useRef<string | undefined>(undefined);
@@ -92,7 +92,7 @@ export const RoomsList = () => {
   };
 
   const detailsFunction = (id: string) => {
-    router.push(`rooms/${id}`);
+    router.push(`/rental-rooms/${id}`);
   };
 
   const approveFunction = async (id: string) => {

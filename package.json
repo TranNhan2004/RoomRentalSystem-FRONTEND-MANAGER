@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next --experimental-https --turbopack -p 3000",
-    "dev-bp": "start-server-and-test 'npm run dev' https://localhost:3000/app.manager",
+    "dev": "next --experimental-https --turbopack -p 3000 && 'App running at: https://localhost:3000/app.manager'",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -32,7 +31,6 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.4",
     "postcss": "^8",
-    "start-server-and-test": "^2.0.11",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

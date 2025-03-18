@@ -21,7 +21,7 @@ export const formatDate = (date: Date | null | undefined, format: 'ymd' | 'dmy' 
   }
 };
 
-export const formatCurrency = (value: number) => new Intl.NumberFormat('vi-VN', {
+export const formatCurrency = (value: number | undefined) => new Intl.NumberFormat('vi-VN', {
   style: 'currency',
   currency: 'VND',
-}).format(value);
+}).format(value ?? -1);

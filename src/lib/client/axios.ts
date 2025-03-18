@@ -30,11 +30,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(response);
-      }, 100); 
-    });
+    return response;
   },
   async (error) => {
     const originalRequest = error.config;

@@ -25,7 +25,7 @@ ApiService<
 > {
 
   constructor() {
-    super('/app.rental-room/room-charges-lists');
+    super('/app.rental-room/charges-lists');
   }
 };
 

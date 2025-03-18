@@ -6,9 +6,7 @@ export type RentalRoomType = {
   commune?: string;
   additional_address?: string;
   closing_time?: string;
-  max_occupancy_per_room?: number;
   total_number?: number;
-  empty_number?: number;
   further_description?: string;
   average_rating?: number;
   lessor?: string;
@@ -20,8 +18,8 @@ export type RentalRoomType = {
 export type RentalRoomQueryType = {
   commune?: RentalRoomType['commune'];
   lessor?: RentalRoomType['lessor'];
-  manager?: RentalRoomType['manager'];
   manager_is_null?: boolean;
+  manager?: string;
   _province?: ProvinceType['id'];
   _district?: DistrictType['id'];
 };
@@ -29,26 +27,30 @@ export type RentalRoomQueryType = {
 export type ChargesListType = {
   id?: string;
   rental_room?: string;
-  room_charges?: number;
+  room_charge?: number;
   deposit?: number;
-  electricity_charges?: number;
-  water_charges?: number;
-  wifi_charges?: number;
-  rubbish_charges?: number;
+  electricity_charge?: number;
+  water_charge?: number;
+  wifi_charge?: number;
+  rubbish_charge?: number;
   start_date?: Date;
   end_date?: Date;
-}
-
-export type ChargesListQueryType = {
-  rental_room?: ChargesListType['rental_room'];
 }
 
 export type RentalRoomImageType = {
   id?: string;
   rental_room?: string;
-  image?: string;
+  image?: File | string;
 }
 
 export type RentalRoomImageQueryType = {
   rental_room?: RentalRoomImageType['rental_room'];
+  mode?: 'first' | 'many';
+}
+
+export type ChargesListQueryType = {
+  rental_room?: ChargesListType['rental_room'];
+  from_date?: Date | string;
+  to_date?: Date | string;
+  mode?: 'first' | 'many';
 }

@@ -7,9 +7,9 @@ import { NOT_FOUND_URL } from '@/lib/client/notFoundURL';
 import { useRouter } from 'next/navigation';
 import { UserType } from '@/types/UserAccount.type';
 import { userService } from '@/services/UserAccount.service';
-import { formatDate } from '@/lib/client/formatDate';
 import { displayGender, displayRole } from '@/lib/client/display';
 import { INITIAL_USER } from '@/initials/UserAccount.initial';
+import { formatDate } from '@/lib/client/format';
 
 type UserDetailsProps = {
   id: string;
