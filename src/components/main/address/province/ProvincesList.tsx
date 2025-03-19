@@ -16,7 +16,7 @@ import { GeneralMessage } from '@/messages/General.message';
 
 export const ProvincesList = () => {
   const router = useRouter();
-  const originialDataRef = useRef<ProvinceType[]>([]);
+  const originalDataRef = useRef<ProvinceType[]>([]);
   const [data, setData] = useState<ProvinceType[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +25,7 @@ export const ProvincesList = () => {
       try {
         setLoading(true);
         const data = await provinceService.getMany();
-        originialDataRef.current = data;
+        originalDataRef.current = data;
         setData(data);
       
       } catch {
@@ -68,8 +68,8 @@ export const ProvincesList = () => {
       try {
         await provinceService.delete(id);
         await toastSuccess(ProvinceMessage.DELETE_SUCCESS);
-        originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
-        setData(originialDataRef.current); 
+        originalDataRef.current = originalDataRef.current.filter((item) => item.id !== id);
+        setData(originalDataRef.current); 
       
       } catch (error) {
         await handleDeleteError(error);
@@ -97,7 +97,7 @@ export const ProvincesList = () => {
           <InputSearch 
             placeholder='Tìm kiếm theo tên tỉnh'
             options={['name']}
-            originalData={originialDataRef.current}
+            originalData={originalDataRef.current}
             data={data}
             setData={setData}
           />
@@ -109,7 +109,7 @@ export const ProvincesList = () => {
               { label: 'Tên tỉnh (A-Z)', value: 'asc-name' },
               { label: 'Tên tỉnh (Z-A)', value: 'desc-name' },
             ]}
-            originalData={originialDataRef.current}
+            originalData={originalDataRef.current}
             data={data}
             setData={setData}
           />

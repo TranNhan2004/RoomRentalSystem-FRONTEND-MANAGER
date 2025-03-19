@@ -8,7 +8,7 @@ export type DataLineProps = {
 }
 
 export const DataLine = (props: DataLineProps) => {  
-  if (!props.value) {
+  if (props.value === undefined) {
     return null;
   }
 

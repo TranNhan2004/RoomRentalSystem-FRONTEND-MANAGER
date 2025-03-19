@@ -21,7 +21,7 @@ import { mapOptions } from '@/lib/client/handleOptions';
 
 export const DistrictsList = () => {
   const router = useRouter();
-  const originialDataRef = useRef<DistrictType[]>([]);
+  const originalDataRef = useRef<DistrictType[]>([]);
   const [data, setData] = useState<DistrictType[]>([]);
   const [provinceOptions, setProvinceOptions] = useState<OptionType[]>([]);
   const [query, setQuery] = useState<DistrictQueryType>(INITIAL_DISTRICT_QUERY);
@@ -37,7 +37,7 @@ export const DistrictsList = () => {
         ]);
 
         setData(data);
-        originialDataRef.current = data;
+        originalDataRef.current = data;
         setProvinceOptions(mapOptions(provinceData, ['name'], 'id'));
       
       } catch {
@@ -80,8 +80,8 @@ export const DistrictsList = () => {
       try {
         await districtService.delete(id);
         await toastSuccess(DistrictMessage.DELETE_SUCCESS);
-        originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
-        setData(originialDataRef.current); 
+        originalDataRef.current = originalDataRef.current.filter((item) => item.id !== id);
+        setData(originalDataRef.current); 
       
       } catch (error) {
         await handleDeleteError(error);
@@ -105,7 +105,7 @@ export const DistrictsList = () => {
     try {
       setLoading(true);
       const data = await districtService.getMany(query);
-      originialDataRef.current = data;
+      originalDataRef.current = data;
       setData(data);
     
     } catch {
@@ -132,7 +132,7 @@ export const DistrictsList = () => {
           <InputSearch 
             placeholder='Tìm kiếm theo tên huyện'
             options={['name']}
-            originalData={originialDataRef.current}
+            originalData={originalDataRef.current}
             data={data}
             setData={setData}
           />
@@ -144,7 +144,7 @@ export const DistrictsList = () => {
               { label: 'Tên huyện (A-Z)', value: 'asc-name' },
               { label: 'Tên huyện (Z-A)', value: 'desc-name' },
             ]}
-            originalData={originialDataRef.current}
+            originalData={originalDataRef.current}
             data={data}
             setData={setData}
           />

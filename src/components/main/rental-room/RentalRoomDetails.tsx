@@ -47,7 +47,7 @@ export const RentalRoomDetails = (props: RentalRoomDetailsProps) => {
           userService.get(data.lessor ?? ''),
           data.manager ? userService.get(data.manager) : INITIAL_USER,
           roomImageService.getMany({ rental_room: props.id }),
-          chargesService.getMany({ rental_room: props.id, mode: 'first' }),
+          chargesService.getMany({ rental_room: props.id, first_only: true }),
         ]);
       
         setData(data);

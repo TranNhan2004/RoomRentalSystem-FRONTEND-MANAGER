@@ -45,12 +45,11 @@ export type RoomImageType = {
 
 export type RoomImageQueryType = {
   rental_room?: RoomImageType['rental_room'];
-  mode?: 'first' | 'many';
 }
 
 export type ChargesQueryType = {
   rental_room?: ChargesType['rental_room'];
   from_date?: Date | string;
   to_date?: Date | string;
-  mode?: 'first' | 'many';
+  first_only?: boolean;
 }

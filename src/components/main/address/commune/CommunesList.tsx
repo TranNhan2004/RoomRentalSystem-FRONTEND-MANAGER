@@ -28,7 +28,7 @@ export const CommunesList = () => {
   const [query, setQuery] = useState<CommuneQueryType>(INITIAL_COMMUNE_QUERY);
   const [loading, setLoading] = useState(true);
   
-  const originialDataRef = useRef<CommuneType[]>([]);
+  const originalDataRef = useRef<CommuneType[]>([]);
   const originalDistrictDataRef = useRef<DistrictType[]>([]);
   
 
@@ -46,7 +46,7 @@ export const CommunesList = () => {
         setProvinceOptions(mapOptions(provinceData, ['name'], 'id'));
         setDistrictOptions(mapOptions(districtData, ['name'], 'id'));
 
-        originialDataRef.current = data;
+        originalDataRef.current = data;
         originalDistrictDataRef.current = districtData;
     
       } catch {
@@ -89,8 +89,8 @@ export const CommunesList = () => {
       try {
         await communeService.delete(id);
         await toastSuccess(CommuneMessage.DELETE_SUCCESS);
-        originialDataRef.current = originialDataRef.current.filter((item) => item.id !== id);
-        setData(originialDataRef.current); 
+        originalDataRef.current = originalDataRef.current.filter((item) => item.id !== id);
+        setData(originalDataRef.current); 
       
       } catch (error) {
         await handleDeleteError(error);
@@ -122,7 +122,7 @@ export const CommunesList = () => {
       
       } else {
         const data = await communeService.getMany(query);
-        originialDataRef.current = data;
+        originalDataRef.current = data;
         setData(data);
       }
   
@@ -161,7 +161,7 @@ export const CommunesList = () => {
           <InputSearch 
             placeholder='Tìm kiếm theo tên xã'
             options={['name']}
-            originalData={originialDataRef.current}
+            originalData={originalDataRef.current}
             data={data}
             setData={setData}
           />
@@ -173,7 +173,7 @@ export const CommunesList = () => {
               { label: 'Tên xã (A-Z)', value: 'asc-name' },
               { label: 'Tên xã (Z-A)', value: 'desc-name' },
             ]}
-            originalData={originialDataRef.current}
+            originalData={originalDataRef.current}
             data={data}
             setData={setData}
           />

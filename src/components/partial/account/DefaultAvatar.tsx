@@ -4,9 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { UserType } from '@/types/UserAccount.type';
 
 const backgroundColors = [
-  '27445D', '497D74', '71BBB2', '3674B5', '578FCA', 
-  '73C7C7', '493D9E', 'B2A5FF', 'B82132', 'D2665A',
-  'F2B28C', 'EFB036'
+  '27445D', // Xanh navy đậm
+  '497D74', // Xanh lam ngả lục
+  '71BBB2', // Xanh ngọc nhạt
+  'B2A5FF', // Tím pastel
+  'F2B28C', // Cam nhạt
+  'EFB036'  // Vàng đậm
 ];
 
 type DefaultAvatarProps = {
