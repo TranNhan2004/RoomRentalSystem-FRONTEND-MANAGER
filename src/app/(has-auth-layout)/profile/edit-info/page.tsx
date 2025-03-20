@@ -1,4 +1,4 @@
-import EditInfo from "@/components/main/profile/EditInfo";
+import { EditInfo } from "@/components/main/profile/EditInfo";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

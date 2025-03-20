@@ -14,13 +14,13 @@ import { DataForm } from '@/components/partial/data/DataForm';
 import { Label } from '@/components/partial/form/Label';
 import { Input } from '@/components/partial/form/Input';
 import { EMAIL_REG_EXP } from '@/lib/client/isValidForm';
-import { formatDate } from '@/lib/client/formatDate';
+import { formatDate } from '@/lib/client/format';
 import { Select } from '@/components/partial/form/Select';
 import { dateStrOfMaxAge, dateStrOfMinAge } from '@/lib/client/dateLimit';
 import { AxiosError } from 'axios';
 import { GeneralMessage } from '@/messages/General.message';
 
-const EditInfo = () => {
+export const EditInfo = () => {
   const router = useRouter();
   const [data, setData] = useState<UserType>(INITIAL_USER);
 
@@ -273,5 +273,3 @@ const EditInfo = () => {
     </DataForm>
   );
 };
-
-export default EditInfo;

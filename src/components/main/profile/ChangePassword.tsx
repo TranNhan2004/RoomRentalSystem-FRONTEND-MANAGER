@@ -16,7 +16,7 @@ import { userService } from '@/services/UserAccount.service';
 import { Validators } from '@/types/Validators.type';
 
 
-const ChangePassword = () => {
+export const ChangePassword = () => {
   const router = useRouter();
   const [data, setData] = useState<ChangePasswordType>(INITIAL_CHANGE_PASSWORD);
 
@@ -119,5 +119,3 @@ const ChangePassword = () => {
     </DataForm>
   );
 };
-
-export default ChangePassword;
