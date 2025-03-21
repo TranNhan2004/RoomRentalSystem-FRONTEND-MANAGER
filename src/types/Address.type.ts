@@ -17,6 +17,7 @@ export type CommuneType = {
   id?: string;
   name?: string;
   district?: string;
+  _province?: string;
 }
 
 export type CommuneQueryType = {

@@ -126,11 +126,11 @@ export const DistrictsList = () => {
 
   return (
     <div>
-      <Title>Danh sách các huyện</Title>
+      <Title>Danh sách các huyện/quận/thị xã</Title>
       <div className='flex items-center'>
         <div className='w-[40%]'>
           <InputSearch 
-            placeholder='Tìm kiếm theo tên huyện'
+            placeholder='Tìm kiếm theo tên huyện/quận/thị xã'
             options={['name']}
             originalData={originalDataRef.current}
             data={data}
@@ -141,8 +141,8 @@ export const DistrictsList = () => {
         <div className='ml-[30px]'>
           <Sorting
             options={[
-              { label: 'Tên huyện (A-Z)', value: 'asc-name' },
-              { label: 'Tên huyện (Z-A)', value: 'desc-name' },
+              { label: 'Tên huyện/quận/thị xã (A-Z)', value: 'asc-name' },
+              { label: 'Tên huyện/quận/thị xã (Z-A)', value: 'desc-name' },
             ]}
             originalData={originalDataRef.current}
             data={data}
@@ -156,7 +156,7 @@ export const DistrictsList = () => {
             refreshOnClick={refreshOnClick}
           >
             <div className='grid grid-cols-2 items-center mt-1 mb-1'>
-              <Label htmlFor='province-query'>Tỉnh: </Label>
+              <Label htmlFor='province-query'>Tỉnh/thành phố: </Label>
               <Select 
                 id='province-query'
                 value={query.province}

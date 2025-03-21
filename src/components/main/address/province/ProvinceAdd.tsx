@@ -57,7 +57,7 @@ export const ProvinceAdd = () => {
   return (
     <>
       <ProvinceForm 
-        formLabel='Thêm tỉnh mới'
+        formLabel='Thêm tỉnh/thành phố mới'
         saveOnClick={saveOnClick}
         saveAndExitOnClick={saveAndExitOnClick}
         reqData={reqData}

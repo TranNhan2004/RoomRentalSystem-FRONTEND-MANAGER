@@ -71,12 +71,12 @@ export const DistrictForm = (props: DistrictFormProps) => {
         validators={validators}
       >
         <div className='grid grid-cols-2 items-center'>
-          <Label htmlFor='name' required>Tên huyện: </Label>
+          <Label htmlFor='name' required>Tên huyện/quận/thị xã: </Label>
           <Input 
             id='name'
             name='name'
             type='text'
-            className='w-[300px] ml-[-360px]'
+            className='w-[300px] ml-[-250px]'
             value={props.reqData.name}
             onChange={handleInputOnChange}
             validate={validators.name}
@@ -84,11 +84,11 @@ export const DistrictForm = (props: DistrictFormProps) => {
         </div>
 
         <div className='grid grid-cols-2 items-center'>
-          <Label htmlFor='province' required>Thuộc tỉnh: </Label>
+          <Label htmlFor='province' required>Thuộc tỉnh/thành phố: </Label>
           <Select 
             id='province'
             value={props.reqData.province}
-            className='w-[300px] ml-[-360px]'
+            className='w-[300px] ml-[-250px]'
             options={provinceOptions}
             onChange={handleProvinceChange}
             validate={validators.province}

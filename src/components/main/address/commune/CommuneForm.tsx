@@ -53,6 +53,7 @@ export const CommuneForm = (props: CommuneFormProps) => {
   
 
   const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    props.setReqData({ ...props.reqData, _province: e.target.value });
     if (e.target.value == '') {
       setDistrictOptions(mapOptions(originalDistrictDataRef.current, ['name'], 'id'));
     } else {
@@ -80,6 +81,13 @@ export const CommuneForm = (props: CommuneFormProps) => {
         return CommuneMessage.DISTRICT_REQUIRED;
       }
       return null;
+    },
+
+    _province: () => {
+      if (!props.reqData._province) {
+        return CommuneMessage.PROVINCE_REQUIRED;
+      }
+      return null;
     }
   };
 
@@ -93,12 +101,12 @@ export const CommuneForm = (props: CommuneFormProps) => {
         validators={validators}
       >
         <div className='grid grid-cols-2 items-center'>
-          <Label htmlFor='name' required>Tên xã: </Label>
+          <Label htmlFor='name' required>Tên xã/phường/thị trấn: </Label>
           <Input 
             id='name'
             name='name'
             type='text'
-            className='w-[300px] ml-[-360px]'
+            className='w-[300px] ml-[-250px]'
             value={props.reqData.name}
             onChange={handleInputOnChange}
             validate={validators.name}
@@ -106,21 +114,23 @@ export const CommuneForm = (props: CommuneFormProps) => {
         </div>
 
         <div className='grid grid-cols-2 items-center'>
-          <Label htmlFor='province'>Thuộc tỉnh: </Label>
+          <Label htmlFor='province' required>Thuộc tỉnh/thành phố: </Label>
           <Select 
             id='province'
-            className='w-[300px] ml-[-360px]'
+            value={props.reqData._province}
+            className='w-[300px] ml-[-250px]'
             options={provinceOptions}
             onChange={handleProvinceChange}
+            validate={validators._province}
           />
         </div>
         
         <div className='grid grid-cols-2 items-center'>
-          <Label htmlFor='district' required>Thuộc huyện: </Label>
+          <Label htmlFor='district' required>Thuộc huyện/quận/thị xã: </Label>
           <Select 
             id='district'
             value={props.reqData.district}
-            className='w-[300px] ml-[-360px]'
+            className='w-[300px] ml-[-250px]'
             options={districtOptions}
             onChange={handleDistrictChange}
             validate={validators.district}

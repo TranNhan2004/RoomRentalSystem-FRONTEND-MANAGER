@@ -48,12 +48,12 @@ export const ProvinceForm = (props: ProvinceFormProps) => {
         validators={validators}
       >
         <div className='grid grid-cols-2 items-center'>
-          <Label htmlFor='name' required>Tên tỉnh: </Label>
+          <Label htmlFor='name' required>Tên tỉnh/thành phố: </Label>
           <Input 
             id='name'
             name='name'
             type='text'
-            className='w-[300px] ml-[-360px]'
+            className='w-[300px] ml-[-250px]'
             value={props.reqData.name}
             onChange={handleInputOnChange}
             validate={validators.name}

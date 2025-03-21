@@ -61,15 +61,15 @@ export const CommuneDetails = (props: CommuneDetailsProps) => {
             value: data.id,
           },
           {
-            label: 'Tên',
+            label: 'Tên xã/phường/thị trấn',
             value: data.name,
           },
           {
-            label: 'Thuộc tỉnh',
+            label: 'Thuộc tỉnh/thành phố',
             value: provinceData.name,
           },
           {
-            label: 'Thuộc huyện',
+            label: 'Thuộc huyện/quận/thị xã',
             value: districtData.name,
           },
         ]}

@@ -54,7 +54,7 @@ export const ProvinceDetails = (props: ProvinceDetailsProps) => {
             value: data.id,
           },
           {
-            label: 'Tên',
+            label: 'Tên tỉnh/thành phố',
             value: data.name,
           }
         ]}

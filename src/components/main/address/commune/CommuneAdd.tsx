@@ -50,7 +50,7 @@ export const CommuneAdd = () => {
   return (
     <>
       <CommuneForm 
-        formLabel='Thêm xã mới'
+        formLabel='Thêm xã/phường/thị trấn mới'
         saveOnClick={saveOnClick}
         saveAndExitOnClick={saveAndExitOnClick}
         reqData={reqData}

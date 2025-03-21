@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { toastError, toastSuccess } from '@/lib/client/alert';
 import { CommuneMessage } from '@/messages/Address.message';
-import { communeService } from '@/services/Address.service';
+import { communeService, districtService } from '@/services/Address.service';
 import { CommuneType } from '@/types/Address.type';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -27,7 +27,12 @@ export const CommuneEdit = (props: CommuneEditProps) => {
       try {
         setIsLoading(true);
         const data = await communeService.get(props.id);
-        setReqData(data);
+        const districtData = await districtService.get(props.id);
+        
+        setReqData({
+          ...data,
+          _province: districtData.province
+        });
       
       } catch {
         router.push(NOT_FOUND_URL);

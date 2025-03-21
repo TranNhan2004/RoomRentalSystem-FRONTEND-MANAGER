@@ -37,6 +37,7 @@ export class DistrictMessage {
 export class CommuneMessage {
   public static readonly NAME_REQUIRED = 'Tên xã không được để trống!';
   public static readonly DISTRICT_REQUIRED = 'Tên huyện không được để trống!';
+  public static readonly PROVINCE_REQUIRED = 'Tên tỉnh không được để trống!';
 
   public static readonly POST_ERROR = 'Đã xảy ra lỗi khi thêm xã mới!';
   public static readonly GET_MANY_ERROR = 'Đã xảy ra lỗi khi lấy danh sách xã!';

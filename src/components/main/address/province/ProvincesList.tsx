@@ -91,11 +91,11 @@ export const ProvincesList = () => {
 
   return (
     <div>
-      <Title>Danh sách các tỉnh</Title>
+      <Title>Danh sách các tỉnh/thành phố</Title>
       <div className='flex items-center'>
         <div className='w-[40%]'>
           <InputSearch 
-            placeholder='Tìm kiếm theo tên tỉnh'
+            placeholder='Tìm kiếm theo tên tỉnh/thành phố'
             options={['name']}
             originalData={originalDataRef.current}
             data={data}
@@ -106,8 +106,8 @@ export const ProvincesList = () => {
         <div className='ml-[30px]'>
           <Sorting
             options={[
-              { label: 'Tên tỉnh (A-Z)', value: 'asc-name' },
-              { label: 'Tên tỉnh (Z-A)', value: 'desc-name' },
+              { label: 'Tên tỉnh/thành phố (A-Z)', value: 'asc-name' },
+              { label: 'Tên tỉnh/thành phố (Z-A)', value: 'desc-name' },
             ]}
             originalData={originalDataRef.current}
             data={data}

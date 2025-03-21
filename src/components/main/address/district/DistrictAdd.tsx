@@ -50,7 +50,7 @@ export const DistrictAdd = () => {
   return (
     <>
       <DistrictForm 
-        formLabel='Thêm huyện mới'
+        formLabel='Thêm huyện/quận/thị xã mới'
         saveOnClick={saveOnClick}
         saveAndExitOnClick={saveAndExitOnClick}
         reqData={reqData}

@@ -58,11 +58,11 @@ export const DistrictDetails = (props: DistrictDetailsProps) => {
             value: data.id,
           },
           {
-            label: 'Tên',
+            label: 'Tên huyện/quận/thị xã',
             value: data.name,
           },
           {
-            label: 'Thuộc tỉnh',
+            label: 'Thuộc tỉnh/thành phố',
             value: provinceData.name,
           },
         ]}
