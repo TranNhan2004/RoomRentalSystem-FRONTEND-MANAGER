@@ -36,10 +36,19 @@ export const CommuneForm = (props: CommuneFormProps) => {
       setProvinceOptions(mapOptions(provinceData, ['name'], 'id'));
       setDistrictOptions(mapOptions(districtData, ['name'], 'id'));
       originalDistrictDataRef.current = districtData;
+
+      if (props.reqData.district) {
+        const district = districtData.find(item => item.id === props.reqData.district);
+        const districts = districtData.filter(item => item.province === district?.province);
+        setDistrictOptions(mapOptions(districts, ['name'], 'id'));
+      
+      } else {
+        setDistrictOptions(mapOptions(districtData, ['name'], 'id'));
+      } 
     };
 
     fetchOptionData();
-  }, []);
+  }, [props.reqData.district]);
 
   const cancelOnClick = async () => {
     await handleCancelAlert(() => {

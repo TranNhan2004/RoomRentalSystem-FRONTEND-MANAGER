@@ -113,13 +113,13 @@ export const RentalRoomDetails = (props: RentalRoomDetailsProps) => {
           },
           {
             label: 'Chủ trọ',
-            value: lessorData.first_name + ' ' + lessorData.last_name + ' - ' + lessorData.phone_number
+            value: lessorData.last_name + ' ' + lessorData.first_name + ' - ' + lessorData.phone_number
           },
           {
             label: 'Người phê duyệt',
             value: data.manager ? 
-                managerData.first_name + ' ' + managerData.last_name + ' - ' + managerData.phone_number :
-                'Chưa xác định'
+              managerData.last_name + ' ' + managerData.first_name + ' - ' + managerData.phone_number :
+              'Chưa xác định'
           },
           {
             label: 'Ngày tạo',
@@ -132,7 +132,7 @@ export const RentalRoomDetails = (props: RentalRoomDetailsProps) => {
         ]}
       />
 
-      <div className='p-8 mt-10 ml-[-3%]'>
+      <div className='p-8 ml-[-3%]'>
         <h2 className='text-left text-2xl mb-5 font-bold'>Danh sách các ảnh của phòng trọ</h2>
         <div className='ml-2 flex flex-wrap items-center gap-4'>
           {

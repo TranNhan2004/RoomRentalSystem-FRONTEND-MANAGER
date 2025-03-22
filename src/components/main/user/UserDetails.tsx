@@ -49,7 +49,7 @@ export const UserDetails = (props: UserDetailsProps) => {
   return (
     <>
       <DataDetails
-        title={`Thông tin chi tiết của người dùng ${data.first_name + ' ' + data.last_name}`}
+        title={`Thông tin chi tiết của người dùng ${data.last_name + ' ' + data.first_name}`}
         data={[
           {
             label: 'ID',

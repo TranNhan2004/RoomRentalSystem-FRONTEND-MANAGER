@@ -55,7 +55,7 @@ export const UsersList = () => {
         id: `${item.id}`,
         basicInfo: (
           <div>
-            <DataLine label='Họ tên' value={item.first_name + ' ' + item.last_name} />
+            <DataLine label='Họ tên' value={item.last_name + ' ' + item.first_name} />
             <DataLine label='Số điện thoại' value={item.phone_number} />
             <DataLine label='Số CCCD' value={item.citizen_number} />
             <DataLine label='Vai trò' value={displayRole(item.role)} />

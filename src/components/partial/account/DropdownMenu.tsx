@@ -14,7 +14,7 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const fullName = props.data.first_name + ' ' + props.data.last_name;
+  const fullName = props.data.last_name + ' ' + props.data.first_name;
   const email = props.data.email ?? '';
 
   const truncate = (str: string) => str.length > 18 ? str.slice(0, 18) + '...' : str;

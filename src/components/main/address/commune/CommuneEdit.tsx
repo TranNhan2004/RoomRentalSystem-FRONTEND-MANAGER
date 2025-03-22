@@ -27,7 +27,7 @@ export const CommuneEdit = (props: CommuneEditProps) => {
       try {
         setIsLoading(true);
         const data = await communeService.get(props.id);
-        const districtData = await districtService.get(props.id);
+        const districtData = await districtService.get(data.district ?? '');
         
         setReqData({
           ...data,

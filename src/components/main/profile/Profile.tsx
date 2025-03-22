@@ -33,15 +33,15 @@ export const Profile = () => {
 
           <div className='text-lef italic space-y-2'>
             <DataLine label='Ngày tạo tài khoản' value={formatDate(myInfoData.created_at, 'dmy')} />
-            <DataLine label='Lần cập nhật gần nhất' value={formatDate(myInfoData.updated_at, 'dmy')} />
-            <DataLine label='Lần đăng nhập gần nhất' value={formatDate(myInfoData.last_login, 'dmy')} />
+            <DataLine label='Ngày cập nhật gần nhất' value={formatDate(myInfoData.updated_at, 'dmy')} />
+            <DataLine label='Ngày đăng nhập gần nhất' value={formatDate(myInfoData.last_login, 'dmy')} />
           </div>
         </div>
 
         <div className='border-l-4 border-gray-200 rounded-sm ml-[15%] h-[105%]'></div>
         
         <div className='flex flex-col justify-center space-y-4 ml-[-65%] mt-[-10%]'>
-          <h2 className='text-3xl font-semibold text-gray-800'>{myInfoData.first_name + ' ' + myInfoData.last_name}</h2>
+          <h2 className='text-3xl font-semibold text-gray-800'>{myInfoData.last_name + ' ' + myInfoData.first_name}</h2>
           <DataLine label='Email' value={myInfoData.email} />
           <DataLine label='Số điện thoại' value={myInfoData.phone_number} />
           <DataLine label='Số CCCD' value={myInfoData.citizen_number} />
