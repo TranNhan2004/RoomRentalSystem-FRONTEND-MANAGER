@@ -37,6 +37,10 @@ axiosInstance.interceptors.response.use(
     console.log(JSON.stringify(error.response));
   
     if (error.response && error.response.status === 401) {
+      if (originalRequest._retry) {
+        return Promise.reject(error);
+      }
+      
       originalRequest._retry = true;
       
       try {

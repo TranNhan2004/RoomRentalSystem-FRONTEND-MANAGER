@@ -44,10 +44,9 @@ export const RentalRoomsList = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [data, lessorData, managerData, provinceData, districtData, communeData] = await Promise.all([
+        const [data, userData, provinceData, districtData, communeData] = await Promise.all([
           rentalRoomService.getMany(),
-          userService.getMany({ role_include: ['LESSOR'] }),
-          userService.getMany({ role_include: ['MANAGER'] }),
+          userService.getMany({ role_include: ['LESSOR', 'MANAGER'] }),
           provinceService.getMany(),
           districtService.getMany(),
           communeService.getMany(),
@@ -57,6 +56,9 @@ export const RentalRoomsList = () => {
         myIdRef.current = (await getMyInfo()).id;
         setData(data);
       
+        const lessorData = userData.filter(item => item.role === 'LESSOR');
+        const managerData = userData.filter(item => item.role === 'MANAGER');
+
         setLessorOptions(mapOptions(lessorData, ['first_name', 'last_name', 'phone_number'], 'id'));
         setManagerOptions(mapOptions(managerData, ['first_name', 'last_name', 'phone_number'], 'id'));
         setProvinceOptions(mapOptions(provinceData, ['name'], 'id'));
